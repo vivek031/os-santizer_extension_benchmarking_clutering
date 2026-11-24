@@ -1,0 +1,30 @@
+<section id="performance" data-transition="fade" style="background:#FAFAF7;color:#1B2333;font-family:'Inter', Arial, sans-serif;padding:112px 128px;display:flex;flex-direction:column;gap:28px">
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#A9461A">Benchmark · Table 3 · Real programs</p>
+<h2 style="font-family:'Inter', Arial, sans-serif;font-size:64px;font-weight:700;letter-spacing:-1px;line-height:1.1;color:#1B2333">Real programs: kernel passes cost almost nothing</h2>
+</div>
+<div style="flex:1;display:flex;flex-direction:row;gap:48px;align-items:start">
+<img src="/_blob/d99baace7a5b11be56a272c570202dd2" alt="Table of run time divided by baseline for 17 configurations and 5 workloads; almost all cells 0.97 to 1.02; filep_unlocked on gcc 1.30; memory passes on sqlite about 4.3" style="width:730px;height:740px;object-fit:contain">
+<div style="flex:1;display:flex;flex-direction:column;gap:10px">
+<p style="font-size:24px;font-weight:600;color:#4A5568">Workloads (5 runs each · baseline = without OS-Sanitizer)</p>
+<table style="font-size:26px;color:#1B2333;font-family:'Inter', Arial, sans-serif">
+<tr style="background:#E6EAF0"><th style="width:20%;text-align:left;padding:6px 12px">Program</th><th style="width:60%;text-align:left;padding:6px 12px">What it does</th><th style="width:20%;text-align:right;padding:6px 12px">Baseline</th></tr>
+<tr style="background:#FAFAF7"><td style="padding:6px 12px">xz</td><td style="padding:6px 12px">compress 64 MiB tar (4,964 files)</td><td style="text-align:right;padding:6px 12px">19.9 s</td></tr>
+<tr style="background:#F2F1EC"><td style="padding:6px 12px">gcc</td><td style="padding:6px 12px">compile sqlite3.c (257,679 lines)</td><td style="text-align:right;padding:6px 12px">19.9 s</td></tr>
+<tr style="background:#FAFAF7"><td style="padding:6px 12px">perl</td><td style="padding:6px 12px">count 6.0 M words in 48 MiB text</td><td style="text-align:right;padding:6px 12px">6.6 s</td></tr>
+<tr style="background:#F2F1EC"><td style="padding:6px 12px">sqlite</td><td style="padding:6px 12px">4 M rows in memory, 3 queries</td><td style="text-align:right;padding:6px 12px">9.0 s</td></tr>
+<tr style="background:#FAFAF7"><td style="padding:6px 12px">stockfish</td><td style="padding:6px 12px">Stockfish 17 chess, depth 17</td><td style="text-align:right;padding:6px 12px">13.5 s</td></tr>
+</table>
+<p style="font-size:24px;font-weight:600;color:#4A5568;padding-top:20px">Same pattern as the paper’s Table 3</p>
+<table style="font-size:26px;color:#1B2333;font-family:'Inter', Arial, sans-serif">
+<tr style="background:#E6EAF0"><th style="width:56%;text-align:left;padding:6px 12px">Finding</th><th style="width:22%;text-align:right;padding:6px 12px">Ours</th><th style="width:22%;text-align:right;padding:6px 12px">Paper</th></tr>
+<tr style="background:#FAFAF7"><td style="padding:6px 12px">Kernel-hook pass alone</td><td style="text-align:right;padding:6px 12px">≤ 1.02×</td><td style="text-align:right;padding:6px 12px">≤ 1.07×</td></tr>
+<tr style="background:#F2F1EC"><td style="padding:6px 12px">filep_unlocked on gcc</td><td style="text-align:right;padding:6px 12px"><b>1.30×</b></td><td style="text-align:right;padding:6px 12px">1.32×</td></tr>
+<tr style="background:#FAFAF7"><td style="padding:6px 12px">All non-memory passes, gcc</td><td style="text-align:right;padding:6px 12px">1.45×</td><td style="text-align:right;padding:6px 12px">1.36×</td></tr>
+<tr style="background:#F2F1EC"><td style="padding:6px 12px">Memory passes, worst program</td><td style="text-align:right;padding:6px 12px"><b>4.3×</b></td><td style="text-align:right;padding:6px 12px">6.3×</td></tr>
+</table>
+</div>
+</div>
+<p style="position:absolute;right:128px;top:56px;width:240px;text-align:right;font-size:24px;color:#6B7280">15 / 18</p>
+<aside>(~35 s) In real programs the picture is very different. Compiling, compressing, a database, a chess engine: the kernel-side passes cost at most about 2 percent. The one clear exception is gcc with filep_unlocked, 1.30 times, almost exactly the paper's 1.32, because gcc writes all its output with unlocked calls. And in both studies the memory passes are the expensive ones, which is why they stay off in normal use.</aside>
+</section>

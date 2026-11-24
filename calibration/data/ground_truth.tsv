@@ -1,0 +1,11 @@
+scenario	label	path_substr	rationale
+A_root_rootdir	fp	A_root_rootdir/	root, root-owned dir and file: nobody else can swap the entry (Scenario 1)
+A_root_userdir	tp	A_root_userdir/	root opens in a dir owned by uid 1001, who can swap the file between check and use (Scenario 2)
+A_user_userdir	fp	A_user_userdir/	uid 1001 in its own dir: no privilege boundary
+A_root_sticky_rootfile	fp	A_root_sticky_rootfile/	sticky world-writable dir but root-owned entry: others cannot replace it
+A_root_sticky_userfile	tp	A_root_sticky_userfile/	sticky dir, entry owned by uid 1001: owner can replace it under root
+I_root_userdir	tp	I_root_userdir/	root traverses dir1 owned by uid 1001, who can redirect dir2 (Scenario 3)
+I_root_worldw	tp	I_root_worldw/	root traverses a world-writable non-sticky dir
+I_user_owntree	none	I_user_owntree/	uid 1001 in its own tree: should not be reported at all
+S_root_ww	tp	S_root_ww/	root reads a file any user can modify
+S_user_ww_own	unsure	S_user_ww_own/	uid 1001 reads its own world-writable file: weakness, no privilege gain

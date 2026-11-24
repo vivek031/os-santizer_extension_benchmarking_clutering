@@ -1,0 +1,12 @@
+date: 2026-11-12T04:44:08-05:00
+host: 6.11.9-100.fc39.x86_64 | 10 vCPU | 22 GiB
+cpu: AMD Ryzen 5 5600G with Radeon Graphics
+os-sanitizer: /usr/local/bin/os-sanitizer sha256=6151231279035d70
+trials: 5
+scenarios: access fixed-mmap rwx-mem filep-unlocked gets snprintf printf-mutability system-mutability system-absolute security-file-open interceptable-path reference-policy memcpy strcpy strncpy sprintf all
+workload: xz|xz -6 -T1 -c data.tar > /dev/null
+workload: gcc|gcc -O2 -c sqlite3.c -o /dev/null
+workload: perl|perl /root/os-sanitizer/evaluation/quickbench/workloads/wordfreq.pl corpus.txt > /dev/null
+workload: sqlite|sqlite3 :memory: < /root/os-sanitizer/evaluation/quickbench/workloads/sqlite_bench.sql > /dev/null
+workload: stockfish|stockfish bench 16 1 17 > /dev/null 2>&1
+resumed: 2026-11-12T05:28:01-05:00

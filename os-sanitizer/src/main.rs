@@ -35,12 +35,14 @@ use tokio::{signal, task};
 use users::{get_group_by_gid, get_user_by_uid};
 
 use os_sanitizer_common::{
-    CopyViolation, FixedMmapViolation, OpenViolation, OsSanitizerReport, ProgId, SERIALIZED_SIZE,
-    SnprintfViolation,
+    CopyViolation, FixedMmapViolation, OpenViolation, OsSanitizerReport, ProgId, ReportCtx,
+    SERIALIZED_SIZE, SnprintfViolation,
 };
 
+use crate::json_out::{Frame, JsonSink};
 use crate::resolver::{ProcMap, ProcMapOffsetResolver};
 
+mod json_out;
 mod resolver;
 
 const PROCMAP_CACHE_TIME: u64 = 30;
@@ -299,6 +301,13 @@ struct Args {
         default_value = "7"
     )]
     visibility_depth: usize,
+
+    #[arg(
+        long,
+        value_name = "FILE",
+        help = "Additionally append every report as one JSON object per line to FILE (structured fields, kernel-captured credentials/executable identity, full resolved stack)"
+    )]
+    json: Option<std::path::PathBuf>,
 }
 
 #[tokio::main]
@@ -369,6 +378,13 @@ async fn main() -> Result<(), anyhow::Error> {
         usize::MAX
     } else {
         args.visibility_depth
+    };
+
+    let json_sink: Option<Arc<JsonSink>> = match &args.json {
+        Some(path) => Some(Arc::new(JsonSink::open(path).map_err(|e| {
+            anyhow::anyhow!("couldn't open JSON output {}: {e}", path.display())
+        })?)),
+        None => None,
     };
 
     // Bump the memlock rlimit. This is needed for older kernels that don't use the
@@ -539,6 +555,7 @@ async fn main() -> Result<(), anyhow::Error> {
                 let stacktraces = stacktraces.clone();
                 let cached_procmaps = cached_procmaps.clone();
                 let counters_map = counters_map.clone();
+                let json_sink = json_sink.clone();
                 let mut rx = tx.subscribe();
                 tasks.push(task::spawn(async move {
                     let mut buffers = (0..32)
@@ -554,6 +571,7 @@ async fn main() -> Result<(), anyhow::Error> {
                         buf.clear_ready();
                         for buf in buffers.iter_mut().take(events.read) {
                             let report = buf.iter().as_slice();
+                            let report_ctx = ReportCtx::parse(report);
                             let Ok(report) = OsSanitizerReport::try_from(report) else {
                                 warn!("Failed to deserialise a report.");
                                 continue;
@@ -561,6 +579,7 @@ async fn main() -> Result<(), anyhow::Error> {
                             let stacktraces = stacktraces.clone();
                             let cached_procmaps = cached_procmaps.clone();
                             let counters_map = counters_map.clone();
+                            let json_sink = json_sink.clone();
                             task::spawn(async move {
                                 let (executable, pid, thread, stacktrace) = match report {
                                     OsSanitizerReport::PrintfMutability { executable, pid_tgid, stack_id, .. }
@@ -903,6 +922,11 @@ async fn main() -> Result<(), anyhow::Error> {
                                     OsSanitizerReport::Statistics { .. } => unreachable!("Handled in an earlier branch.")
                                 };
 
+                                let stacktrace_frames = stacktrace.frames().iter()
+                                    .chain(extra_stacktraces.iter().flat_map(|s| s.frames().iter()))
+                                    .map(|f| f.ip)
+                                    .collect::<Vec<u64>>();
+
                                 // only error condition is if rx is closed
                                 let maybe_resolver =
                                     procmap.as_ref().map(|procmap| ProcMapOffsetResolver::from(procmap.as_ref()));
@@ -957,6 +981,35 @@ async fn main() -> Result<(), anyhow::Error> {
                                 // let level = if stacktrace.len() <= 2 { Level::Info } else { level };
 
                                 let stacktrace = stacktrace.join("\n");
+
+                                if let Some(sink) = json_sink.as_ref() {
+                                    // full (untruncated, up to 64 frames) resolved stack for clustering
+                                    let frames = stacktrace_frames.iter().take(64).map(|&ip| {
+                                        let resolved = maybe_resolver.as_ref().and_then(|r| r.resolve_file_offset(ip));
+                                        Frame {
+                                            ip,
+                                            path: resolved.map(|(p, _)| p.to_string_lossy().into_owned()),
+                                            offset: resolved.map(|(_, o)| o),
+                                        }
+                                    }).collect::<Vec<_>>();
+                                    // where the suspicious data lives (constant in a binary vs runtime memory)
+                                    let data_addr = match report {
+                                        OsSanitizerReport::Strcpy { src, .. }
+                                        | OsSanitizerReport::Strncpy { src, .. }
+                                        | OsSanitizerReport::Memcpy { src, .. } => Some(src),
+                                        OsSanitizerReport::Snprintf { srcptr, .. } => Some(srcptr),
+                                        OsSanitizerReport::PrintfMutability { template_param, .. } => Some(template_param),
+                                        OsSanitizerReport::SystemMutability { command_param, .. }
+                                        | OsSanitizerReport::SystemAbsolute { command_param, .. } => Some(command_param),
+                                        _ => None,
+                                    };
+                                    let data_region = data_addr.and_then(|a| maybe_resolver.as_ref().and_then(|r| r.data_region(a)));
+                                    sink.write(&json_out::record(
+                                        pass, level, &executable, pid, thread, &report,
+                                        report_ctx.as_ref(), &frames, &message, data_region,
+                                    ));
+                                }
+
                                 log!(level, "{message}; stacktrace:{stacktrace}");
                                 let (_, counters) = &counters_map[pass];
                                 counters[level as usize - 1].fetch_add(1, Ordering::SeqCst);
@@ -972,6 +1025,11 @@ async fn main() -> Result<(), anyhow::Error> {
 
     if args.security_file_open || args.access {
         attach_fentry!(bpf, btf, "security_file_open");
+    }
+
+    if args.json.is_some() {
+        // observe-only; feeds ReportCtx::untrusted_open for calibration
+        attach_lsm!(bpf, btf, "file_open", "untrusted_open");
     }
 
     if args.memcpy || args.strncpy || args.strcpy {
@@ -1148,6 +1206,28 @@ async fn main() -> Result<(), anyhow::Error> {
             ["libc", "__mempcpy_chk_evex_unaligned_erms"],
             ["libc", "__mempcpy_chk_sse2_unaligned_erms"],
             ["libc", "__mempcpy_chk_ssse3"],
+            // Non-ERMS variants: glibc selects these on CPUs without ERMS/FSRM
+            // (common in VMs, e.g. VirtualBox), so the list above misses them.
+            ["libc", "__memcpy_avx_unaligned"],
+            ["libc", "__memcpy_avx_unaligned_rtm"],
+            ["libc", "__memcpy_avx512_unaligned"],
+            ["libc", "__memcpy_evex_unaligned"],
+            ["libc", "__memcpy_sse2_unaligned"],
+            ["libc", "__memcpy_chk_avx_unaligned"],
+            ["libc", "__memcpy_chk_avx_unaligned_rtm"],
+            ["libc", "__memcpy_chk_avx512_unaligned"],
+            ["libc", "__memcpy_chk_evex_unaligned"],
+            ["libc", "__memcpy_chk_sse2_unaligned"],
+            ["libc", "__mempcpy_avx_unaligned"],
+            ["libc", "__mempcpy_avx_unaligned_rtm"],
+            ["libc", "__mempcpy_avx512_unaligned"],
+            ["libc", "__mempcpy_evex_unaligned"],
+            ["libc", "__mempcpy_sse2_unaligned"],
+            ["libc", "__mempcpy_chk_avx_unaligned"],
+            ["libc", "__mempcpy_chk_avx_unaligned_rtm"],
+            ["libc", "__mempcpy_chk_avx512_unaligned"],
+            ["libc", "__mempcpy_chk_evex_unaligned"],
+            ["libc", "__mempcpy_chk_sse2_unaligned"],
         );
     }
 

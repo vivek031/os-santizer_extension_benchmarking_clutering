@@ -1,0 +1,29 @@
+<section id="implemented" data-transition="fade" style="background:#FAFAF7;color:#1B2333;font-family:'Inter', Arial, sans-serif;padding:112px 128px;display:flex;flex-direction:column;gap:32px">
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#A9461A">Our work · Implementation</p>
+<h2 style="font-family:'Inter', Arial, sans-serif;font-size:64px;font-weight:700;letter-spacing:-1px;line-height:1.1;color:#1B2333">What we implemented</h2>
+</div>
+<hr style="border-top:2px solid #E2E0D8">
+<div style="display:flex;flex-direction:column;gap:22px">
+<div style="display:flex;flex-direction:column;gap:6px">
+<p style="font-size:34px;line-height:1.3"><b>1. Kernel context</b>  <span style="color:#6B7280">os-sanitizer-ebpf, -common · ~476 lines of Rust</span></p>
+<p style="font-size:28px;line-height:1.4;padding-left:48px;color:#2D3748">– Every report gets a context block filled in the kernel at the event: user IDs (real, effective, file-system), the program’s owner and permissions, the parent’s user ID, the owner and permissions of the file and its folder</p>
+<p style="font-size:28px;line-height:1.4;padding-left:48px;color:#2D3748">– New LSM hook (observe only): flags a root process that opens another user’s file</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:6px">
+<p style="font-size:34px;line-height:1.3"><b>2. JSON output</b>  <span style="color:#6B7280">--json · json_out.rs</span></p>
+<p style="font-size:28px;line-height:1.4;padding-left:48px;color:#2D3748">– One record per report: pass, severity, program, PID, time, kernel context, pass details (e.g. who can write the path), full stack as binary + offset</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:6px">
+<p style="font-size:34px;line-height:1.3"><b>3. Clustering</b>  <span style="color:#6B7280">cluster.py</span></p>
+<p style="font-size:28px;line-height:1.4;padding-left:48px;color:#2D3748">– Same group if same <b>pass + program + top-5 stack frames + context</b> (root? can another user swap the file? other writers?)</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:6px">
+<p style="font-size:34px;line-height:1.3"><b>4. Scoring</b>  <span style="color:#6B7280">score.py</span></p>
+<p style="font-size:28px;line-height:1.4;padding-left:48px;color:#2D3748">– Gives each cluster a 0–1 risk score with a written reason (criteria on slide 12)</p>
+</div>
+<p style="font-size:34px;line-height:1.3"><b>5. Evaluation</b>: reproduced the paper’s Tables 2, 3 and 4 on our VM</p>
+</div>
+<p style="position:absolute;right:128px;top:56px;width:240px;text-align:right;font-size:24px;color:#6B7280">10 / 18</p>
+<aside>(~40 s) Here is what we built, in four steps. First, we made the kernel tell us the context at the moment of the event: who is running, who owns the program, who owns the file and its folder. That is a small change in the eBPF code, about 480 lines of Rust. Second, every report is written as one JSON record, so a script can read it. Third, we group the duplicates. Fourth, we give each group a risk score with a written reason. And to make sure our setup still behaves like the paper's, we re-ran its three benchmarks on our VM.</aside>
+</section>

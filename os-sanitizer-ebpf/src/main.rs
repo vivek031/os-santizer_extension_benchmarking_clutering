@@ -23,11 +23,12 @@ use os_sanitizer_common::CopyViolation::Strlen;
 use os_sanitizer_common::OsSanitizerError::*;
 use os_sanitizer_common::ProgId;
 use os_sanitizer_common::{
-    CopyViolation, EXECUTABLE_LEN, MaybeOwnedArray, OsSanitizerError, OsSanitizerReport,
-    SERIALIZED_SIZE, ToctouVariant, USERSTR_LEN,
+    CTX_OFFSET, CopyViolation, EXECUTABLE_LEN, MaybeOwnedArray, ObjInfo, OsSanitizerError,
+    OsSanitizerReport, ReportCtx, SERIALIZED_SIZE, ToctouVariant, USERSTR_LEN,
 };
 
 use crate::binding::vm_area_struct;
+use crate::binding::{cred, dentry, file, inode, mm_struct, super_block, task_struct};
 use crate::statistics::update_tracking;
 use crate::strlen::STRLEN_MAP;
 
@@ -246,15 +247,197 @@ pub(crate) unsafe fn emit_report<C: EbpfContext>(
     ctx: &C,
     report: &OsSanitizerReport,
 ) -> Result<(), OsSanitizerError> {
+    emit_report_obj(ctx, report, core::ptr::null())
+}
+
+/// tgid -> 1 once the process, while privileged, opened a file another user controls.
+#[map]
+pub static UNTRUSTED_OPEN: LruHashMap<u32, u8> = LruHashMap::with_max_entries(1 << 14, 0);
+
+/// Observe-only LSM hook (always allows): marks privileged processes that open a regular
+/// file owned by a non-root user, or writable by everyone. Pseudo filesystems are skipped.
+#[aya_ebpf::macros::lsm(hook = "file_open")]
+fn lsm_untrusted_open(ctx: aya_ebpf::programs::LsmContext) -> i32 {
+    unsafe { mark_untrusted_open(&ctx) };
+    0
+}
+
+#[inline(always)]
+unsafe fn mark_untrusted_open(ctx: &aya_ebpf::programs::LsmContext) {
+    use core::ptr::addr_of;
+    const PROC_SUPER_MAGIC: u64 = 0x9fa0;
+    const SYSFS_MAGIC: u64 = 0x6265_6572;
+    let fsuid = {
+        let task = aya_ebpf::helpers::generated::bpf_get_current_task() as *const task_struct;
+        if task.is_null() {
+            return;
+        }
+        let cred = rk_ptr(addr_of!((*task).cred));
+        if cred.is_null() {
+            return;
+        }
+        rk(addr_of!((*cred).fsuid.val))
+    };
+    if fsuid != 0 {
+        return;
+    }
+    let f: *const file = ctx.arg(0);
+    if f.is_null() {
+        return;
+    }
+    let ino = rk_ptr(addr_of!((*f).f_inode) as *const *const inode);
+    if ino.is_null() {
+        return;
+    }
+    let mode: u16 = rk(addr_of!((*ino).i_mode));
+    if mode & 0xF000 != 0x8000 {
+        return; // regular files only
+    }
+    let sb = rk_ptr(addr_of!((*ino).i_sb) as *const *const super_block);
+    if !sb.is_null() {
+        let magic = rk(addr_of!((*sb).s_magic)) as u64;
+        if magic == PROC_SUPER_MAGIC || magic == SYSFS_MAGIC {
+            return;
+        }
+    }
+    let owner: u32 = rk(addr_of!((*ino).i_uid.val));
+    if owner != 0 || mode & 0o002 != 0 {
+        let tgid = (bpf_get_current_pid_tgid() >> 32) as u32;
+        let _ = UNTRUSTED_OPEN.insert(&tgid, &1u8, 0);
+    }
+}
+
+/// Per-CPU scratch for the context trailer; built here rather than on the 512-byte eBPF
+/// stack, which some passes (intercept_path) nearly exhaust already.
+#[map]
+pub static CTX_SCRATCH: PerCpuArray<ReportCtx> = PerCpuArray::with_max_entries(1, 0);
+
+/// Like [`emit_report`], additionally recording owner/mode of `f` (and its parent
+/// directory) when `f` is non-null.
+#[inline(always)]
+pub(crate) unsafe fn emit_report_obj<C: EbpfContext>(
+    ctx: &C,
+    report: &OsSanitizerReport,
+    f: *const file,
+) -> Result<(), OsSanitizerError> {
     let ptr = REPORT_SCRATCH
         .get_ptr_mut(0)
         .ok_or(CouldntAccessBuffer("emit-report"))?;
     let buf = &mut *ptr;
     report
-        .serialise_into(buf)
+        .serialise_into(&mut buf[..CTX_OFFSET])
         .map_err(|_| SerialisationError("emit-report"))?;
+    let c = &mut *CTX_SCRATCH
+        .get_ptr_mut(0)
+        .ok_or(CouldntAccessBuffer("emit-report ctx"))?;
+    fill_ctx(c, f);
+    c.serialise_into(&mut buf[CTX_OFFSET..])
+        .map_err(|_| SerialisationError("emit-report ctx"))?;
     FUNCTION_REPORT_QUEUE.output(ctx, buf, 0);
     Ok(())
+}
+
+/// Reads a kernel value, yielding zero on failure; context collection is best-effort and
+/// must never prevent a report from being emitted.
+#[inline(always)]
+unsafe fn rk<T: Default>(src: *const T) -> T {
+    aya_ebpf::helpers::bpf_probe_read_kernel(src).unwrap_or_default()
+}
+
+#[inline(always)]
+unsafe fn rk_ptr<T>(src: *const *const T) -> *const T {
+    aya_ebpf::helpers::bpf_probe_read_kernel(src).unwrap_or(core::ptr::null())
+}
+
+/// Captures the credentials and executable identity of the current task, plus owner/mode of
+/// file `f` and its parent directory if `f` is non-null. Writes in place into `c`.
+#[inline(always)]
+unsafe fn fill_ctx(c: &mut ReportCtx, f: *const file) {
+    use aya_ebpf::helpers::generated::{
+        bpf_get_current_cgroup_id, bpf_get_current_task, bpf_ktime_get_boot_ns,
+    };
+    use core::ptr::addr_of;
+
+    let uid_gid = aya_ebpf::helpers::bpf_get_current_uid_gid();
+    c.uid = uid_gid as u32;
+    c.gid = (uid_gid >> 32) as u32;
+    c.cgroup_id = bpf_get_current_cgroup_id();
+    c.ts_boot_ns = bpf_ktime_get_boot_ns();
+    c.euid = 0;
+    c.egid = 0;
+    c.fsuid = 0;
+    c.fsgid = 0;
+    c.exe_ino = 0;
+    c.exe_dev = 0;
+    c.exe_uid = 0;
+    c.exe_mode = 0;
+    c.parent_uid = 0;
+    c.obj = None;
+    c.untrusted_open = UNTRUSTED_OPEN
+        .get(&((bpf_get_current_pid_tgid() >> 32) as u32))
+        .copied()
+        .unwrap_or(0);
+
+    let task = bpf_get_current_task() as *const task_struct;
+    if !task.is_null() {
+        let cred = rk_ptr(addr_of!((*task).cred));
+        if !cred.is_null() {
+            c.euid = rk(addr_of!((*cred).euid.val));
+            c.egid = rk(addr_of!((*cred).egid.val));
+            c.fsuid = rk(addr_of!((*cred).fsuid.val));
+            c.fsgid = rk(addr_of!((*cred).fsgid.val));
+        }
+        let parent = rk_ptr(addr_of!((*task).real_parent) as *const *const task_struct);
+        if !parent.is_null() {
+            let pcred = rk_ptr(addr_of!((*parent).cred));
+            if !pcred.is_null() {
+                c.parent_uid = rk(addr_of!((*pcred).uid.val));
+            }
+        }
+        let mm = rk_ptr(addr_of!((*task).mm) as *const *const mm_struct);
+        if !mm.is_null() {
+            let exe = rk_ptr(addr_of!((*mm).__bindgen_anon_1.exe_file) as *const *const file);
+            if !exe.is_null() {
+                let ino = rk_ptr(addr_of!((*exe).f_inode) as *const *const inode);
+                if !ino.is_null() {
+                    c.exe_ino = rk(addr_of!((*ino).i_ino)) as u64;
+                    c.exe_uid = rk(addr_of!((*ino).i_uid.val));
+                    c.exe_mode = rk(addr_of!((*ino).i_mode));
+                    let sb = rk_ptr(addr_of!((*ino).i_sb) as *const *const super_block);
+                    if !sb.is_null() {
+                        c.exe_dev = rk(addr_of!((*sb).s_dev));
+                    }
+                }
+            }
+        }
+    }
+
+    if f.is_null() {
+        return;
+    }
+    let ino = rk_ptr(addr_of!((*f).f_inode) as *const *const inode);
+    if ino.is_null() {
+        return;
+    }
+    let mut o = ObjInfo {
+        uid: rk(addr_of!((*ino).i_uid.val)),
+        gid: rk(addr_of!((*ino).i_gid.val)),
+        mode: rk(addr_of!((*ino).i_mode)),
+        ..ObjInfo::default()
+    };
+    let d = rk_ptr(addr_of!((*f).f_path.dentry) as *const *const dentry);
+    if !d.is_null() {
+        let p = rk_ptr(addr_of!((*d).d_parent) as *const *const dentry);
+        if !p.is_null() {
+            let pino = rk_ptr(addr_of!((*p).d_inode) as *const *const inode);
+            if !pino.is_null() {
+                o.parent_uid = rk(addr_of!((*pino).i_uid.val));
+                o.parent_gid = rk(addr_of!((*pino).i_gid.val));
+                o.parent_mode = rk(addr_of!((*pino).i_mode));
+            }
+        }
+    }
+    c.obj = Some(o);
 }
 
 macro_rules! always_bad_call {

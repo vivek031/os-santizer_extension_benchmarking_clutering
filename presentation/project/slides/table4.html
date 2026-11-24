@@ -1,0 +1,46 @@
+<section id="table4" data-transition="fade" style="background:#FAFAF7;color:#1B2333;font-family:'Inter', Arial, sans-serif;padding:112px 128px;display:flex;flex-direction:column;gap:24px">
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#A9461A">Benchmark · Table 4 · Live system</p>
+<h2 style="font-family:'Inter', Arial, sans-serif;font-size:64px;font-weight:700;letter-spacing:-1px;line-height:1.1;color:#1B2333">Table 4: reports per pass and severity</h2>
+</div>
+<div style="flex:1;display:flex;flex-direction:row;gap:48px;align-items:start">
+<div style="width:1150px;display:flex;flex-direction:column">
+<div style="display:flex;flex-direction:row">
+<div style="flex:25;background:#E6EAF0"></div>
+<p style="flex:37.5;font-size:24px;font-weight:700;text-align:center;background:#DCE7FA;padding:6px 0">Our VM</p>
+<p style="flex:37.5;font-size:24px;font-weight:700;text-align:center;background:#ECEAE3;padding:6px 0">Paper (Table 4)</p>
+</div>
+<table style="font-size:24px;color:#1B2333;font-family:'Inter', Arial, sans-serif">
+<tr style="background:#E6EAF0"><th style="width:25%;text-align:left;padding:4px 12px">Pass</th><th style="width:12.5%;text-align:right;padding:4px 12px">ERROR</th><th style="width:12.5%;text-align:right;padding:4px 12px">WARN</th><th style="width:12.5%;text-align:right;padding:4px 12px">INFO</th><th style="width:12.5%;text-align:right;padding:4px 12px">ERROR</th><th style="width:12.5%;text-align:right;padding:4px 12px">WARN</th><th style="width:12.5%;text-align:right;padding:4px 12px">INFO</th></tr>
+<tr style="background:#FAFAF7"><td style="padding:4px 12px">access</td><td style="text-align:right;padding:4px 12px">0</td><td style="text-align:right;padding:4px 12px">0</td><td style="text-align:right;padding:4px 12px">109k</td><td style="text-align:right;padding:4px 12px">0</td><td style="text-align:right;padding:4px 12px">0</td><td style="text-align:right;padding:4px 12px">839k</td></tr>
+<tr style="background:#F2F1EC"><td style="padding:4px 12px">fixed_mmap</td><td style="text-align:right;padding:4px 12px">0</td><td style="text-align:right;padding:4px 12px">524</td><td style="text-align:right;padding:4px 12px">13.4k</td><td style="text-align:right;padding:4px 12px">0</td><td style="text-align:right;padding:4px 12px">0</td><td style="text-align:right;padding:4px 12px">707k</td></tr>
+<tr style="background:#FAFAF7"><td style="padding:4px 12px">rwx_mem</td><td style="text-align:right;padding:4px 12px">0</td><td style="text-align:right;padding:4px 12px">317</td><td style="text-align:right;padding:4px 12px">0</td><td style="text-align:right;padding:4px 12px">0</td><td style="text-align:right;padding:4px 12px">62.9k</td><td style="text-align:right;padding:4px 12px">0</td></tr>
+<tr style="background:#F2F1EC"><td style="padding:4px 12px">filep_unlocked</td><td style="text-align:right;padding:4px 12px">0</td><td style="text-align:right;padding:4px 12px">14</td><td style="text-align:right;padding:4px 12px">0</td><td style="text-align:right;padding:4px 12px">0</td><td style="text-align:right;padding:4px 12px">0</td><td style="text-align:right;padding:4px 12px">0</td></tr>
+<tr style="background:#FAFAF7"><td style="padding:4px 12px">gets</td><td style="text-align:right;padding:4px 12px">24</td><td style="text-align:right;padding:4px 12px">0</td><td style="text-align:right;padding:4px 12px">0</td><td style="text-align:right;padding:4px 12px">0</td><td style="text-align:right;padding:4px 12px">0</td><td style="text-align:right;padding:4px 12px">0</td></tr>
+<tr style="background:#F2F1EC"><td style="padding:4px 12px">snprintf</td><td style="text-align:right;padding:4px 12px">0</td><td style="text-align:right;padding:4px 12px">2.2k</td><td style="text-align:right;padding:4px 12px">0</td><td style="text-align:right;padding:4px 12px">0</td><td style="text-align:right;padding:4px 12px">11.3k</td><td style="text-align:right;padding:4px 12px">0</td></tr>
+<tr style="background:#FAFAF7"><td style="padding:4px 12px">printf_mut</td><td style="text-align:right;padding:4px 12px">0</td><td style="text-align:right;padding:4px 12px">17</td><td style="text-align:right;padding:4px 12px">0</td><td style="text-align:right;padding:4px 12px">0</td><td style="text-align:right;padding:4px 12px">0</td><td style="text-align:right;padding:4px 12px">0</td></tr>
+<tr style="background:#F2F1EC"><td style="padding:4px 12px">system_mut</td><td style="text-align:right;padding:4px 12px">0</td><td style="text-align:right;padding:4px 12px">1</td><td style="text-align:right;padding:4px 12px">0</td><td style="text-align:right;padding:4px 12px">0</td><td style="text-align:right;padding:4px 12px">0</td><td style="text-align:right;padding:4px 12px">0</td></tr>
+<tr style="background:#FAFAF7"><td style="padding:4px 12px">system_abs</td><td style="text-align:right;padding:4px 12px">0</td><td style="text-align:right;padding:4px 12px">10</td><td style="text-align:right;padding:4px 12px">0</td><td style="text-align:right;padding:4px 12px">0</td><td style="text-align:right;padding:4px 12px">0</td><td style="text-align:right;padding:4px 12px">0</td></tr>
+<tr style="background:#F2F1EC"><td style="padding:4px 12px">sec_file_open</td><td style="text-align:right;padding:4px 12px">1</td><td style="text-align:right;padding:4px 12px">0</td><td style="text-align:right;padding:4px 12px">0</td><td style="text-align:right;padding:4px 12px">0</td><td style="text-align:right;padding:4px 12px">1</td><td style="text-align:right;padding:4px 12px">345</td></tr>
+<tr style="background:#FAFAF7"><td style="padding:4px 12px">intercept_path</td><td style="text-align:right;padding:4px 12px">8</td><td style="text-align:right;padding:4px 12px">2.0k</td><td style="text-align:right;padding:4px 12px">0</td><td style="text-align:right;padding:4px 12px">1</td><td style="text-align:right;padding:4px 12px">275</td><td style="text-align:right;padding:4px 12px">1.5k</td></tr>
+<tr style="background:#F2F1EC"><td style="padding:4px 12px">sprintf *</td><td style="text-align:right;padding:4px 12px">0</td><td style="text-align:right;padding:4px 12px">72.5k</td><td style="text-align:right;padding:4px 12px">0</td><td style="text-align:right;padding:4px 12px">–</td><td style="text-align:right;padding:4px 12px">–</td><td style="text-align:right;padding:4px 12px">–</td></tr>
+<tr style="background:#E6EAF0"><td style="padding:4px 12px"><b>Total</b></td><td style="text-align:right;padding:4px 12px"><b>33</b></td><td style="text-align:right;padding:4px 12px"><b>77.6k</b></td><td style="text-align:right;padding:4px 12px"><b>122k</b></td><td style="text-align:right;padding:4px 12px"><b>1</b></td><td style="text-align:right;padding:4px 12px"><b>74.5k</b></td><td style="text-align:right;padding:4px 12px"><b>1.55M</b></td></tr>
+</table>
+<p style="font-size:24px;line-height:1.35;color:#4A5568;padding-top:12px">* sprintf was switched on in our run, but the paper’s Table 4 does not list it. ERROR = runs a file others can change · WARN = reads/writes it · INFO = risky pattern only. Paper: Table 4 counts come from a 24-hour run; the volume numbers (right) from 5 days.</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:10px">
+<p style="font-size:24px;font-weight:600;color:#4A5568">Report volume (paper §6.4.2, 5 days)</p>
+<table style="font-size:24px;color:#1B2333;font-family:'Inter', Arial, sans-serif">
+<tr style="background:#E6EAF0"><th style="width:42%;text-align:left;padding:6px 12px">Metric</th><th style="width:30%;text-align:right;padding:6px 12px">Ours</th><th style="width:28%;text-align:right;padding:6px 12px">Paper</th></tr>
+<tr style="background:#FAFAF7"><td style="padding:6px 12px">Time</td><td style="text-align:right;padding:6px 12px">13.4 h</td><td style="text-align:right;padding:6px 12px">5 days</td></tr>
+<tr style="background:#F2F1EC"><td style="padding:6px 12px">Log entries</td><td style="text-align:right;padding:6px 12px">199,642</td><td style="text-align:right;padding:6px 12px">~679K</td></tr>
+<tr style="background:#FAFAF7"><td style="padding:6px 12px">Stack offsets</td><td style="text-align:right;padding:6px 12px">5,612</td><td style="text-align:right;padding:6px 12px">2,784</td></tr>
+<tr style="background:#F2F1EC"><td style="padding:6px 12px">Binaries</td><td style="text-align:right;padding:6px 12px">216</td><td style="text-align:right;padding:6px 12px">127</td></tr>
+<tr style="background:#FAFAF7"><td style="padding:6px 12px">Per offset</td><td style="text-align:right;padding:6px 12px"><b>36</b></td><td style="text-align:right;padding:6px 12px">244</td></tr>
+</table>
+<p style="font-size:28px;line-height:1.4;padding-top:24px">Same shape: <b>access</b> dominates (always INFO); gets and system passes are rare.</p>
+</div>
+</div>
+<p style="position:absolute;right:128px;top:56px;width:240px;text-align:right;font-size:24px;color:#6B7280">16 / 18</p>
+<aside>(~25 s) On the live system, the shape of the reports matches the paper's Table 4: access dominates and is all INFO, while gets and the system passes are rare. Our run is shorter, so our counts are smaller. But even so, nobody can read 200 thousand lines, and that brings us back to the ranking.</aside>
+</section>

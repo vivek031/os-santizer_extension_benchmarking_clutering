@@ -1,0 +1,1579 @@
+loading security_file_open (fentry: security_file_open)...done
+loading do_faccessat (fentry: do_faccessat)...done
+loading vfs_fstatat (fentry: vfs_fstatat)...done
+loading do_statx (fentry: do_statx)...done
+loading do_sys_openat2 (fentry: do_sys_openat2)...done
+loading clear_open_permissions (fentry: path_openat)...done
+loading do_filp_open (fentry: do_filp_open)...done
+loading do_filp_open (fexit: do_filp_open)...done
+loading may_open (fentry: may_open)...[2026-11-10T20:01:33Z INFO  os_sanitizer] libuv-worker (pid: 2234, thread: 2241) opened `/root/.claude/sessions/1932.json' (a file) after accessing it via statx, a known TOCTOU pattern; stacktrace:
+    #0 0x7fc8c5e1fbd5  (/usr/lib64/libc.so.6+0x107bd5)
+    #1 0x1a39adf  (/root/.vscode-server/cli/servers/Stable-dcd3ad6e368fbe19d03f37054a40dbaf40d676f4/server/node+0x1639adf)
+    #2 0x1a30a60  (/root/.vscode-server/cli/servers/Stable-dcd3ad6e368fbe19d03f37054a40dbaf40d676f4/server/node+0x1630a60)
+    #3 0x7fc8c5da6907  (/usr/lib64/libc.so.6+0x8e907)
+    #4 0x7fc8c5e2dadc  (/usr/lib64/libc.so.6+0x115adc)
+    
+    #0 0x7fc8c5e2b8dd  (/usr/lib64/libc.so.6+0x1138dd)
+    #1 0x1a383b5  (/root/.vscode-server/cli/servers/Stable-dcd3ad6e368fbe19d03f37054a40dbaf40d676f4/server/node+0x16383b5)
+    #2 0x1a39914  (/root/.vscode-server/cli/servers/Stable-dcd3ad6e368fbe19d03f37054a40dbaf40d676f4/server/node+0x1639914)
+    #3 0x1a30a60  (/root/.vscode-server/cli/servers/Stable-dcd3ad6e368fbe19d03f37054a40dbaf40d676f4/server/node+0x1630a60)
+    #4 0x7fc8c5da6907  (/usr/lib64/libc.so.6+0x8e907)
+    #5 0x7fc8c5e2dadc  (/usr/lib64/libc.so.6+0x115adc)
+done
+loading open_permissions_inode (lsm: inode_permission)...done
+loading open_permissions_file (fentry: security_file_open)...done
+[2026-11-10T20:01:34Z INFO  os_sanitizer] git (pid: 74379) opened `/root/os-sanitizer/.git/HEAD' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7fcca0818b65  (/usr/lib64/libc.so.6+0x107b65)
+    #1 0x55fa8928b4b8  (/usr/bin/git+0x2c64b8)
+    #2 0x55fa8928f664  (/usr/bin/git+0x2ca664)
+    #3 0x55fa8930fcac  (/usr/bin/git+0x34acac)
+    #4 0x55fa8928e8ea  (/usr/bin/git+0x2c98ea)
+    #5 0x55fa88fe9ce4  (/usr/bin/git+0x24ce4)
+    #6 0x55fa88fe9e22  (/usr/bin/git+0x24e22)
+    ...
+    
+    #0 0x7fcca081551e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x55fa8928f664  (/usr/bin/git+0x2ca664)
+    #2 0x55fa8930fcac  (/usr/bin/git+0x34acac)
+    #3 0x55fa8928e8ea  (/usr/bin/git+0x2c98ea)
+    #4 0x55fa88fe9ce4  (/usr/bin/git+0x24ce4)
+    #5 0x55fa88fe9e22  (/usr/bin/git+0x24e22)
+    #6 0x55fa88fe56f3  (/usr/bin/git+0x206f3)
+    ...
+[2026-11-10T20:01:34Z INFO  os_sanitizer] git (pid: 74379) opened `/root/os-sanitizer/.git/config' (a file) after accessing it via access, a known TOCTOU pattern; stacktrace:
+    #0 0x7fcca0818b65
+    #1 0x7fcca079623f
+    #2 0x7fcca07963c5
+    #3 0x7fcca078a699
+    #4 0x55fa892e6f61
+    #5 0x55fa892d4f13
+    #6 0x55fa8915b1bb
+    ...
+    
+    #0 0x7fcca08147bb
+    #1 0x55fa8915d407
+    #2 0x55fa8901fc8d
+    #3 0x55fa890322f3
+    #4 0x55fa88fe979d
+    #5 0x55fa88fe9e22
+    #6 0x55fa88fe56f3
+    ...
+[2026-11-10T20:01:34Z INFO  os_sanitizer] git (pid: 74380) opened `/root/os-sanitizer/.git/HEAD' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7f177293ab65  (/usr/lib64/libc.so.6+0x107b65)
+    #1 0x5642a95c44b8  (/usr/bin/git+0x2c64b8)
+    #2 0x5642a95c8664  (/usr/bin/git+0x2ca664)
+    #3 0x5642a9648cac  (/usr/bin/git+0x34acac)
+    #4 0x5642a95c78ea  (/usr/bin/git+0x2c98ea)
+    #5 0x5642a9322911  (/usr/bin/git+0x24911)
+    #6 0x5642a9322e22  (/usr/bin/git+0x24e22)
+    ...
+    
+    #0 0x7f177293751e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x5642a95c8664  (/usr/bin/git+0x2ca664)
+    #2 0x5642a9648cac  (/usr/bin/git+0x34acac)
+    #3 0x5642a95c78ea  (/usr/bin/git+0x2c98ea)
+    #4 0x5642a9322911  (/usr/bin/git+0x24911)
+    #5 0x5642a9322e22  (/usr/bin/git+0x24e22)
+    #6 0x5642a931e6f3  (/usr/bin/git+0x206f3)
+    ...
+[2026-11-10T20:01:34Z INFO  os_sanitizer] git (pid: 74380) opened `/root/os-sanitizer/.git/config' (a file) after accessing it via access, a known TOCTOU pattern; stacktrace:
+    #0 0x7f177293ab65  (/usr/lib64/libc.so.6+0x107b65)
+    #1 0x7f17728b823f  (/usr/lib64/libc.so.6+0x8523f)
+    #2 0x7f17728b83c5  (/usr/lib64/libc.so.6+0x853c5)
+    #3 0x7f17728ac699  (/usr/lib64/libc.so.6+0x79699)
+    #4 0x5642a961ff61  (/usr/bin/git+0x321f61)
+    #5 0x5642a960df13  (/usr/bin/git+0x30ff13)
+    #6 0x5642a94941bb  (/usr/bin/git+0x1961bb)
+    ...
+    
+    #0 0x7f17729367bb  (/usr/lib64/libc.so.6+0x1037bb)
+    #1 0x5642a9496407  (/usr/bin/git+0x198407)
+    #2 0x5642a9496d9d  (/usr/bin/git+0x198d9d)
+    #3 0x5642a9322c5e  (/usr/bin/git+0x24c5e)
+    #4 0x5642a9322e22  (/usr/bin/git+0x24e22)
+    #5 0x5642a931e6f3  (/usr/bin/git+0x206f3)
+    #6 0x7f177285b14a  (/usr/lib64/libc.so.6+0x2814a)
+    ...
+[2026-11-10T20:01:34Z INFO  os_sanitizer] git (pid: 74380) opened `/root/os-sanitizer/.git/objects/pack/pack-50b7baa401a0e809259026005df1361763d9ab0d.pack' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7f177293ab65  (/usr/lib64/libc.so.6+0x107b65)
+    #1 0x5642a9644e6f  (/usr/bin/git+0x346e6f)
+    #2 0x5642a953f4a5  (/usr/bin/git+0x2414a5)
+    #3 0x5642a95402e0  (/usr/bin/git+0x2422e0)
+    #4 0x5642a9542bc7  (/usr/bin/git+0x244bc7)
+    #5 0x5642a952a520  (/usr/bin/git+0x22c520)
+    #6 0x5642a952ac65  (/usr/bin/git+0x22cc65)
+    ...
+    
+    #0 0x7f177293751e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x5642a953d1c7  (/usr/bin/git+0x23f1c7)
+    #2 0x5642a953d3d1  (/usr/bin/git+0x23f3d1)
+    #3 0x5642a9545bab  (/usr/bin/git+0x247bab)
+    #4 0x5642a95429a0  (/usr/bin/git+0x2449a0)
+    #5 0x5642a952a520  (/usr/bin/git+0x22c520)
+    #6 0x5642a952ac65  (/usr/bin/git+0x22cc65)
+    ...
+[2026-11-10T20:01:34Z INFO  os_sanitizer] git (pid: 74381) opened `/root/os-sanitizer/.git/HEAD' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7f8ebf33ab65  (/usr/lib64/libc.so.6+0x107b65)
+    #1 0x561266ec64b8  (/usr/bin/git+0x2c64b8)
+    #2 0x561266eca664  (/usr/bin/git+0x2ca664)
+    #3 0x561266f4acac  (/usr/bin/git+0x34acac)
+    #4 0x561266ec98ea  (/usr/bin/git+0x2c98ea)
+    #5 0x561266c24911  (/usr/bin/git+0x24911)
+    #6 0x561266c24e22  (/usr/bin/git+0x24e22)
+    ...
+    
+    #0 0x7f8ebf33751e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x561266eca664  (/usr/bin/git+0x2ca664)
+    #2 0x561266f4acac  (/usr/bin/git+0x34acac)
+    #3 0x561266ec98ea  (/usr/bin/git+0x2c98ea)
+    #4 0x561266c24911  (/usr/bin/git+0x24911)
+    #5 0x561266c24e22  (/usr/bin/git+0x24e22)
+    #6 0x561266c206f3  (/usr/bin/git+0x206f3)
+    ...
+[2026-11-10T20:01:34Z INFO  os_sanitizer] git (pid: 74381) opened `/root/os-sanitizer/.git/config' (a file) after accessing it via access, a known TOCTOU pattern; stacktrace:
+    #0 0x7f8ebf33ab65  (/usr/lib64/libc.so.6+0x107b65)
+    #1 0x7f8ebf2b823f  (/usr/lib64/libc.so.6+0x8523f)
+    #2 0x7f8ebf2b83c5  (/usr/lib64/libc.so.6+0x853c5)
+    #3 0x7f8ebf2ac699  (/usr/lib64/libc.so.6+0x79699)
+    #4 0x561266f21f61  (/usr/bin/git+0x321f61)
+    #5 0x561266f0ff13  (/usr/bin/git+0x30ff13)
+    #6 0x561266d961bb  (/usr/bin/git+0x1961bb)
+    ...
+    
+    #0 0x7f8ebf3367bb  (/usr/lib64/libc.so.6+0x1037bb)
+    #1 0x561266d98407  (/usr/bin/git+0x198407)
+    #2 0x561266d98d9d  (/usr/bin/git+0x198d9d)
+    #3 0x561266c24c5e  (/usr/bin/git+0x24c5e)
+    #4 0x561266c24e22  (/usr/bin/git+0x24e22)
+    #5 0x561266c206f3  (/usr/bin/git+0x206f3)
+    #6 0x7f8ebf25b14a  (/usr/lib64/libc.so.6+0x2814a)
+    ...
+[2026-11-10T20:01:34Z INFO  os_sanitizer] git (pid: 74381) opened `/root/os-sanitizer/.git/HEAD' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7f8ebf33ab65  (/usr/lib64/libc.so.6+0x107b65)
+    #1 0x561266e820f1  (/usr/bin/git+0x2820f1)
+    #2 0x561266e82533  (/usr/bin/git+0x282533)
+    #3 0x561266e7fdd0  (/usr/bin/git+0x27fdd0)
+    #4 0x561266e77031  (/usr/bin/git+0x277031)
+    #5 0x561266e30340  (/usr/bin/git+0x230340)
+    #6 0x561266e323a4  (/usr/bin/git+0x2323a4)
+    ...
+    
+    #0 0x7f8ebf33751e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x561266e82533  (/usr/bin/git+0x282533)
+    #2 0x561266e7fdd0  (/usr/bin/git+0x27fdd0)
+    #3 0x561266e77031  (/usr/bin/git+0x277031)
+    #4 0x561266e30340  (/usr/bin/git+0x230340)
+    #5 0x561266e323a4  (/usr/bin/git+0x2323a4)
+    #6 0x561266e2991c  (/usr/bin/git+0x22991c)
+    ...
+[2026-11-10T20:01:34Z INFO  os_sanitizer] git (pid: 74381) opened `/root/os-sanitizer/.git/HEAD' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7f8ebf33ab65  (/usr/lib64/libc.so.6+0x107b65)
+    #1 0x561266e820f1  (/usr/bin/git+0x2820f1)
+    #2 0x561266e82533  (/usr/bin/git+0x282533)
+    #3 0x561266e7fdd0  (/usr/bin/git+0x27fdd0)
+    #4 0x561266e77031  (/usr/bin/git+0x277031)
+    #5 0x561266e30340  (/usr/bin/git+0x230340)
+    #6 0x561266e323a4  (/usr/bin/git+0x2323a4)
+    ...
+    
+    #0 0x7f8ebf33751e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x561266e82533  (/usr/bin/git+0x282533)
+    #2 0x561266e7fdd0  (/usr/bin/git+0x27fdd0)
+    #3 0x561266e77031  (/usr/bin/git+0x277031)
+    #4 0x561266e30340  (/usr/bin/git+0x230340)
+    #5 0x561266e323a4  (/usr/bin/git+0x2323a4)
+    #6 0x561266ea8ac1  (/usr/bin/git+0x2a8ac1)
+    ...
+[2026-11-10T20:01:34Z INFO  os_sanitizer] git (pid: 74381) opened `/root/os-sanitizer/.git/objects/pack/pack-50b7baa401a0e809259026005df1361763d9ab0d.pack' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7f8ebf33ab65  (/usr/lib64/libc.so.6+0x107b65)
+    #1 0x561266f46e6f  (/usr/bin/git+0x346e6f)
+    #2 0x561266e414a5  (/usr/bin/git+0x2414a5)
+    #3 0x561266e422e0  (/usr/bin/git+0x2422e0)
+    #4 0x561266e44bc7  (/usr/bin/git+0x244bc7)
+    #5 0x561266e2c520  (/usr/bin/git+0x22c520)
+    #6 0x561266e2cc65  (/usr/bin/git+0x22cc65)
+    ...
+    
+    #0 0x7f8ebf33751e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x561266e3f1c7  (/usr/bin/git+0x23f1c7)
+    #2 0x561266e3f3d1  (/usr/bin/git+0x23f3d1)
+    #3 0x561266e47bab  (/usr/bin/git+0x247bab)
+    #4 0x561266e449a0  (/usr/bin/git+0x2449a0)
+    #5 0x561266e2c520  (/usr/bin/git+0x22c520)
+    #6 0x561266e2cc65  (/usr/bin/git+0x22cc65)
+    ...
+[2026-11-10T20:01:34Z INFO  os_sanitizer] git (pid: 74381) opened `/root/os-sanitizer/.git/info/exclude' (a file) after accessing it via access, a known TOCTOU pattern; stacktrace:
+    #0 0x7f8ebf33ab65  (/usr/lib64/libc.so.6+0x107b65)
+    #1 0x561266dc9a49  (/usr/bin/git+0x1c9a49)
+    #2 0x561266dc9f95  (/usr/bin/git+0x1c9f95)
+    #3 0x561266f0aaa8  (/usr/bin/git+0x30aaa8)
+    #4 0x561266dab2cd  (/usr/bin/git+0x1ab2cd)
+    #5 0x561266dacd96  (/usr/bin/git+0x1acd96)
+    #6 0x561266f0bd0d  (/usr/bin/git+0x30bd0d)
+    ...
+    
+    #0 0x7f8ebf3367bb  (/usr/lib64/libc.so.6+0x1037bb)
+    #1 0x561266dd59d7  (/usr/bin/git+0x1d59d7)
+    #2 0x561266f0aaa8  (/usr/bin/git+0x30aaa8)
+    #3 0x561266dab2cd  (/usr/bin/git+0x1ab2cd)
+    #4 0x561266dacd96  (/usr/bin/git+0x1acd96)
+    #5 0x561266f0bd0d  (/usr/bin/git+0x30bd0d)
+    #6 0x561266f13ae4  (/usr/bin/git+0x313ae4)
+    ...
+[2026-11-10T20:01:34Z INFO  os_sanitizer] git (pid: 74381) opened `/root/os-sanitizer/examples/.gitignore' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7f8ebf33ab65  (/usr/lib64/libc.so.6+0x107b65)
+    #1 0x561266dc994f  (/usr/bin/git+0x1c994f)
+    #2 0x561266dca7da  (/usr/bin/git+0x1ca7da)
+    #3 0x561266dcae48  (/usr/bin/git+0x1cae48)
+    #4 0x561266dcb0fc  (/usr/bin/git+0x1cb0fc)
+    #5 0x561266dcbb19  (/usr/bin/git+0x1cbb19)
+    #6 0x561266dcbebc  (/usr/bin/git+0x1cbebc)
+    ...
+    
+    #0 0x7f8ebf33751e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x561266e60c6a  (/usr/bin/git+0x260c6a)
+    #2 0x561266c5b55a  (/usr/bin/git+0x5b55a)
+    #3 0x561266c2479d  (/usr/bin/git+0x2479d)
+    #4 0x561266c24e22  (/usr/bin/git+0x24e22)
+    #5 0x561266c206f3  (/usr/bin/git+0x206f3)
+    #6 0x7f8ebf25b14a  (/usr/lib64/libc.so.6+0x2814a)
+    ...
+[2026-11-10T20:01:34Z INFO  os_sanitizer] git (pid: 74381) opened `/root/os-sanitizer/.git/HEAD' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7f8ebf33ab65  (/usr/lib64/libc.so.6+0x107b65)
+    #1 0x561266e820f1  (/usr/bin/git+0x2820f1)
+    #2 0x561266e82533  (/usr/bin/git+0x282533)
+    #3 0x561266e7fdd0  (/usr/bin/git+0x27fdd0)
+    #4 0x561266e77031  (/usr/bin/git+0x277031)
+    #5 0x561266e30340  (/usr/bin/git+0x230340)
+    #6 0x561266e323a4  (/usr/bin/git+0x2323a4)
+    ...
+    
+    #0 0x7f8ebf33751e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x561266e82533  (/usr/bin/git+0x282533)
+    #2 0x561266e7fdd0  (/usr/bin/git+0x27fdd0)
+    #3 0x561266e77031  (/usr/bin/git+0x277031)
+    #4 0x561266e30340  (/usr/bin/git+0x230340)
+    #5 0x561266e323a4  (/usr/bin/git+0x2323a4)
+    #6 0x561266e2991c  (/usr/bin/git+0x22991c)
+    ...
+[2026-11-10T20:01:34Z INFO  os_sanitizer] git (pid: 74382) opened `/root/os-sanitizer/.git/HEAD' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7f76277dab65  (/usr/lib64/libc.so.6+0x107b65)
+    #1 0x55e9cc83f4b8  (/usr/bin/git+0x2c64b8)
+    #2 0x55e9cc843664  (/usr/bin/git+0x2ca664)
+    #3 0x55e9cc8c3cac  (/usr/bin/git+0x34acac)
+    #4 0x55e9cc8428ea  (/usr/bin/git+0x2c98ea)
+    #5 0x55e9cc59d911  (/usr/bin/git+0x24911)
+    #6 0x55e9cc59de22  (/usr/bin/git+0x24e22)
+    ...
+    
+    #0 0x7f76277d751e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x55e9cc843664  (/usr/bin/git+0x2ca664)
+    #2 0x55e9cc8c3cac  (/usr/bin/git+0x34acac)
+    #3 0x55e9cc8428ea  (/usr/bin/git+0x2c98ea)
+    #4 0x55e9cc59d911  (/usr/bin/git+0x24911)
+    #5 0x55e9cc59de22  (/usr/bin/git+0x24e22)
+    #6 0x55e9cc5996f3  (/usr/bin/git+0x206f3)
+    ...
+[2026-11-10T20:01:34Z INFO  os_sanitizer] git (pid: 74382) opened `/root/os-sanitizer/.git/config' (a file) after accessing it via access, a known TOCTOU pattern; stacktrace:
+    #0 0x7f76277dab65  (/usr/lib64/libc.so.6+0x107b65)
+    #1 0x7f762775823f  (/usr/lib64/libc.so.6+0x8523f)
+    #2 0x7f76277583c5  (/usr/lib64/libc.so.6+0x853c5)
+    #3 0x7f762774c699  (/usr/lib64/libc.so.6+0x79699)
+    #4 0x55e9cc89af61  (/usr/bin/git+0x321f61)
+    #5 0x55e9cc888f13  (/usr/bin/git+0x30ff13)
+    #6 0x55e9cc70f1bb  (/usr/bin/git+0x1961bb)
+    ...
+    
+    #0 0x7f76277d67bb  (/usr/lib64/libc.so.6+0x1037bb)
+    #1 0x55e9cc711407  (/usr/bin/git+0x198407)
+    #2 0x55e9cc711d9d  (/usr/bin/git+0x198d9d)
+    #3 0x55e9cc59dc5e  (/usr/bin/git+0x24c5e)
+    #4 0x55e9cc59de22  (/usr/bin/git+0x24e22)
+    #5 0x55e9cc5996f3  (/usr/bin/git+0x206f3)
+    #6 0x7f76276fb14a  (/usr/lib64/libc.so.6+0x2814a)
+    ...
+[2026-11-10T20:01:34Z INFO  os_sanitizer] git (pid: 74382) opened `/root/os-sanitizer/.git/refs/heads/main' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7f76277dab65  (/usr/lib64/libc.so.6+0x107b65)
+    #1 0x55e9cc7fb0f1  (/usr/bin/git+0x2820f1)
+    #2 0x55e9cc7fb533  (/usr/bin/git+0x282533)
+    #3 0x55e9cc7f8dd0  (/usr/bin/git+0x27fdd0)
+    #4 0x55e9cc7f8f9b  (/usr/bin/git+0x27ff9b)
+    #5 0x55e9cc7faf37  (/usr/bin/git+0x281f37)
+    #6 0x55e9cc808a6a  (/usr/bin/git+0x28fa6a)
+    ...
+    
+    #0 0x7f76277d751e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x55e9cc7fb533  (/usr/bin/git+0x282533)
+    #2 0x55e9cc7f8dd0  (/usr/bin/git+0x27fdd0)
+    #3 0x55e9cc7f8f9b  (/usr/bin/git+0x27ff9b)
+    #4 0x55e9cc7faf37  (/usr/bin/git+0x281f37)
+    #5 0x55e9cc808a6a  (/usr/bin/git+0x28fa6a)
+    #6 0x55e9cc809299  (/usr/bin/git+0x290299)
+    ...
+[2026-11-10T20:01:34Z INFO  os_sanitizer] git (pid: 74382) opened `/root/os-sanitizer/.git/refs/remotes/origin/HEAD' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7f76277dab65  (/usr/lib64/libc.so.6+0x107b65)
+    #1 0x55e9cc7fb0f1  (/usr/bin/git+0x2820f1)
+    #2 0x55e9cc7fb533  (/usr/bin/git+0x282533)
+    #3 0x55e9cc7f8dd0  (/usr/bin/git+0x27fdd0)
+    #4 0x55e9cc7f8f9b  (/usr/bin/git+0x27ff9b)
+    #5 0x55e9cc7faf37  (/usr/bin/git+0x281f37)
+    #6 0x55e9cc808a6a  (/usr/bin/git+0x28fa6a)
+    ...
+    
+    #0 0x7f76277d751e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x55e9cc7fb533  (/usr/bin/git+0x282533)
+    #2 0x55e9cc7f8dd0  (/usr/bin/git+0x27fdd0)
+    #3 0x55e9cc7f8f9b  (/usr/bin/git+0x27ff9b)
+    #4 0x55e9cc7faf37  (/usr/bin/git+0x281f37)
+    #5 0x55e9cc808a6a  (/usr/bin/git+0x28fa6a)
+    #6 0x55e9cc8092bb  (/usr/bin/git+0x2902bb)
+    ...
+[2026-11-10T20:01:34Z INFO  os_sanitizer] git (pid: 74382) opened `/root/os-sanitizer/.git/objects/pack/pack-50b7baa401a0e809259026005df1361763d9ab0d.pack' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7f76277dab65  (/usr/lib64/libc.so.6+0x107b65)
+    #1 0x55e9cc8bfe6f  (/usr/bin/git+0x346e6f)
+    #2 0x55e9cc7ba4a5  (/usr/bin/git+0x2414a5)
+    #3 0x55e9cc7bb2e0  (/usr/bin/git+0x2422e0)
+    #4 0x55e9cc7bdbc7  (/usr/bin/git+0x244bc7)
+    #5 0x55e9cc7a5520  (/usr/bin/git+0x22c520)
+    #6 0x55e9cc7a5c65  (/usr/bin/git+0x22cc65)
+    ...
+    
+    #0 0x7f76277d751e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x55e9cc7b81c7  (/usr/bin/git+0x23f1c7)
+    #2 0x55e9cc7b83d1  (/usr/bin/git+0x23f3d1)
+    #3 0x55e9cc7c0bab  (/usr/bin/git+0x247bab)
+    #4 0x55e9cc7bd9a0  (/usr/bin/git+0x2449a0)
+    #5 0x55e9cc7a5520  (/usr/bin/git+0x22c520)
+    #6 0x55e9cc7a5c65  (/usr/bin/git+0x22cc65)
+    ...
+[2026-11-10T20:01:36Z INFO  os_sanitizer] Bun Pool 1 (pid: 2508, thread: 2513) opened `/tmp/claude-0/-root/6ca3eefe-8256-4be4-8d52-7bfd1ea4e42e/tasks/balvoyaom.output' (a file) after accessing it via statx, a known TOCTOU pattern; stacktrace:
+    #0 0x34b7c10  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x32b6c10)
+    #1 0x2e100ab  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c0f0ab)
+    #2 0x2e3ba75  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c3aa75)
+    #3 0x3480149  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327f149)
+    #4 0x347fca7  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327eca7)
+    #5 0x347f8a8  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327e8a8)
+    #6 0x7f86e3463907  (/usr/lib64/libc.so.6+0x8e907)
+    ...
+    
+    #0 0x7f86e34e88dd  (/usr/lib64/libc.so.6+0x1138dd)
+    #1 0x2e11a27  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c10a27)
+    #2 0x2e3971e  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c3871e)
+    #3 0x3480149  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327f149)
+    #4 0x347fca7  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327eca7)
+    #5 0x347f8a8  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327e8a8)
+    #6 0x7f86e3463907  (/usr/lib64/libc.so.6+0x8e907)
+    ...
+[2026-11-10T20:01:38Z INFO  os_sanitizer] Bun Pool 3 (pid: 2508, thread: 2516) opened `/tmp/claude-0/-root/6ca3eefe-8256-4be4-8d52-7bfd1ea4e42e/tasks/balvoyaom.output' (a file) after accessing it via statx, a known TOCTOU pattern; stacktrace:
+    #0 0x34b7c10  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x32b6c10)
+    #1 0x2e100ab  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c0f0ab)
+    #2 0x2e3ba75  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c3aa75)
+    #3 0x3480149  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327f149)
+    #4 0x347fca7  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327eca7)
+    #5 0x347f8a8  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327e8a8)
+    #6 0x7f86e3463907  (/usr/lib64/libc.so.6+0x8e907)
+    ...
+    
+    #0 0x7f86e34e88dd  (/usr/lib64/libc.so.6+0x1138dd)
+    #1 0x2e11a27  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c10a27)
+    #2 0x2e3971e  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c3871e)
+    #3 0x3480149  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327f149)
+    #4 0x347fca7  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327eca7)
+    #5 0x347f8a8  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327e8a8)
+    #6 0x7f86e3463907  (/usr/lib64/libc.so.6+0x8e907)
+    ...
+[2026-11-10T20:01:39Z INFO  os_sanitizer] Bun Pool 1 (pid: 2508, thread: 2513) opened `/tmp/claude-0/-root/6ca3eefe-8256-4be4-8d52-7bfd1ea4e42e/tasks/balvoyaom.output' (a file) after accessing it via statx, a known TOCTOU pattern; stacktrace:
+    #0 0x34b7c10  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x32b6c10)
+    #1 0x2e100ab  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c0f0ab)
+    #2 0x2e3ba75  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c3aa75)
+    #3 0x3480149  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327f149)
+    #4 0x347fca7  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327eca7)
+    #5 0x347f8a8  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327e8a8)
+    #6 0x7f86e3463907  (/usr/lib64/libc.so.6+0x8e907)
+    ...
+    
+    #0 0x7f86e34e88dd  (/usr/lib64/libc.so.6+0x1138dd)
+    #1 0x2e11a27  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c10a27)
+    #2 0x2e3971e  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c3871e)
+    #3 0x3480149  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327f149)
+    #4 0x347fca7  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327eca7)
+    #5 0x347f8a8  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327e8a8)
+    #6 0x7f86e3463907  (/usr/lib64/libc.so.6+0x8e907)
+    ...
+[2026-11-10T20:01:40Z INFO  os_sanitizer] Bun Pool 4 (pid: 2508, thread: 2517) opened `/tmp/claude-0/-root/6ca3eefe-8256-4be4-8d52-7bfd1ea4e42e/tasks/balvoyaom.output' (a file) after accessing it via statx, a known TOCTOU pattern; stacktrace:
+    #0 0x34b7c10  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x32b6c10)
+    #1 0x2e100ab  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c0f0ab)
+    #2 0x2e3ba75  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c3aa75)
+    #3 0x3480149  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327f149)
+    #4 0x347fca7  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327eca7)
+    #5 0x347f8a8  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327e8a8)
+    #6 0x7f86e3463907  (/usr/lib64/libc.so.6+0x8e907)
+    ...
+    
+    #0 0x7f86e34e88dd  (/usr/lib64/libc.so.6+0x1138dd)
+    #1 0x2e11a27  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c10a27)
+    #2 0x2e3971e  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c3871e)
+    #3 0x3480149  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327f149)
+    #4 0x347fca7  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327eca7)
+    #5 0x347f8a8  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327e8a8)
+    #6 0x7f86e3463907  (/usr/lib64/libc.so.6+0x8e907)
+    ...
+[2026-11-10T20:01:41Z INFO  os_sanitizer] Bun Pool 4 (pid: 2508, thread: 2517) opened `/tmp/claude-0/-root/6ca3eefe-8256-4be4-8d52-7bfd1ea4e42e/tasks/balvoyaom.output' (a file) after accessing it via statx, a known TOCTOU pattern; stacktrace:
+    #0 0x34b7c10  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x32b6c10)
+    #1 0x2e100ab  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c0f0ab)
+    #2 0x2e3ba75  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c3aa75)
+    #3 0x3480149  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327f149)
+    #4 0x347fca7  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327eca7)
+    #5 0x347f8a8  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327e8a8)
+    #6 0x7f86e3463907  (/usr/lib64/libc.so.6+0x8e907)
+    ...
+    
+    #0 0x7f86e34e88dd  (/usr/lib64/libc.so.6+0x1138dd)
+    #1 0x2e11a27  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c10a27)
+    #2 0x2e3971e  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c3871e)
+    #3 0x3480149  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327f149)
+    #4 0x347fca7  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327eca7)
+    #5 0x347f8a8  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327e8a8)
+    #6 0x7f86e3463907  (/usr/lib64/libc.so.6+0x8e907)
+    ...
+[2026-11-10T20:01:43Z INFO  os_sanitizer] Bun Pool 5 (pid: 2508, thread: 2518) opened `/tmp/claude-0/-root/6ca3eefe-8256-4be4-8d52-7bfd1ea4e42e/tasks/balvoyaom.output' (a file) after accessing it via statx, a known TOCTOU pattern; stacktrace:
+    #0 0x34b7c10  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x32b6c10)
+    #1 0x2e100ab  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c0f0ab)
+    #2 0x2e3ba75  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c3aa75)
+    #3 0x3480149  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327f149)
+    #4 0x347fca7  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327eca7)
+    #5 0x347f8a8  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327e8a8)
+    #6 0x7f86e3463907  (/usr/lib64/libc.so.6+0x8e907)
+    ...
+    
+    #0 0x7f86e34e88dd  (/usr/lib64/libc.so.6+0x1138dd)
+    #1 0x2e11a27  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c10a27)
+    #2 0x2e3971e  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c3871e)
+    #3 0x3480149  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327f149)
+    #4 0x347fca7  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327eca7)
+    #5 0x347f8a8  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327e8a8)
+    #6 0x7f86e3463907  (/usr/lib64/libc.so.6+0x8e907)
+    ...
+[2026-11-10T20:01:44Z INFO  os_sanitizer] Bun Pool 4 (pid: 2508, thread: 2517) opened `/tmp/claude-0/-root/6ca3eefe-8256-4be4-8d52-7bfd1ea4e42e/tasks/balvoyaom.output' (a file) after accessing it via statx, a known TOCTOU pattern; stacktrace:
+    #0 0x34b7c10  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x32b6c10)
+    #1 0x2e100ab  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c0f0ab)
+    #2 0x2e3ba75  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c3aa75)
+    #3 0x3480149  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327f149)
+    #4 0x347fca7  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327eca7)
+    #5 0x347f8a8  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327e8a8)
+    #6 0x7f86e3463907  (/usr/lib64/libc.so.6+0x8e907)
+    ...
+    
+    #0 0x7f86e34e88dd  (/usr/lib64/libc.so.6+0x1138dd)
+    #1 0x2e11a27  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c10a27)
+    #2 0x2e3971e  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c3871e)
+    #3 0x3480149  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327f149)
+    #4 0x347fca7  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327eca7)
+    #5 0x347f8a8  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327e8a8)
+    #6 0x7f86e3463907  (/usr/lib64/libc.so.6+0x8e907)
+    ...
+[2026-11-10T20:01:45Z INFO  os_sanitizer] claude (pid: 74388) opened `/root/os-sanitizer/calibration/data/scenarios.log' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7efe8c46db65
+    #1 0x7efe8c3eb23f
+    #2 0x7efe8c3eb3c5
+    #3 0x7efe8c3df699
+    #4 0x8d5732f
+    #5 0xa00000000
+    #6 0x7a6974696e61732d
+    
+    #0 0x7efe8c47c968
+[2026-11-10T20:01:45Z INFO  os_sanitizer] cp (pid: 74394) opened `/tmp/claude-0/-root/6ca3eefe-8256-4be4-8d52-7bfd1ea4e42e/scratchpad/ex/01_access' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7f03c954ab65  (/usr/lib64/libc.so.6+0x107b65)
+    #1 0x561e3ff0cd58  (/usr/bin/cp+0x9d58)
+    #2 0x561e3ff0f8f0  (/usr/bin/cp+0xc8f0)
+    #3 0x561e3ff143c9  (/usr/bin/cp+0x113c9)
+    #4 0x561e3ff1c5d6  (/usr/bin/cp+0x195d6)
+    #5 0x561e3ff11c2a  (/usr/bin/cp+0xec2a)
+    #6 0x561e3ff08ae8  (/usr/bin/cp+0x5ae8)
+    ...
+    
+    #0 0x7f03c954751e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x561e3ff1c5d6  (/usr/bin/cp+0x195d6)
+    #2 0x561e3ff11c2a  (/usr/bin/cp+0xec2a)
+    #3 0x561e3ff08ae8  (/usr/bin/cp+0x5ae8)
+    #4 0x7f03c946b14a  (/usr/lib64/libc.so.6+0x2814a)
+    #5 0x7f03c946b20b  (/usr/lib64/libc.so.6+0x2820b)
+    #6 0x561e3ff08d75  (/usr/bin/cp+0x5d75)
+[2026-11-10T20:01:45Z INFO  os_sanitizer] cp (pid: 74394) opened `/var/tmp/ossan-scenarios/01_access' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7f03c954acd2  (/usr/lib64/libc.so.6+0x107cd2)
+    #1 0x561e3ff0e322  (/usr/bin/cp+0xb322)
+    #2 0x561e3ff0f98f  (/usr/bin/cp+0xc98f)
+    #3 0x561e3ff143c9  (/usr/bin/cp+0x113c9)
+    #4 0x561e3ff1c5d6  (/usr/bin/cp+0x195d6)
+    #5 0x561e3ff11c2a  (/usr/bin/cp+0xec2a)
+    #6 0x561e3ff08ae8  (/usr/bin/cp+0x5ae8)
+    ...
+    
+    #0 0x7f03c954751e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x561e3ff1c5d6  (/usr/bin/cp+0x195d6)
+    #2 0x561e3ff11c2a  (/usr/bin/cp+0xec2a)
+    #3 0x561e3ff08ae8  (/usr/bin/cp+0x5ae8)
+    #4 0x7f03c946b14a  (/usr/lib64/libc.so.6+0x2814a)
+    #5 0x7f03c946b20b  (/usr/lib64/libc.so.6+0x2820b)
+    #6 0x561e3ff08d75  (/usr/bin/cp+0x5d75)
+[2026-11-10T20:01:45Z INFO  os_sanitizer] cp (pid: 74394) opened `/tmp/claude-0/-root/6ca3eefe-8256-4be4-8d52-7bfd1ea4e42e/scratchpad/ex/13_interceptable_path' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7f03c954ab65
+    #1 0x561e3ff0cd58  (/usr/bin/cp+0x9d58)
+    #2 0x561e3ff0f8f0  (/usr/bin/cp+0xc8f0)
+    #3 0x561e3ff143c9  (/usr/bin/cp+0x113c9)
+    #4 0x561e3ff1c5d6  (/usr/bin/cp+0x195d6)
+    #5 0x561e3ff11c2a  (/usr/bin/cp+0xec2a)
+    #6 0x561e3ff08ae8  (/usr/bin/cp+0x5ae8)
+    ...
+    
+    #0 0x7f03c954751e
+    #1 0x561e3ff1c5d6  (/usr/bin/cp+0x195d6)
+    #2 0x561e3ff11c2a  (/usr/bin/cp+0xec2a)
+    #3 0x561e3ff08ae8  (/usr/bin/cp+0x5ae8)
+    #4 0x7f03c946b14a
+    #5 0x7f03c946b20b
+    #6 0x561e3ff08d75  (/usr/bin/cp+0x5d75)
+[2026-11-10T20:01:45Z INFO  os_sanitizer] chown (pid: 74396) opened `/etc/authselect/nsswitch.conf' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7f58359f12a4  (/usr/lib64/libc.so.6+0x1092a4)
+    #1 0x7f583596d2e5  (/usr/lib64/libc.so.6+0x852e5)
+    #2 0x7f583596d3c5  (/usr/lib64/libc.so.6+0x853c5)
+    #3 0x7f5835961699  (/usr/lib64/libc.so.6+0x79699)
+    #4 0x7f5835a2bcf1  (/usr/lib64/libc.so.6+0x143cf1)
+    #5 0x7f5835a2a39c  (/usr/lib64/libc.so.6+0x14239c)
+    #6 0x7f58359c513a  (/usr/lib64/libc.so.6+0xdd13a)
+    ...
+    
+    #0 0x7f58359ec51e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x7f5835a2bc16  (/usr/lib64/libc.so.6+0x143c16)
+    #2 0x7f5835a2a39c  (/usr/lib64/libc.so.6+0x14239c)
+    #3 0x7f58359c513a  (/usr/lib64/libc.so.6+0xdd13a)
+    #4 0x7f58359c4c48  (/usr/lib64/libc.so.6+0xdcc48)
+    #5 0x5633b67fba2c  (/usr/bin/chown+0x7a2c)
+    #6 0x5633b67fbb8b  (/usr/bin/chown+0x7b8b)
+    ...
+[2026-11-10T20:01:45Z INFO  os_sanitizer] chown (pid: 74398) opened `/etc/authselect/nsswitch.conf' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7fecb97332a4  (/usr/lib64/libc.so.6+0x1092a4)
+    #1 0x7fecb96af2e5  (/usr/lib64/libc.so.6+0x852e5)
+    #2 0x7fecb96af3c5  (/usr/lib64/libc.so.6+0x853c5)
+    #3 0x7fecb96a3699  (/usr/lib64/libc.so.6+0x79699)
+    #4 0x7fecb976dcf1  (/usr/lib64/libc.so.6+0x143cf1)
+    #5 0x7fecb976c39c  (/usr/lib64/libc.so.6+0x14239c)
+    #6 0x7fecb970713a  (/usr/lib64/libc.so.6+0xdd13a)
+    ...
+    
+    #0 0x7fecb972e51e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x7fecb976dc16  (/usr/lib64/libc.so.6+0x143c16)
+    #2 0x7fecb976c39c  (/usr/lib64/libc.so.6+0x14239c)
+    #3 0x7fecb970713a  (/usr/lib64/libc.so.6+0xdd13a)
+    #4 0x7fecb9706c48  (/usr/lib64/libc.so.6+0xdcc48)
+    #5 0x561b75d46a2c  (/usr/bin/chown+0x7a2c)
+    #6 0x561b75d46b8b  (/usr/bin/chown+0x7b8b)
+    ...
+[2026-11-10T20:01:45Z INFO  os_sanitizer] 01_access (pid: 74402) opened `/var/tmp/ossan-scenarios/A_root_rootdir/sensitive_information.txt' (a file) after accessing it via access, a known TOCTOU pattern; stacktrace:
+    #0 0x7fcda414eb65
+    #1 0x4011e6
+    #2 0x7fcda406f14a
+    #3 0x7fcda406f20b
+    #4 0x4010c5
+    
+    #0 0x7fcda414a7bb
+    #1 0x7fcda406f14a
+    #2 0x7fcda406f20b
+    #3 0x4010c5
+[2026-11-10T20:01:45Z INFO  os_sanitizer] 01_access (pid: 74404) opened `/var/tmp/ossan-scenarios/A_root_rootdir/sensitive_information.txt' (a file) after accessing it via access, a known TOCTOU pattern; stacktrace:
+    #0 0x7f0ea0753b65
+    #1 0x4011e6
+    #2 0x7f0ea067414a
+    #3 0x7f0ea067420b
+    #4 0x4010c5
+    
+    #0 0x7f0ea074f7bb
+    #1 0x7f0ea067414a
+    #2 0x7f0ea067420b
+    #3 0x4010c5
+[2026-11-10T20:01:45Z INFO  os_sanitizer] 01_access (pid: 74406) opened `/var/tmp/ossan-scenarios/A_root_rootdir/sensitive_information.txt' (a file) after accessing it via access, a known TOCTOU pattern; stacktrace:
+    #0 0x7fd971844b65
+    #1 0x4011e6
+    #2 0x7fd97176514a
+    #3 0x7fd97176520b
+    #4 0x4010c5
+    
+    #0 0x7fd9718407bb
+    #1 0x7fd97176514a
+    #2 0x7fd97176520b
+    #3 0x4010c5
+[2026-11-10T20:01:45Z INFO  os_sanitizer] chown (pid: 74408) opened `/etc/authselect/nsswitch.conf' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7f7249b5c2a4  (/usr/lib64/libc.so.6+0x1092a4)
+    #1 0x7f7249ad82e5  (/usr/lib64/libc.so.6+0x852e5)
+    #2 0x7f7249ad83c5  (/usr/lib64/libc.so.6+0x853c5)
+    #3 0x7f7249acc699  (/usr/lib64/libc.so.6+0x79699)
+    #4 0x7f7249b96cf1  (/usr/lib64/libc.so.6+0x143cf1)
+    #5 0x7f7249b9539c  (/usr/lib64/libc.so.6+0x14239c)
+    #6 0x7f7249b3013a  (/usr/lib64/libc.so.6+0xdd13a)
+    ...
+    
+    #0 0x7f7249b5751e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x7f7249b96c16  (/usr/lib64/libc.so.6+0x143c16)
+    #2 0x7f7249b9539c  (/usr/lib64/libc.so.6+0x14239c)
+    #3 0x7f7249b3013a  (/usr/lib64/libc.so.6+0xdd13a)
+    #4 0x7f7249b2fc48  (/usr/lib64/libc.so.6+0xdcc48)
+    #5 0x560c8bbe8a2c  (/usr/bin/chown+0x7a2c)
+    #6 0x560c8bbe8b8b  (/usr/bin/chown+0x7b8b)
+    ...
+[2026-11-10T20:01:45Z WARN  os_sanitizer] bash (pid: 74389), acting as root:root, attempted to access /var/tmp/ossan-scenarios/A_root_userdir/sensitive_information.txt (originally as /var/tmp/ossan-scenarios/A_root_userdir/sensitive_information.txt) with [] (0x0), which may be intercepted by uids [1001] and gids []; stacktrace:
+    #0 0x7fe3120e2b65  (/usr/lib64/libc.so.6+0x107b65)
+    #1 0x555c1fe6193e  (/usr/bin/bash+0x11693e)
+    #2 0x555c1fdf28ac  (/usr/bin/bash+0xa78ac)
+    #3 0x555c1fda1eeb  (/usr/bin/bash+0x56eeb)
+    #4 0x555c1fd95c04  (/usr/bin/bash+0x4ac04)
+    #5 0x555c1fd97ece  (/usr/bin/bash+0x4cece)
+    #6 0x555c1fd9717d  (/usr/bin/bash+0x4c17d)
+    ...
+[2026-11-10T20:01:45Z INFO  os_sanitizer] chown (pid: 74410) opened `/etc/authselect/nsswitch.conf' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7f7438cdf2a4  (/usr/lib64/libc.so.6+0x1092a4)
+    #1 0x7f7438c5b2e5  (/usr/lib64/libc.so.6+0x852e5)
+    #2 0x7f7438c5b3c5  (/usr/lib64/libc.so.6+0x853c5)
+    #3 0x7f7438c4f699  (/usr/lib64/libc.so.6+0x79699)
+    #4 0x7f7438d19cf1  (/usr/lib64/libc.so.6+0x143cf1)
+    #5 0x7f7438d1839c  (/usr/lib64/libc.so.6+0x14239c)
+    #6 0x7f7438cb313a  (/usr/lib64/libc.so.6+0xdd13a)
+    ...
+    
+    #0 0x7f7438cda51e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x7f7438d19c16  (/usr/lib64/libc.so.6+0x143c16)
+    #2 0x7f7438d1839c  (/usr/lib64/libc.so.6+0x14239c)
+    #3 0x7f7438cb313a  (/usr/lib64/libc.so.6+0xdd13a)
+    #4 0x7f7438cb2c48  (/usr/lib64/libc.so.6+0xdcc48)
+    #5 0x55b8cb9c2a2c  (/usr/bin/chown+0x7a2c)
+    #6 0x55b8cb9c2b8b  (/usr/bin/chown+0x7b8b)
+    ...
+[2026-11-10T20:01:45Z WARN  os_sanitizer] 01_access (pid: 74414), acting as root:root, attempted to access /var/tmp/ossan-scenarios/A_root_userdir/sensitive_information.txt (originally as sensitive_information.txt) with ["MAY_READ"] (0x4), which may be intercepted by uids [1001] and gids []; stacktrace:
+    #0 0x7f7346562b65
+    #1 0x4011e6
+    #2 0x7f734648314a
+    #3 0x7f734648320b
+    #4 0x4010c5
+[2026-11-10T20:01:45Z WARN  os_sanitizer] 01_access (pid: 74416), acting as root:root, attempted to access /var/tmp/ossan-scenarios/A_root_userdir/sensitive_information.txt (originally as sensitive_information.txt) with ["MAY_READ"] (0x4), which may be intercepted by uids [1001] and gids []; stacktrace:
+    #0 0x7f33a19bab65
+    #1 0x4011e6
+    #2 0x7f33a18db14a
+    #3 0x7f33a18db20b
+    #4 0x4010c5
+[2026-11-10T20:01:45Z WARN  os_sanitizer] 01_access (pid: 74418), acting as root:root, attempted to access /var/tmp/ossan-scenarios/A_root_userdir/sensitive_information.txt (originally as sensitive_information.txt) with ["MAY_READ"] (0x4), which may be intercepted by uids [1001] and gids []; stacktrace:
+    #0 0x7f3fa7dfeb65
+    #1 0x4011e6
+    #2 0x7f3fa7d1f14a
+    #3 0x7f3fa7d1f20b
+    #4 0x4010c5
+[2026-11-10T20:01:45Z INFO  os_sanitizer] chown (pid: 74420) opened `/etc/authselect/nsswitch.conf' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7fdd57b102a4  (/usr/lib64/libc.so.6+0x1092a4)
+    #1 0x7fdd57a8c2e5  (/usr/lib64/libc.so.6+0x852e5)
+    #2 0x7fdd57a8c3c5  (/usr/lib64/libc.so.6+0x853c5)
+    #3 0x7fdd57a80699  (/usr/lib64/libc.so.6+0x79699)
+    #4 0x7fdd57b4acf1  (/usr/lib64/libc.so.6+0x143cf1)
+    #5 0x7fdd57b4939c  (/usr/lib64/libc.so.6+0x14239c)
+    #6 0x7fdd57ae413a  (/usr/lib64/libc.so.6+0xdd13a)
+    ...
+    
+    #0 0x7fdd57b0b51e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x7fdd57b4ac16  (/usr/lib64/libc.so.6+0x143c16)
+    #2 0x7fdd57b4939c  (/usr/lib64/libc.so.6+0x14239c)
+    #3 0x7fdd57ae413a  (/usr/lib64/libc.so.6+0xdd13a)
+    #4 0x7fdd57ae3c48  (/usr/lib64/libc.so.6+0xdcc48)
+    #5 0x55a098ddba2c  (/usr/bin/chown+0x7a2c)
+    #6 0x55a098ddbb8b  (/usr/bin/chown+0x7b8b)
+    ...
+[2026-11-10T20:01:45Z WARN  os_sanitizer] bash (pid: 74389), acting as root:root, attempted to access /var/tmp/ossan-scenarios/A_user_userdir/sensitive_information.txt (originally as /var/tmp/ossan-scenarios/A_user_userdir/sensitive_information.txt) with [] (0x0), which may be intercepted by uids [1001] and gids []; stacktrace:
+    #0 0x7fe3120e2b65  (/usr/lib64/libc.so.6+0x107b65)
+    #1 0x555c1fe6193e  (/usr/bin/bash+0x11693e)
+    #2 0x555c1fdf28ac  (/usr/bin/bash+0xa78ac)
+    #3 0x555c1fda1eeb  (/usr/bin/bash+0x56eeb)
+    #4 0x555c1fd95c04  (/usr/bin/bash+0x4ac04)
+    #5 0x555c1fd97ece  (/usr/bin/bash+0x4cece)
+    #6 0x555c1fd9717d  (/usr/bin/bash+0x4c17d)
+    ...
+[2026-11-10T20:01:45Z INFO  os_sanitizer] chown (pid: 74422) opened `/etc/authselect/nsswitch.conf' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7ffa22f0c2a4  (/usr/lib64/libc.so.6+0x1092a4)
+    #1 0x7ffa22e882e5  (/usr/lib64/libc.so.6+0x852e5)
+    #2 0x7ffa22e883c5  (/usr/lib64/libc.so.6+0x853c5)
+    #3 0x7ffa22e7c699  (/usr/lib64/libc.so.6+0x79699)
+    #4 0x7ffa22f46cf1  (/usr/lib64/libc.so.6+0x143cf1)
+    #5 0x7ffa22f4539c  (/usr/lib64/libc.so.6+0x14239c)
+    #6 0x7ffa22ee013a  (/usr/lib64/libc.so.6+0xdd13a)
+    ...
+    
+    #0 0x7ffa22f0751e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x7ffa22f46c16  (/usr/lib64/libc.so.6+0x143c16)
+    #2 0x7ffa22f4539c  (/usr/lib64/libc.so.6+0x14239c)
+    #3 0x7ffa22ee013a  (/usr/lib64/libc.so.6+0xdd13a)
+    #4 0x7ffa22edfc48  (/usr/lib64/libc.so.6+0xdcc48)
+    #5 0x560621b1ea2c  (/usr/bin/chown+0x7a2c)
+    #6 0x560621b1eb8b  (/usr/bin/chown+0x7b8b)
+    ...
+[2026-11-10T20:01:45Z INFO  os_sanitizer] setpriv (pid: 74426) opened `/etc/authselect/nsswitch.conf' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7fe01f61e2a4  (/usr/lib64/libc.so.6+0x1092a4)
+    #1 0x7fe01f59a2e5  (/usr/lib64/libc.so.6+0x852e5)
+    #2 0x7fe01f59a3c5  (/usr/lib64/libc.so.6+0x853c5)
+    #3 0x7fe01f58e699  (/usr/lib64/libc.so.6+0x79699)
+    #4 0x7fe01f658cf1  (/usr/lib64/libc.so.6+0x143cf1)
+    #5 0x7fe01f65739c  (/usr/lib64/libc.so.6+0x14239c)
+    #6 0x7fe01f5f213a  (/usr/lib64/libc.so.6+0xdd13a)
+    ...
+    
+    #0 0x7fe01f61951e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x7fe01f658c16  (/usr/lib64/libc.so.6+0x143c16)
+    #2 0x7fe01f65739c  (/usr/lib64/libc.so.6+0x14239c)
+    #3 0x7fe01f5f213a  (/usr/lib64/libc.so.6+0xdd13a)
+    #4 0x7fe01f5f1c48  (/usr/lib64/libc.so.6+0xdcc48)
+    #5 0x55bc3e07d2bb  (/usr/bin/setpriv+0x62bb)
+    #6 0x55bc3e07a129  (/usr/bin/setpriv+0x3129)
+    ...
+[2026-11-10T20:01:45Z INFO  os_sanitizer] 01_access (pid: 74426) opened `/var/tmp/ossan-scenarios/A_user_userdir/sensitive_information.txt' (a file) after accessing it via access, a known TOCTOU pattern; stacktrace:
+    #0 0x7fb320364b65
+    #1 0x4011e6
+    #2 0x7fb32028514a
+    #3 0x7fb32028520b
+    #4 0x4010c5
+    
+    #0 0x7fb3203607bb
+    #1 0x7fb32028514a
+    #2 0x7fb32028520b
+    #3 0x4010c5
+[2026-11-10T20:01:45Z INFO  os_sanitizer] setpriv (pid: 74428) opened `/etc/authselect/nsswitch.conf' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7f9adbe522a4  (/usr/lib64/libc.so.6+0x1092a4)
+    #1 0x7f9adbdce2e5  (/usr/lib64/libc.so.6+0x852e5)
+    #2 0x7f9adbdce3c5  (/usr/lib64/libc.so.6+0x853c5)
+    #3 0x7f9adbdc2699  (/usr/lib64/libc.so.6+0x79699)
+    #4 0x7f9adbe8ccf1  (/usr/lib64/libc.so.6+0x143cf1)
+    #5 0x7f9adbe8b39c  (/usr/lib64/libc.so.6+0x14239c)
+    #6 0x7f9adbe2613a  (/usr/lib64/libc.so.6+0xdd13a)
+    ...
+    
+    #0 0x7f9adbe4d51e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x7f9adbe8cc16  (/usr/lib64/libc.so.6+0x143c16)
+    #2 0x7f9adbe8b39c  (/usr/lib64/libc.so.6+0x14239c)
+    #3 0x7f9adbe2613a  (/usr/lib64/libc.so.6+0xdd13a)
+    #4 0x7f9adbe25c48  (/usr/lib64/libc.so.6+0xdcc48)
+    #5 0x55ec8ddd42bb  (/usr/bin/setpriv+0x62bb)
+    #6 0x55ec8ddd1129  (/usr/bin/setpriv+0x3129)
+    ...
+[2026-11-10T20:01:45Z INFO  os_sanitizer] 01_access (pid: 74428) opened `/var/tmp/ossan-scenarios/A_user_userdir/sensitive_information.txt' (a file) after accessing it via access, a known TOCTOU pattern; stacktrace:
+    #0 0x7f0b34d5db65
+    #1 0x4011e6
+    #2 0x7f0b34c7e14a
+    #3 0x7f0b34c7e20b
+    #4 0x4010c5
+    
+    #0 0x7f0b34d597bb
+    #1 0x7f0b34c7e14a
+    #2 0x7f0b34c7e20b
+    #3 0x4010c5
+[2026-11-10T20:01:45Z INFO  os_sanitizer] setpriv (pid: 74430) opened `/etc/authselect/nsswitch.conf' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7f7127fdd2a4  (/usr/lib64/libc.so.6+0x1092a4)
+    #1 0x7f7127f592e5  (/usr/lib64/libc.so.6+0x852e5)
+    #2 0x7f7127f593c5  (/usr/lib64/libc.so.6+0x853c5)
+    #3 0x7f7127f4d699  (/usr/lib64/libc.so.6+0x79699)
+    #4 0x7f7128017cf1  (/usr/lib64/libc.so.6+0x143cf1)
+    #5 0x7f712801639c  (/usr/lib64/libc.so.6+0x14239c)
+    #6 0x7f7127fb113a  (/usr/lib64/libc.so.6+0xdd13a)
+    ...
+    
+    #0 0x7f7127fd851e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x7f7128017c16  (/usr/lib64/libc.so.6+0x143c16)
+    #2 0x7f712801639c  (/usr/lib64/libc.so.6+0x14239c)
+    #3 0x7f7127fb113a  (/usr/lib64/libc.so.6+0xdd13a)
+    #4 0x7f7127fb0c48  (/usr/lib64/libc.so.6+0xdcc48)
+    #5 0x5647c61232bb  (/usr/bin/setpriv+0x62bb)
+    #6 0x5647c6120129  (/usr/bin/setpriv+0x3129)
+    ...
+[2026-11-10T20:01:45Z INFO  os_sanitizer] 01_access (pid: 74430) opened `/var/tmp/ossan-scenarios/A_user_userdir/sensitive_information.txt' (a file) after accessing it via access, a known TOCTOU pattern; stacktrace:
+    #0 0x7f1774651b65
+    #1 0x4011e6
+    #2 0x7f177457214a
+    #3 0x7f177457220b
+    #4 0x4010c5
+    
+    #0 0x7f177464d7bb
+    #1 0x7f177457214a
+    #2 0x7f177457220b
+    #3 0x4010c5
+[2026-11-10T20:01:45Z INFO  os_sanitizer] chown (pid: 74432) opened `/etc/authselect/nsswitch.conf' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7efca8c5e2a4  (/usr/lib64/libc.so.6+0x1092a4)
+    #1 0x7efca8bda2e5  (/usr/lib64/libc.so.6+0x852e5)
+    #2 0x7efca8bda3c5  (/usr/lib64/libc.so.6+0x853c5)
+    #3 0x7efca8bce699  (/usr/lib64/libc.so.6+0x79699)
+    #4 0x7efca8c98cf1  (/usr/lib64/libc.so.6+0x143cf1)
+    #5 0x7efca8c9739c  (/usr/lib64/libc.so.6+0x14239c)
+    #6 0x7efca8c3213a  (/usr/lib64/libc.so.6+0xdd13a)
+    ...
+    
+    #0 0x7efca8c5951e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x7efca8c98c16  (/usr/lib64/libc.so.6+0x143c16)
+    #2 0x7efca8c9739c  (/usr/lib64/libc.so.6+0x14239c)
+    #3 0x7efca8c3213a  (/usr/lib64/libc.so.6+0xdd13a)
+    #4 0x7efca8c31c48  (/usr/lib64/libc.so.6+0xdcc48)
+    #5 0x561432138a2c  (/usr/bin/chown+0x7a2c)
+    #6 0x561432138b8b  (/usr/bin/chown+0x7b8b)
+    ...
+[2026-11-10T20:01:45Z INFO  os_sanitizer] chown (pid: 74434) opened `/etc/authselect/nsswitch.conf' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7f01af53c2a4  (/usr/lib64/libc.so.6+0x1092a4)
+    #1 0x7f01af4b82e5  (/usr/lib64/libc.so.6+0x852e5)
+    #2 0x7f01af4b83c5  (/usr/lib64/libc.so.6+0x853c5)
+    #3 0x7f01af4ac699  (/usr/lib64/libc.so.6+0x79699)
+    #4 0x7f01af576cf1  (/usr/lib64/libc.so.6+0x143cf1)
+    #5 0x7f01af57539c  (/usr/lib64/libc.so.6+0x14239c)
+    #6 0x7f01af51013a  (/usr/lib64/libc.so.6+0xdd13a)
+    ...
+    
+    #0 0x7f01af53751e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x7f01af576c16  (/usr/lib64/libc.so.6+0x143c16)
+    #2 0x7f01af57539c  (/usr/lib64/libc.so.6+0x14239c)
+    #3 0x7f01af51013a  (/usr/lib64/libc.so.6+0xdd13a)
+    #4 0x7f01af50fc48  (/usr/lib64/libc.so.6+0xdcc48)
+    #5 0x55f6b4e26a2c  (/usr/bin/chown+0x7a2c)
+    #6 0x55f6b4e26b8b  (/usr/bin/chown+0x7b8b)
+    ...
+[2026-11-10T20:01:45Z INFO  os_sanitizer] 01_access (pid: 74438) opened `/var/tmp/ossan-scenarios/A_root_sticky_rootfile/sensitive_information.txt' (a file) after accessing it via access, a known TOCTOU pattern; stacktrace:
+    #0 0x7f735cfb0b65
+    #1 0x4011e6
+    #2 0x7f735ced114a
+    #3 0x7f735ced120b
+    #4 0x4010c5
+    
+    #0 0x7f735cfac7bb
+    #1 0x7f735ced114a
+    #2 0x7f735ced120b
+    #3 0x4010c5
+[2026-11-10T20:01:45Z INFO  os_sanitizer] 01_access (pid: 74440) opened `/var/tmp/ossan-scenarios/A_root_sticky_rootfile/sensitive_information.txt' (a file) after accessing it via access, a known TOCTOU pattern; stacktrace:
+    #0 0x7fdc64d84b65
+    #1 0x4011e6
+    #2 0x7fdc64ca514a
+    #3 0x7fdc64ca520b
+    #4 0x4010c5
+    
+    #0 0x7fdc64d807bb
+    #1 0x7fdc64ca514a
+    #2 0x7fdc64ca520b
+    #3 0x4010c5
+[2026-11-10T20:01:45Z INFO  os_sanitizer] 01_access (pid: 74442) opened `/var/tmp/ossan-scenarios/A_root_sticky_rootfile/sensitive_information.txt' (a file) after accessing it via access, a known TOCTOU pattern; stacktrace:
+    #0 0x7fbc0928eb65
+    #1 0x4011e6
+    #2 0x7fbc091af14a
+    #3 0x7fbc091af20b
+    #4 0x4010c5
+    
+    #0 0x7fbc0928a7bb
+    #1 0x7fbc091af14a
+    #2 0x7fbc091af20b
+    #3 0x4010c5
+[2026-11-10T20:01:45Z INFO  os_sanitizer] chown (pid: 74444) opened `/etc/authselect/nsswitch.conf' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7fc110a272a4  (/usr/lib64/libc.so.6+0x1092a4)
+    #1 0x7fc1109a32e5  (/usr/lib64/libc.so.6+0x852e5)
+    #2 0x7fc1109a33c5  (/usr/lib64/libc.so.6+0x853c5)
+    #3 0x7fc110997699  (/usr/lib64/libc.so.6+0x79699)
+    #4 0x7fc110a61cf1  (/usr/lib64/libc.so.6+0x143cf1)
+    #5 0x7fc110a6039c  (/usr/lib64/libc.so.6+0x14239c)
+    #6 0x7fc1109fb13a  (/usr/lib64/libc.so.6+0xdd13a)
+    ...
+    
+    #0 0x7fc110a2251e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x7fc110a61c16  (/usr/lib64/libc.so.6+0x143c16)
+    #2 0x7fc110a6039c  (/usr/lib64/libc.so.6+0x14239c)
+    #3 0x7fc1109fb13a  (/usr/lib64/libc.so.6+0xdd13a)
+    #4 0x7fc1109fac48  (/usr/lib64/libc.so.6+0xdcc48)
+    #5 0x56428535fa2c  (/usr/bin/chown+0x7a2c)
+    #6 0x56428535fb8b  (/usr/bin/chown+0x7b8b)
+    ...
+[2026-11-10T20:01:45Z INFO  os_sanitizer] chown (pid: 74446) opened `/etc/authselect/nsswitch.conf' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7f9b952eb2a4  (/usr/lib64/libc.so.6+0x1092a4)
+    #1 0x7f9b952672e5  (/usr/lib64/libc.so.6+0x852e5)
+    #2 0x7f9b952673c5  (/usr/lib64/libc.so.6+0x853c5)
+    #3 0x7f9b9525b699  (/usr/lib64/libc.so.6+0x79699)
+    #4 0x7f9b95325cf1  (/usr/lib64/libc.so.6+0x143cf1)
+    #5 0x7f9b9532439c  (/usr/lib64/libc.so.6+0x14239c)
+    #6 0x7f9b952bf13a  (/usr/lib64/libc.so.6+0xdd13a)
+    ...
+    
+    #0 0x7f9b952e651e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x7f9b95325c16  (/usr/lib64/libc.so.6+0x143c16)
+    #2 0x7f9b9532439c  (/usr/lib64/libc.so.6+0x14239c)
+    #3 0x7f9b952bf13a  (/usr/lib64/libc.so.6+0xdd13a)
+    #4 0x7f9b952bec48  (/usr/lib64/libc.so.6+0xdcc48)
+    #5 0x55e518e44a2c  (/usr/bin/chown+0x7a2c)
+    #6 0x55e518e44b8b  (/usr/bin/chown+0x7b8b)
+    ...
+[2026-11-10T20:01:45Z WARN  os_sanitizer] 01_access (pid: 74450), acting as root:root, attempted to access /var/tmp/ossan-scenarios/A_root_sticky_userfile/sensitive_information.txt (originally as sensitive_information.txt) with ["MAY_READ"] (0x4), which may be intercepted by uids [1001] and gids []; stacktrace:
+    #0 0x7f237f989b65
+    #1 0x4011e6
+    #2 0x7f237f8aa14a
+    #3 0x7f237f8aa20b
+    #4 0x4010c5
+[2026-11-10T20:01:45Z WARN  os_sanitizer] 01_access (pid: 74452), acting as root:root, attempted to access /var/tmp/ossan-scenarios/A_root_sticky_userfile/sensitive_information.txt (originally as sensitive_information.txt) with ["MAY_READ"] (0x4), which may be intercepted by uids [1001] and gids []; stacktrace:
+    #0 0x7f85569abb65
+    #1 0x4011e6
+    #2 0x7f85568cc14a
+    #3 0x7f85568cc20b
+    #4 0x4010c5
+[2026-11-10T20:01:45Z INFO  os_sanitizer] Bun Pool 3 (pid: 2508, thread: 2516) opened `/tmp/claude-0/-root/6ca3eefe-8256-4be4-8d52-7bfd1ea4e42e/tasks/balvoyaom.output' (a file) after accessing it via statx, a known TOCTOU pattern; stacktrace:
+    #0 0x34b7c10  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x32b6c10)
+    #1 0x2e100ab  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c0f0ab)
+    #2 0x2e3ba75  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c3aa75)
+    #3 0x3480149  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327f149)
+    #4 0x347fca7  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327eca7)
+    #5 0x347f8a8  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327e8a8)
+    #6 0x7f86e3463907  (/usr/lib64/libc.so.6+0x8e907)
+    ...
+    
+    #0 0x7f86e34e88dd  (/usr/lib64/libc.so.6+0x1138dd)
+    #1 0x2e11a27  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c10a27)
+    #2 0x2e3971e  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c3871e)
+    #3 0x3480149  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327f149)
+    #4 0x347fca7  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327eca7)
+    #5 0x347f8a8  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327e8a8)
+    #6 0x7f86e3463907  (/usr/lib64/libc.so.6+0x8e907)
+    ...
+[2026-11-10T20:01:45Z WARN  os_sanitizer] 01_access (pid: 74454), acting as root:root, attempted to access /var/tmp/ossan-scenarios/A_root_sticky_userfile/sensitive_information.txt (originally as sensitive_information.txt) with ["MAY_READ"] (0x4), which may be intercepted by uids [1001] and gids []; stacktrace:
+    #0 0x7f7abb7eeb65
+    #1 0x4011e6
+    #2 0x7f7abb70f14a
+    #3 0x7f7abb70f20b
+    #4 0x4010c5
+[2026-11-10T20:01:45Z INFO  os_sanitizer] chown (pid: 74456) opened `/etc/authselect/nsswitch.conf' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7f19054512a4  (/usr/lib64/libc.so.6+0x1092a4)
+    #1 0x7f19053cd2e5  (/usr/lib64/libc.so.6+0x852e5)
+    #2 0x7f19053cd3c5  (/usr/lib64/libc.so.6+0x853c5)
+    #3 0x7f19053c1699  (/usr/lib64/libc.so.6+0x79699)
+    #4 0x7f190548bcf1  (/usr/lib64/libc.so.6+0x143cf1)
+    #5 0x7f190548a39c  (/usr/lib64/libc.so.6+0x14239c)
+    #6 0x7f190542513a  (/usr/lib64/libc.so.6+0xdd13a)
+    ...
+    
+    #0 0x7f190544c51e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x7f190548bc16  (/usr/lib64/libc.so.6+0x143c16)
+    #2 0x7f190548a39c  (/usr/lib64/libc.so.6+0x14239c)
+    #3 0x7f190542513a  (/usr/lib64/libc.so.6+0xdd13a)
+    #4 0x7f1905424c48  (/usr/lib64/libc.so.6+0xdcc48)
+    #5 0x560fb3beca2c  (/usr/bin/chown+0x7a2c)
+    #6 0x560fb3becb8b  (/usr/bin/chown+0x7b8b)
+    ...
+[2026-11-10T20:01:45Z INFO  os_sanitizer] chown (pid: 74459) opened `/etc/authselect/nsswitch.conf' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7fc6eeab12a4  (/usr/lib64/libc.so.6+0x1092a4)
+    #1 0x7fc6eea2d2e5  (/usr/lib64/libc.so.6+0x852e5)
+    #2 0x7fc6eea2d3c5  (/usr/lib64/libc.so.6+0x853c5)
+    #3 0x7fc6eea21699  (/usr/lib64/libc.so.6+0x79699)
+    #4 0x7fc6eeaebcf1  (/usr/lib64/libc.so.6+0x143cf1)
+    #5 0x7fc6eeaea39c  (/usr/lib64/libc.so.6+0x14239c)
+    #6 0x7fc6eea8513a  (/usr/lib64/libc.so.6+0xdd13a)
+    ...
+    
+    #0 0x7fc6eeaac51e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x7fc6eeaebc16  (/usr/lib64/libc.so.6+0x143c16)
+    #2 0x7fc6eeaea39c  (/usr/lib64/libc.so.6+0x14239c)
+    #3 0x7fc6eea8513a  (/usr/lib64/libc.so.6+0xdd13a)
+    #4 0x7fc6eea84c48  (/usr/lib64/libc.so.6+0xdcc48)
+    #5 0x5556e4b14a2c  (/usr/bin/chown+0x7a2c)
+    #6 0x5556e4b14b8b  (/usr/bin/chown+0x7b8b)
+    ...
+[2026-11-10T20:01:45Z INFO  os_sanitizer] chown (pid: 74462) opened `/etc/authselect/nsswitch.conf' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7f53ba9152a4  (/usr/lib64/libc.so.6+0x1092a4)
+    #1 0x7f53ba8912e5  (/usr/lib64/libc.so.6+0x852e5)
+    #2 0x7f53ba8913c5  (/usr/lib64/libc.so.6+0x853c5)
+    #3 0x7f53ba885699  (/usr/lib64/libc.so.6+0x79699)
+    #4 0x7f53ba94fcf1  (/usr/lib64/libc.so.6+0x143cf1)
+    #5 0x7f53ba94e39c  (/usr/lib64/libc.so.6+0x14239c)
+    #6 0x7f53ba8e913a  (/usr/lib64/libc.so.6+0xdd13a)
+    ...
+    
+    #0 0x7f53ba91051e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x7f53ba94fc16  (/usr/lib64/libc.so.6+0x143c16)
+    #2 0x7f53ba94e39c  (/usr/lib64/libc.so.6+0x14239c)
+    #3 0x7f53ba8e913a  (/usr/lib64/libc.so.6+0xdd13a)
+    #4 0x7f53ba8e8c48  (/usr/lib64/libc.so.6+0xdcc48)
+    #5 0x55c7b119aa2c  (/usr/bin/chown+0x7a2c)
+    #6 0x55c7b119ab8b  (/usr/bin/chown+0x7b8b)
+    ...
+[2026-11-10T20:01:45Z WARN  os_sanitizer] bash (pid: 74389), acting as root:root, attempted to access /var/tmp/ossan-scenarios/I_root_userdir/dir1/dir2/sensitive_information.txt (originally as /var/tmp/ossan-scenarios/I_root_userdir/dir1/dir2/sensitive_information.txt) with [] (0x0), which may be intercepted by uids [1001] and gids []; stacktrace:
+    #0 0x7fe3120e2b65  (/usr/lib64/libc.so.6+0x107b65)
+    #1 0x555c1fe6193e  (/usr/bin/bash+0x11693e)
+    #2 0x555c1fdf28ac  (/usr/bin/bash+0xa78ac)
+    #3 0x555c1fda1eeb  (/usr/bin/bash+0x56eeb)
+    #4 0x555c1fd95c04  (/usr/bin/bash+0x4ac04)
+    #5 0x555c1fd97ece  (/usr/bin/bash+0x4cece)
+    #6 0x555c1fd9717d  (/usr/bin/bash+0x4c17d)
+    ...
+[2026-11-10T20:01:45Z INFO  os_sanitizer] chown (pid: 74464) opened `/etc/authselect/nsswitch.conf' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7f367ec942a4  (/usr/lib64/libc.so.6+0x1092a4)
+    #1 0x7f367ec102e5  (/usr/lib64/libc.so.6+0x852e5)
+    #2 0x7f367ec103c5  (/usr/lib64/libc.so.6+0x853c5)
+    #3 0x7f367ec04699  (/usr/lib64/libc.so.6+0x79699)
+    #4 0x7f367eccecf1  (/usr/lib64/libc.so.6+0x143cf1)
+    #5 0x7f367eccd39c  (/usr/lib64/libc.so.6+0x14239c)
+    #6 0x7f367ec6813a  (/usr/lib64/libc.so.6+0xdd13a)
+    ...
+    
+    #0 0x7f367ec8f51e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x7f367eccec16  (/usr/lib64/libc.so.6+0x143c16)
+    #2 0x7f367eccd39c  (/usr/lib64/libc.so.6+0x14239c)
+    #3 0x7f367ec6813a  (/usr/lib64/libc.so.6+0xdd13a)
+    #4 0x7f367ec67c48  (/usr/lib64/libc.so.6+0xdcc48)
+    #5 0x55f664d7ba2c  (/usr/bin/chown+0x7a2c)
+    #6 0x55f664d7bb8b  (/usr/bin/chown+0x7b8b)
+    ...
+[2026-11-10T20:01:45Z WARN  os_sanitizer] 13_interceptabl (pid: 74468), acting as root:root, attempted to access /var/tmp/ossan-scenarios/I_root_userdir/dir1/dir2/sensitive_information.txt (originally as dir1/dir2/sensitive_information.txt) with ["MAY_READ"] (0x4), which may be intercepted by uids [1001] and gids []; stacktrace:
+    #0 0x7f10029b7b65
+    #1 0x4011b0
+    #2 0x7f10028d814a
+    #3 0x7f10028d820b
+    #4 0x4010b5
+[2026-11-10T20:01:45Z WARN  os_sanitizer] 13_interceptabl (pid: 74470), acting as root:root, attempted to access /var/tmp/ossan-scenarios/I_root_userdir/dir1/dir2/sensitive_information.txt (originally as dir1/dir2/sensitive_information.txt) with ["MAY_READ"] (0x4), which may be intercepted by uids [1001] and gids []; stacktrace:
+    #0 0x7f09d3ea3b65
+    #1 0x4011b0
+    #2 0x7f09d3dc414a
+    #3 0x7f09d3dc420b
+    #4 0x4010b5
+[2026-11-10T20:01:45Z WARN  os_sanitizer] 13_interceptabl (pid: 74472), acting as root:root, attempted to access /var/tmp/ossan-scenarios/I_root_userdir/dir1/dir2/sensitive_information.txt (originally as dir1/dir2/sensitive_information.txt) with ["MAY_READ"] (0x4), which may be intercepted by uids [1001] and gids []; stacktrace:
+    #0 0x7f1495565b65
+    #1 0x4011b0
+    #2 0x7f149548614a
+    #3 0x7f149548620b
+    #4 0x4010b5
+[2026-11-10T20:01:45Z INFO  os_sanitizer] chown (pid: 74474) opened `/etc/authselect/nsswitch.conf' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7f657907b2a4  (/usr/lib64/libc.so.6+0x1092a4)
+    #1 0x7f6578ff72e5  (/usr/lib64/libc.so.6+0x852e5)
+    #2 0x7f6578ff73c5  (/usr/lib64/libc.so.6+0x853c5)
+    #3 0x7f6578feb699  (/usr/lib64/libc.so.6+0x79699)
+    #4 0x7f65790b5cf1  (/usr/lib64/libc.so.6+0x143cf1)
+    #5 0x7f65790b439c  (/usr/lib64/libc.so.6+0x14239c)
+    #6 0x7f657904f13a  (/usr/lib64/libc.so.6+0xdd13a)
+    ...
+    
+    #0 0x7f657907651e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x7f65790b5c16  (/usr/lib64/libc.so.6+0x143c16)
+    #2 0x7f65790b439c  (/usr/lib64/libc.so.6+0x14239c)
+    #3 0x7f657904f13a  (/usr/lib64/libc.so.6+0xdd13a)
+    #4 0x7f657904ec48  (/usr/lib64/libc.so.6+0xdcc48)
+    #5 0x5555af657a2c  (/usr/bin/chown+0x7a2c)
+    #6 0x5555af657b8b  (/usr/bin/chown+0x7b8b)
+    ...
+[2026-11-10T20:01:45Z INFO  os_sanitizer] chown (pid: 74477) opened `/etc/authselect/nsswitch.conf' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7f45908d42a4  (/usr/lib64/libc.so.6+0x1092a4)
+    #1 0x7f45908502e5  (/usr/lib64/libc.so.6+0x852e5)
+    #2 0x7f45908503c5  (/usr/lib64/libc.so.6+0x853c5)
+    #3 0x7f4590844699  (/usr/lib64/libc.so.6+0x79699)
+    #4 0x7f459090ecf1  (/usr/lib64/libc.so.6+0x143cf1)
+    #5 0x7f459090d39c  (/usr/lib64/libc.so.6+0x14239c)
+    #6 0x7f45908a813a  (/usr/lib64/libc.so.6+0xdd13a)
+    ...
+    
+    #0 0x7f45908cf51e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x7f459090ec16  (/usr/lib64/libc.so.6+0x143c16)
+    #2 0x7f459090d39c  (/usr/lib64/libc.so.6+0x14239c)
+    #3 0x7f45908a813a  (/usr/lib64/libc.so.6+0xdd13a)
+    #4 0x7f45908a7c48  (/usr/lib64/libc.so.6+0xdcc48)
+    #5 0x5604d85bea2c  (/usr/bin/chown+0x7a2c)
+    #6 0x5604d85beb8b  (/usr/bin/chown+0x7b8b)
+    ...
+[2026-11-10T20:01:45Z INFO  os_sanitizer] chown (pid: 74480) opened `/etc/authselect/nsswitch.conf' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7f47edff22a4  (/usr/lib64/libc.so.6+0x1092a4)
+    #1 0x7f47edf6e2e5  (/usr/lib64/libc.so.6+0x852e5)
+    #2 0x7f47edf6e3c5  (/usr/lib64/libc.so.6+0x853c5)
+    #3 0x7f47edf62699  (/usr/lib64/libc.so.6+0x79699)
+    #4 0x7f47ee02ccf1  (/usr/lib64/libc.so.6+0x143cf1)
+    #5 0x7f47ee02b39c  (/usr/lib64/libc.so.6+0x14239c)
+    #6 0x7f47edfc613a  (/usr/lib64/libc.so.6+0xdd13a)
+    ...
+    
+    #0 0x7f47edfed51e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x7f47ee02cc16  (/usr/lib64/libc.so.6+0x143c16)
+    #2 0x7f47ee02b39c  (/usr/lib64/libc.so.6+0x14239c)
+    #3 0x7f47edfc613a  (/usr/lib64/libc.so.6+0xdd13a)
+    #4 0x7f47edfc5c48  (/usr/lib64/libc.so.6+0xdcc48)
+    #5 0x559fc2b68a2c  (/usr/bin/chown+0x7a2c)
+    #6 0x559fc2b68b8b  (/usr/bin/chown+0x7b8b)
+    ...
+[2026-11-10T20:01:45Z WARN  os_sanitizer] bash (pid: 74389), acting as root:root, attempted to access /var/tmp/ossan-scenarios/I_root_worldw/dir1/dir2/sensitive_information.txt (originally as /var/tmp/ossan-scenarios/I_root_worldw/dir1/dir2/sensitive_information.txt) with [] (0x0), which may be intercepted by uids [] and gids [], as well as everyone else; stacktrace:
+    #0 0x7fe3120e2b65  (/usr/lib64/libc.so.6+0x107b65)
+    #1 0x555c1fe6193e  (/usr/bin/bash+0x11693e)
+    #2 0x555c1fdf28ac  (/usr/bin/bash+0xa78ac)
+    #3 0x555c1fda1eeb  (/usr/bin/bash+0x56eeb)
+    #4 0x555c1fd95c04  (/usr/bin/bash+0x4ac04)
+    #5 0x555c1fd97ece  (/usr/bin/bash+0x4cece)
+    #6 0x555c1fd9717d  (/usr/bin/bash+0x4c17d)
+    ...
+[2026-11-10T20:01:45Z INFO  os_sanitizer] chown (pid: 74482) opened `/etc/authselect/nsswitch.conf' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7ff0fadce2a4  (/usr/lib64/libc.so.6+0x1092a4)
+    #1 0x7ff0fad4a2e5  (/usr/lib64/libc.so.6+0x852e5)
+    #2 0x7ff0fad4a3c5  (/usr/lib64/libc.so.6+0x853c5)
+    #3 0x7ff0fad3e699  (/usr/lib64/libc.so.6+0x79699)
+    #4 0x7ff0fae08cf1  (/usr/lib64/libc.so.6+0x143cf1)
+    #5 0x7ff0fae0739c  (/usr/lib64/libc.so.6+0x14239c)
+    #6 0x7ff0fada213a  (/usr/lib64/libc.so.6+0xdd13a)
+    ...
+    
+    #0 0x7ff0fadc951e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x7ff0fae08c16  (/usr/lib64/libc.so.6+0x143c16)
+    #2 0x7ff0fae0739c  (/usr/lib64/libc.so.6+0x14239c)
+    #3 0x7ff0fada213a  (/usr/lib64/libc.so.6+0xdd13a)
+    #4 0x7ff0fada1c48  (/usr/lib64/libc.so.6+0xdcc48)
+    #5 0x55ce84c21a2c  (/usr/bin/chown+0x7a2c)
+    #6 0x55ce84c21b8b  (/usr/bin/chown+0x7b8b)
+    ...
+[2026-11-10T20:01:45Z WARN  os_sanitizer] 13_interceptabl (pid: 74486), acting as root:root, attempted to access /var/tmp/ossan-scenarios/I_root_worldw/dir1/dir2/sensitive_information.txt (originally as dir1/dir2/sensitive_information.txt) with ["MAY_READ"] (0x4), which may be intercepted by uids [] and gids [], as well as everyone else; stacktrace:
+    #0 0x7f1609153b65
+    #1 0x4011b0
+    #2 0x7f160907414a
+    #3 0x7f160907420b
+    #4 0x4010b5
+[2026-11-10T20:01:45Z WARN  os_sanitizer] 13_interceptabl (pid: 74488), acting as root:root, attempted to access /var/tmp/ossan-scenarios/I_root_worldw/dir1/dir2/sensitive_information.txt (originally as dir1/dir2/sensitive_information.txt) with ["MAY_READ"] (0x4), which may be intercepted by uids [] and gids [], as well as everyone else; stacktrace:
+    #0 0x7fd94a679b65
+    #1 0x4011b0
+    #2 0x7fd94a59a14a
+    #3 0x7fd94a59a20b
+    #4 0x4010b5
+[2026-11-10T20:01:45Z WARN  os_sanitizer] 13_interceptabl (pid: 74490), acting as root:root, attempted to access /var/tmp/ossan-scenarios/I_root_worldw/dir1/dir2/sensitive_information.txt (originally as dir1/dir2/sensitive_information.txt) with ["MAY_READ"] (0x4), which may be intercepted by uids [] and gids [], as well as everyone else; stacktrace:
+    #0 0x7fa148740b65
+    #1 0x4011b0
+    #2 0x7fa14866114a
+    #3 0x7fa14866120b
+    #4 0x4010b5
+[2026-11-10T20:01:45Z INFO  os_sanitizer] chown (pid: 74492) opened `/etc/authselect/nsswitch.conf' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7f3597ce32a4  (/usr/lib64/libc.so.6+0x1092a4)
+    #1 0x7f3597c5f2e5  (/usr/lib64/libc.so.6+0x852e5)
+    #2 0x7f3597c5f3c5  (/usr/lib64/libc.so.6+0x853c5)
+    #3 0x7f3597c53699  (/usr/lib64/libc.so.6+0x79699)
+    #4 0x7f3597d1dcf1  (/usr/lib64/libc.so.6+0x143cf1)
+    #5 0x7f3597d1c39c  (/usr/lib64/libc.so.6+0x14239c)
+    #6 0x7f3597cb713a  (/usr/lib64/libc.so.6+0xdd13a)
+    ...
+    
+    #0 0x7f3597cde51e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x7f3597d1dc16  (/usr/lib64/libc.so.6+0x143c16)
+    #2 0x7f3597d1c39c  (/usr/lib64/libc.so.6+0x14239c)
+    #3 0x7f3597cb713a  (/usr/lib64/libc.so.6+0xdd13a)
+    #4 0x7f3597cb6c48  (/usr/lib64/libc.so.6+0xdcc48)
+    #5 0x558580e81a2c  (/usr/bin/chown+0x7a2c)
+    #6 0x558580e81b8b  (/usr/bin/chown+0x7b8b)
+    ...
+[2026-11-10T20:01:45Z INFO  os_sanitizer] chown (pid: 74495) opened `/etc/authselect/nsswitch.conf' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7fce02fd92a4  (/usr/lib64/libc.so.6+0x1092a4)
+    #1 0x7fce02f552e5  (/usr/lib64/libc.so.6+0x852e5)
+    #2 0x7fce02f553c5  (/usr/lib64/libc.so.6+0x853c5)
+    #3 0x7fce02f49699  (/usr/lib64/libc.so.6+0x79699)
+    #4 0x7fce03013cf1  (/usr/lib64/libc.so.6+0x143cf1)
+    #5 0x7fce0301239c  (/usr/lib64/libc.so.6+0x14239c)
+    #6 0x7fce02fad13a  (/usr/lib64/libc.so.6+0xdd13a)
+    ...
+    
+    #0 0x7fce02fd451e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x7fce03013c16  (/usr/lib64/libc.so.6+0x143c16)
+    #2 0x7fce0301239c  (/usr/lib64/libc.so.6+0x14239c)
+    #3 0x7fce02fad13a  (/usr/lib64/libc.so.6+0xdd13a)
+    #4 0x7fce02facc48  (/usr/lib64/libc.so.6+0xdcc48)
+    #5 0x55b4a282ca2c  (/usr/bin/chown+0x7a2c)
+    #6 0x55b4a282cb8b  (/usr/bin/chown+0x7b8b)
+    ...
+[2026-11-10T20:01:45Z INFO  os_sanitizer] chown (pid: 74498) opened `/etc/authselect/nsswitch.conf' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7f892c5aa2a4  (/usr/lib64/libc.so.6+0x1092a4)
+    #1 0x7f892c5262e5  (/usr/lib64/libc.so.6+0x852e5)
+    #2 0x7f892c5263c5  (/usr/lib64/libc.so.6+0x853c5)
+    #3 0x7f892c51a699  (/usr/lib64/libc.so.6+0x79699)
+    #4 0x7f892c5e4cf1  (/usr/lib64/libc.so.6+0x143cf1)
+    #5 0x7f892c5e339c  (/usr/lib64/libc.so.6+0x14239c)
+    #6 0x7f892c57e13a  (/usr/lib64/libc.so.6+0xdd13a)
+    ...
+    
+    #0 0x7f892c5a551e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x7f892c5e4c16  (/usr/lib64/libc.so.6+0x143c16)
+    #2 0x7f892c5e339c  (/usr/lib64/libc.so.6+0x14239c)
+    #3 0x7f892c57e13a  (/usr/lib64/libc.so.6+0xdd13a)
+    #4 0x7f892c57dc48  (/usr/lib64/libc.so.6+0xdcc48)
+    #5 0x55a4d72f4a2c  (/usr/bin/chown+0x7a2c)
+    #6 0x55a4d72f4b8b  (/usr/bin/chown+0x7b8b)
+    ...
+[2026-11-10T20:01:45Z WARN  os_sanitizer] bash (pid: 74389), acting as root:root, attempted to access /var/tmp/ossan-scenarios/I_user_owntree/dir1/dir2/sensitive_information.txt (originally as /var/tmp/ossan-scenarios/I_user_owntree/dir1/dir2/sensitive_information.txt) with [] (0x0), which may be intercepted by uids [1001] and gids []; stacktrace:
+    #0 0x7fe3120e2b65  (/usr/lib64/libc.so.6+0x107b65)
+    #1 0x555c1fe6193e  (/usr/bin/bash+0x11693e)
+    #2 0x555c1fdf28ac  (/usr/bin/bash+0xa78ac)
+    #3 0x555c1fda1eeb  (/usr/bin/bash+0x56eeb)
+    #4 0x555c1fd95c04  (/usr/bin/bash+0x4ac04)
+    #5 0x555c1fd97ece  (/usr/bin/bash+0x4cece)
+    #6 0x555c1fd9717d  (/usr/bin/bash+0x4c17d)
+    ...
+[2026-11-10T20:01:45Z INFO  os_sanitizer] chown (pid: 74500) opened `/etc/authselect/nsswitch.conf' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7f68f16a62a4  (/usr/lib64/libc.so.6+0x1092a4)
+    #1 0x7f68f16222e5  (/usr/lib64/libc.so.6+0x852e5)
+    #2 0x7f68f16223c5  (/usr/lib64/libc.so.6+0x853c5)
+    #3 0x7f68f1616699  (/usr/lib64/libc.so.6+0x79699)
+    #4 0x7f68f16e0cf1  (/usr/lib64/libc.so.6+0x143cf1)
+    #5 0x7f68f16df39c  (/usr/lib64/libc.so.6+0x14239c)
+    #6 0x7f68f167a13a  (/usr/lib64/libc.so.6+0xdd13a)
+    ...
+    
+    #0 0x7f68f16a151e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x7f68f16e0c16  (/usr/lib64/libc.so.6+0x143c16)
+    #2 0x7f68f16df39c  (/usr/lib64/libc.so.6+0x14239c)
+    #3 0x7f68f167a13a  (/usr/lib64/libc.so.6+0xdd13a)
+    #4 0x7f68f1679c48  (/usr/lib64/libc.so.6+0xdcc48)
+    #5 0x55e083c34a2c  (/usr/bin/chown+0x7a2c)
+    #6 0x55e083c34b8b  (/usr/bin/chown+0x7b8b)
+    ...
+[2026-11-10T20:01:45Z INFO  os_sanitizer] setpriv (pid: 74504) opened `/etc/authselect/nsswitch.conf' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7f4f44a8b2a4  (/usr/lib64/libc.so.6+0x1092a4)
+    #1 0x7f4f44a072e5  (/usr/lib64/libc.so.6+0x852e5)
+    #2 0x7f4f44a073c5  (/usr/lib64/libc.so.6+0x853c5)
+    #3 0x7f4f449fb699  (/usr/lib64/libc.so.6+0x79699)
+    #4 0x7f4f44ac5cf1  (/usr/lib64/libc.so.6+0x143cf1)
+    #5 0x7f4f44ac439c  (/usr/lib64/libc.so.6+0x14239c)
+    #6 0x7f4f44a5f13a  (/usr/lib64/libc.so.6+0xdd13a)
+    ...
+    
+    #0 0x7f4f44a8651e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x7f4f44ac5c16  (/usr/lib64/libc.so.6+0x143c16)
+    #2 0x7f4f44ac439c  (/usr/lib64/libc.so.6+0x14239c)
+    #3 0x7f4f44a5f13a  (/usr/lib64/libc.so.6+0xdd13a)
+    #4 0x7f4f44a5ec48  (/usr/lib64/libc.so.6+0xdcc48)
+    #5 0x555d41b3e2bb  (/usr/bin/setpriv+0x62bb)
+    #6 0x555d41b3b129  (/usr/bin/setpriv+0x3129)
+    ...
+[2026-11-10T20:01:45Z INFO  os_sanitizer] setpriv (pid: 74506) opened `/etc/authselect/nsswitch.conf' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7f199b2022a4  (/usr/lib64/libc.so.6+0x1092a4)
+    #1 0x7f199b17e2e5  (/usr/lib64/libc.so.6+0x852e5)
+    #2 0x7f199b17e3c5  (/usr/lib64/libc.so.6+0x853c5)
+    #3 0x7f199b172699  (/usr/lib64/libc.so.6+0x79699)
+    #4 0x7f199b23ccf1  (/usr/lib64/libc.so.6+0x143cf1)
+    #5 0x7f199b23b39c  (/usr/lib64/libc.so.6+0x14239c)
+    #6 0x7f199b1d613a  (/usr/lib64/libc.so.6+0xdd13a)
+    ...
+    
+    #0 0x7f199b1fd51e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x7f199b23cc16  (/usr/lib64/libc.so.6+0x143c16)
+    #2 0x7f199b23b39c  (/usr/lib64/libc.so.6+0x14239c)
+    #3 0x7f199b1d613a  (/usr/lib64/libc.so.6+0xdd13a)
+    #4 0x7f199b1d5c48  (/usr/lib64/libc.so.6+0xdcc48)
+    #5 0x55a481fb92bb  (/usr/bin/setpriv+0x62bb)
+    #6 0x55a481fb6129  (/usr/bin/setpriv+0x3129)
+    ...
+[2026-11-10T20:01:45Z INFO  os_sanitizer] setpriv (pid: 74508) opened `/etc/authselect/nsswitch.conf' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7f1f634b92a4  (/usr/lib64/libc.so.6+0x1092a4)
+    #1 0x7f1f634352e5  (/usr/lib64/libc.so.6+0x852e5)
+    #2 0x7f1f634353c5  (/usr/lib64/libc.so.6+0x853c5)
+    #3 0x7f1f63429699  (/usr/lib64/libc.so.6+0x79699)
+    #4 0x7f1f634f3cf1  (/usr/lib64/libc.so.6+0x143cf1)
+    #5 0x7f1f634f239c  (/usr/lib64/libc.so.6+0x14239c)
+    #6 0x7f1f6348d13a  (/usr/lib64/libc.so.6+0xdd13a)
+    ...
+    
+    #0 0x7f1f634b451e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x7f1f634f3c16  (/usr/lib64/libc.so.6+0x143c16)
+    #2 0x7f1f634f239c  (/usr/lib64/libc.so.6+0x14239c)
+    #3 0x7f1f6348d13a  (/usr/lib64/libc.so.6+0xdd13a)
+    #4 0x7f1f6348cc48  (/usr/lib64/libc.so.6+0xdcc48)
+    #5 0x55f0cc9492bb  (/usr/bin/setpriv+0x62bb)
+    #6 0x55f0cc946129  (/usr/bin/setpriv+0x3129)
+    ...
+[2026-11-10T20:01:45Z INFO  os_sanitizer] chown (pid: 74510) opened `/etc/authselect/nsswitch.conf' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7fbdfc0e22a4  (/usr/lib64/libc.so.6+0x1092a4)
+    #1 0x7fbdfc05e2e5  (/usr/lib64/libc.so.6+0x852e5)
+    #2 0x7fbdfc05e3c5  (/usr/lib64/libc.so.6+0x853c5)
+    #3 0x7fbdfc052699  (/usr/lib64/libc.so.6+0x79699)
+    #4 0x7fbdfc11ccf1  (/usr/lib64/libc.so.6+0x143cf1)
+    #5 0x7fbdfc11b39c  (/usr/lib64/libc.so.6+0x14239c)
+    #6 0x7fbdfc0b613a  (/usr/lib64/libc.so.6+0xdd13a)
+    ...
+    
+    #0 0x7fbdfc0dd51e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x7fbdfc11cc16  (/usr/lib64/libc.so.6+0x143c16)
+    #2 0x7fbdfc11b39c  (/usr/lib64/libc.so.6+0x14239c)
+    #3 0x7fbdfc0b613a  (/usr/lib64/libc.so.6+0xdd13a)
+    #4 0x7fbdfc0b5c48  (/usr/lib64/libc.so.6+0xdcc48)
+    #5 0x55f0a574da2c  (/usr/bin/chown+0x7a2c)
+    #6 0x55f0a574db8b  (/usr/bin/chown+0x7b8b)
+    ...
+[2026-11-10T20:01:45Z INFO  os_sanitizer] chown (pid: 74512) opened `/etc/authselect/nsswitch.conf' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7f14a65762a4  (/usr/lib64/libc.so.6+0x1092a4)
+    #1 0x7f14a64f22e5  (/usr/lib64/libc.so.6+0x852e5)
+    #2 0x7f14a64f23c5  (/usr/lib64/libc.so.6+0x853c5)
+    #3 0x7f14a64e6699  (/usr/lib64/libc.so.6+0x79699)
+    #4 0x7f14a65b0cf1  (/usr/lib64/libc.so.6+0x143cf1)
+    #5 0x7f14a65af39c  (/usr/lib64/libc.so.6+0x14239c)
+    #6 0x7f14a654a13a  (/usr/lib64/libc.so.6+0xdd13a)
+    ...
+    
+    #0 0x7f14a657151e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x7f14a65b0c16  (/usr/lib64/libc.so.6+0x143c16)
+    #2 0x7f14a65af39c  (/usr/lib64/libc.so.6+0x14239c)
+    #3 0x7f14a654a13a  (/usr/lib64/libc.so.6+0xdd13a)
+    #4 0x7f14a6549c48  (/usr/lib64/libc.so.6+0xdcc48)
+    #5 0x5611b2240a2c  (/usr/bin/chown+0x7a2c)
+    #6 0x5611b2240b8b  (/usr/bin/chown+0x7b8b)
+    ...
+[2026-11-10T20:01:45Z WARN  os_sanitizer] 05_security_fil (pid: 74516), acting as root:root, attempted to access /var/tmp/ossan-scenarios/S_root_ww/05_demo_file.txt (originally as 05_demo_file.txt) with ["MAY_READ"] (0x4), which may be intercepted by uids [] and gids [], as well as everyone else; stacktrace:
+    #0 0x7f391b308b65
+    #1 0x4011b0
+    #2 0x7f391b22914a
+    #3 0x7f391b22920b
+    #4 0x4010b5
+[2026-11-10T20:01:45Z WARN  os_sanitizer] 05_security_fil (pid: 74518), acting as root:root, attempted to access /var/tmp/ossan-scenarios/S_root_ww/05_demo_file.txt (originally as 05_demo_file.txt) with ["MAY_READ"] (0x4), which may be intercepted by uids [] and gids [], as well as everyone else; stacktrace:
+    #0 0x7fb26f469b65
+    #1 0x4011b0
+    #2 0x7fb26f38a14a
+    #3 0x7fb26f38a20b
+    #4 0x4010b5
+[2026-11-10T20:01:45Z WARN  os_sanitizer] 05_security_fil (pid: 74520), acting as root:root, attempted to access /var/tmp/ossan-scenarios/S_root_ww/05_demo_file.txt (originally as 05_demo_file.txt) with ["MAY_READ"] (0x4), which may be intercepted by uids [] and gids [], as well as everyone else; stacktrace:
+    #0 0x7f7b268dab65
+    #1 0x4011b0
+    #2 0x7f7b267fb14a
+    #3 0x7f7b267fb20b
+    #4 0x4010b5
+[2026-11-10T20:01:45Z INFO  os_sanitizer] chown (pid: 74522) opened `/etc/authselect/nsswitch.conf' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7fa46c20f2a4  (/usr/lib64/libc.so.6+0x1092a4)
+    #1 0x7fa46c18b2e5  (/usr/lib64/libc.so.6+0x852e5)
+    #2 0x7fa46c18b3c5  (/usr/lib64/libc.so.6+0x853c5)
+    #3 0x7fa46c17f699  (/usr/lib64/libc.so.6+0x79699)
+    #4 0x7fa46c249cf1  (/usr/lib64/libc.so.6+0x143cf1)
+    #5 0x7fa46c24839c  (/usr/lib64/libc.so.6+0x14239c)
+    #6 0x7fa46c1e313a  (/usr/lib64/libc.so.6+0xdd13a)
+    ...
+    
+    #0 0x7fa46c20a51e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x7fa46c249c16  (/usr/lib64/libc.so.6+0x143c16)
+    #2 0x7fa46c24839c  (/usr/lib64/libc.so.6+0x14239c)
+    #3 0x7fa46c1e313a  (/usr/lib64/libc.so.6+0xdd13a)
+    #4 0x7fa46c1e2c48  (/usr/lib64/libc.so.6+0xdcc48)
+    #5 0x5616d49bca2c  (/usr/bin/chown+0x7a2c)
+    #6 0x5616d49bcb8b  (/usr/bin/chown+0x7b8b)
+    ...
+[2026-11-10T20:01:45Z WARN  os_sanitizer] bash (pid: 74389), acting as root:root, attempted to access /var/tmp/ossan-scenarios/S_user_ww_own/05_demo_file.txt (originally as /var/tmp/ossan-scenarios/S_user_ww_own/05_demo_file.txt) with [] (0x0), which may be intercepted by uids [1001] and gids []; stacktrace:
+    #0 0x7fe3120e2b65  (/usr/lib64/libc.so.6+0x107b65)
+    #1 0x555c1fe6193e  (/usr/bin/bash+0x11693e)
+    #2 0x555c1fdf28ac  (/usr/bin/bash+0xa78ac)
+    #3 0x555c1fda1eeb  (/usr/bin/bash+0x56eeb)
+    #4 0x555c1fd95c04  (/usr/bin/bash+0x4ac04)
+    #5 0x555c1fd97ece  (/usr/bin/bash+0x4cece)
+    #6 0x555c1fd9717d  (/usr/bin/bash+0x4c17d)
+    ...
+[2026-11-10T20:01:45Z INFO  os_sanitizer] chown (pid: 74524) opened `/etc/authselect/nsswitch.conf' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7f99d98a92a4  (/usr/lib64/libc.so.6+0x1092a4)
+    #1 0x7f99d98252e5  (/usr/lib64/libc.so.6+0x852e5)
+    #2 0x7f99d98253c5  (/usr/lib64/libc.so.6+0x853c5)
+    #3 0x7f99d9819699  (/usr/lib64/libc.so.6+0x79699)
+    #4 0x7f99d98e3cf1  (/usr/lib64/libc.so.6+0x143cf1)
+    #5 0x7f99d98e239c  (/usr/lib64/libc.so.6+0x14239c)
+    #6 0x7f99d987d13a  (/usr/lib64/libc.so.6+0xdd13a)
+    ...
+    
+    #0 0x7f99d98a451e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x7f99d98e3c16  (/usr/lib64/libc.so.6+0x143c16)
+    #2 0x7f99d98e239c  (/usr/lib64/libc.so.6+0x14239c)
+    #3 0x7f99d987d13a  (/usr/lib64/libc.so.6+0xdd13a)
+    #4 0x7f99d987cc48  (/usr/lib64/libc.so.6+0xdcc48)
+    #5 0x56145986ea2c  (/usr/bin/chown+0x7a2c)
+    #6 0x56145986eb8b  (/usr/bin/chown+0x7b8b)
+    ...
+[2026-11-10T20:01:45Z INFO  os_sanitizer] setpriv (pid: 74528) opened `/etc/authselect/nsswitch.conf' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7f51d3ca92a4  (/usr/lib64/libc.so.6+0x1092a4)
+    #1 0x7f51d3c252e5  (/usr/lib64/libc.so.6+0x852e5)
+    #2 0x7f51d3c253c5  (/usr/lib64/libc.so.6+0x853c5)
+    #3 0x7f51d3c19699  (/usr/lib64/libc.so.6+0x79699)
+    #4 0x7f51d3ce3cf1  (/usr/lib64/libc.so.6+0x143cf1)
+    #5 0x7f51d3ce239c  (/usr/lib64/libc.so.6+0x14239c)
+    #6 0x7f51d3c7d13a  (/usr/lib64/libc.so.6+0xdd13a)
+    ...
+    
+    #0 0x7f51d3ca451e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x7f51d3ce3c16  (/usr/lib64/libc.so.6+0x143c16)
+    #2 0x7f51d3ce239c  (/usr/lib64/libc.so.6+0x14239c)
+    #3 0x7f51d3c7d13a  (/usr/lib64/libc.so.6+0xdd13a)
+    #4 0x7f51d3c7cc48  (/usr/lib64/libc.so.6+0xdcc48)
+    #5 0x562ca209d2bb  (/usr/bin/setpriv+0x62bb)
+    #6 0x562ca209a129  (/usr/bin/setpriv+0x3129)
+    ...
+[2026-11-10T20:01:45Z INFO  os_sanitizer] 05_security_fil (pid: 74528), acting as 1001:1001, attempted to access /var/tmp/ossan-scenarios/S_user_ww_own/05_demo_file.txt (originally as 05_demo_file.txt) with ["MAY_READ"] (0x4), which may be intercepted by uids [] and gids [], as well as everyone else; stacktrace:
+    #0 0x7f77c3e00b65
+    #1 0x4011b0
+    #2 0x7f77c3d2114a
+    #3 0x7f77c3d2120b
+    #4 0x4010b5
+[2026-11-10T20:01:45Z INFO  os_sanitizer] setpriv (pid: 74530) opened `/etc/authselect/nsswitch.conf' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7f890e6272a4  (/usr/lib64/libc.so.6+0x1092a4)
+    #1 0x7f890e5a32e5  (/usr/lib64/libc.so.6+0x852e5)
+    #2 0x7f890e5a33c5  (/usr/lib64/libc.so.6+0x853c5)
+    #3 0x7f890e597699  (/usr/lib64/libc.so.6+0x79699)
+    #4 0x7f890e661cf1  (/usr/lib64/libc.so.6+0x143cf1)
+    #5 0x7f890e66039c  (/usr/lib64/libc.so.6+0x14239c)
+    #6 0x7f890e5fb13a  (/usr/lib64/libc.so.6+0xdd13a)
+    ...
+    
+    #0 0x7f890e62251e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x7f890e661c16  (/usr/lib64/libc.so.6+0x143c16)
+    #2 0x7f890e66039c  (/usr/lib64/libc.so.6+0x14239c)
+    #3 0x7f890e5fb13a  (/usr/lib64/libc.so.6+0xdd13a)
+    #4 0x7f890e5fac48  (/usr/lib64/libc.so.6+0xdcc48)
+    #5 0x556c76df82bb  (/usr/bin/setpriv+0x62bb)
+    #6 0x556c76df5129  (/usr/bin/setpriv+0x3129)
+    ...
+[2026-11-10T20:01:45Z INFO  os_sanitizer] 05_security_fil (pid: 74530), acting as 1001:1001, attempted to access /var/tmp/ossan-scenarios/S_user_ww_own/05_demo_file.txt (originally as 05_demo_file.txt) with ["MAY_READ"] (0x4), which may be intercepted by uids [] and gids [], as well as everyone else; stacktrace:
+    #0 0x7fb732652b65
+    #1 0x4011b0
+    #2 0x7fb73257314a
+    #3 0x7fb73257320b
+    #4 0x4010b5
+[2026-11-10T20:01:45Z INFO  os_sanitizer] setpriv (pid: 74532) opened `/etc/authselect/nsswitch.conf' (a file) after accessing it via stat, a known TOCTOU pattern; stacktrace:
+    #0 0x7fbbacc402a4  (/usr/lib64/libc.so.6+0x1092a4)
+    #1 0x7fbbacbbc2e5  (/usr/lib64/libc.so.6+0x852e5)
+    #2 0x7fbbacbbc3c5  (/usr/lib64/libc.so.6+0x853c5)
+    #3 0x7fbbacbb0699  (/usr/lib64/libc.so.6+0x79699)
+    #4 0x7fbbacc7acf1  (/usr/lib64/libc.so.6+0x143cf1)
+    #5 0x7fbbacc7939c  (/usr/lib64/libc.so.6+0x14239c)
+    #6 0x7fbbacc1413a  (/usr/lib64/libc.so.6+0xdd13a)
+    ...
+    
+    #0 0x7fbbacc3b51e  (/usr/lib64/libc.so.6+0x10451e)
+    #1 0x7fbbacc7ac16  (/usr/lib64/libc.so.6+0x143c16)
+    #2 0x7fbbacc7939c  (/usr/lib64/libc.so.6+0x14239c)
+    #3 0x7fbbacc1413a  (/usr/lib64/libc.so.6+0xdd13a)
+    #4 0x7fbbacc13c48  (/usr/lib64/libc.so.6+0xdcc48)
+    #5 0x5632921b72bb  (/usr/bin/setpriv+0x62bb)
+    #6 0x5632921b4129  (/usr/bin/setpriv+0x3129)
+    ...
+[2026-11-10T20:01:45Z INFO  os_sanitizer] 05_security_fil (pid: 74532), acting as 1001:1001, attempted to access /var/tmp/ossan-scenarios/S_user_ww_own/05_demo_file.txt (originally as 05_demo_file.txt) with ["MAY_READ"] (0x4), which may be intercepted by uids [] and gids [], as well as everyone else; stacktrace:
+    #0 0x7fccdb765b65
+    #1 0x4011b0
+    #2 0x7fccdb68614a
+    #3 0x7fccdb68620b
+    #4 0x4010b5
+[2026-11-10T20:01:47Z INFO  os_sanitizer] Bun Pool 0 (pid: 2508, thread: 2512) opened `/tmp/claude-0/-root/6ca3eefe-8256-4be4-8d52-7bfd1ea4e42e/tasks/balvoyaom.output' (a file) after accessing it via statx, a known TOCTOU pattern; stacktrace:
+    #0 0x34b7c10  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x32b6c10)
+    #1 0x2e100ab  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c0f0ab)
+    #2 0x2e3ba75  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c3aa75)
+    #3 0x3480149  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327f149)
+    #4 0x347fca7  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327eca7)
+    #5 0x347f8a8  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327e8a8)
+    #6 0x7f86e3463907  (/usr/lib64/libc.so.6+0x8e907)
+    ...
+    
+    #0 0x7f86e34e88dd  (/usr/lib64/libc.so.6+0x1138dd)
+    #1 0x2e11a27  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c10a27)
+    #2 0x2e3971e  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c3871e)
+    #3 0x3480149  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327f149)
+    #4 0x347fca7  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327eca7)
+    #5 0x347f8a8  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327e8a8)
+    #6 0x7f86e3463907  (/usr/lib64/libc.so.6+0x8e907)
+    ...
+[2026-11-10T20:01:48Z WARN  os_sanitizer] Couldn't recover the stacktrace of the executable Bun Pool 1.
+[2026-11-10T20:01:48Z INFO  os_sanitizer] Bun Pool 0 (pid: 2508, thread: 2512) opened `/tmp/claude-0/-root/6ca3eefe-8256-4be4-8d52-7bfd1ea4e42e/tasks/balvoyaom.output' (a file) after accessing it via statx, a known TOCTOU pattern; stacktrace:
+    #0 0x34b7c10  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x32b6c10)
+    #1 0x2e100ab  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c0f0ab)
+    #2 0x2e3ba75  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c3aa75)
+    #3 0x3480149  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327f149)
+    #4 0x347fca7  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327eca7)
+    #5 0x347f8a8  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327e8a8)
+    #6 0x7f86e3463907  (/usr/lib64/libc.so.6+0x8e907)
+    ...
+    
+    #0 0x7f86e34e88dd  (/usr/lib64/libc.so.6+0x1138dd)
+    #1 0x2e11a27  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c10a27)
+    #2 0x2e3971e  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c3871e)
+    #3 0x3480149  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327f149)
+    #4 0x347fca7  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327eca7)
+    #5 0x347f8a8  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327e8a8)
+    #6 0x7f86e3463907  (/usr/lib64/libc.so.6+0x8e907)
+    ...
+[2026-11-10T20:01:49Z INFO  os_sanitizer] Bun Pool 1 (pid: 2508, thread: 2513) opened `/tmp/claude-0/-root/6ca3eefe-8256-4be4-8d52-7bfd1ea4e42e/tasks/balvoyaom.output' (a file) after accessing it via statx, a known TOCTOU pattern; stacktrace:
+    #0 0x34b7c10  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x32b6c10)
+    #1 0x2e100ab  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c0f0ab)
+    #2 0x2e3ba75  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c3aa75)
+    #3 0x3480149  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327f149)
+    #4 0x347fca7  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327eca7)
+    #5 0x347f8a8  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327e8a8)
+    #6 0x7f86e3463907  (/usr/lib64/libc.so.6+0x8e907)
+    ...
+    
+    #0 0x7f86e34e88dd  (/usr/lib64/libc.so.6+0x1138dd)
+    #1 0x2e11a27  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c10a27)
+    #2 0x2e3971e  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c3871e)
+    #3 0x3480149  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327f149)
+    #4 0x347fca7  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327eca7)
+    #5 0x347f8a8  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327e8a8)
+    #6 0x7f86e3463907  (/usr/lib64/libc.so.6+0x8e907)
+    ...
+[2026-11-10T20:01:49Z INFO  os_sanitizer] libuv-worker (pid: 1750, thread: 1764) opened `/root/.claude/sessions/2508.json' (a file) after accessing it via statx, a known TOCTOU pattern; stacktrace:
+    #0 0x7f581f525bd5  (/usr/lib64/libc.so.6+0x107bd5)
+    #1 0x1a0073f  (/root/.vscode-server/cli/servers/Stable-04c0d99f4fb0d8afe6ce4f0c58e31e183ac3e4b1/server/node+0x160073f)
+    #2 0x19f76c0  (/root/.vscode-server/cli/servers/Stable-04c0d99f4fb0d8afe6ce4f0c58e31e183ac3e4b1/server/node+0x15f76c0)
+    #3 0x7f581f4ac907  (/usr/lib64/libc.so.6+0x8e907)
+    #4 0x7f581f533adc  (/usr/lib64/libc.so.6+0x115adc)
+    
+    #0 0x7f581f5318dd  (/usr/lib64/libc.so.6+0x1138dd)
+    #1 0x19ff015  (/root/.vscode-server/cli/servers/Stable-04c0d99f4fb0d8afe6ce4f0c58e31e183ac3e4b1/server/node+0x15ff015)
+    #2 0x1a00574  (/root/.vscode-server/cli/servers/Stable-04c0d99f4fb0d8afe6ce4f0c58e31e183ac3e4b1/server/node+0x1600574)
+    #3 0x19f76c0  (/root/.vscode-server/cli/servers/Stable-04c0d99f4fb0d8afe6ce4f0c58e31e183ac3e4b1/server/node+0x15f76c0)
+    #4 0x7f581f4ac907  (/usr/lib64/libc.so.6+0x8e907)
+    #5 0x7f581f533adc  (/usr/lib64/libc.so.6+0x115adc)
+[2026-11-10T20:01:49Z INFO  os_sanitizer] libuv-worker (pid: 1750, thread: 1761) opened `/root/.claude/sessions/3044.json' (a file) after accessing it via statx, a known TOCTOU pattern; stacktrace:
+    #0 0x7f581f525bd5  (/usr/lib64/libc.so.6+0x107bd5)
+    #1 0x1a0073f  (/root/.vscode-server/cli/servers/Stable-04c0d99f4fb0d8afe6ce4f0c58e31e183ac3e4b1/server/node+0x160073f)
+    #2 0x19f76c0  (/root/.vscode-server/cli/servers/Stable-04c0d99f4fb0d8afe6ce4f0c58e31e183ac3e4b1/server/node+0x15f76c0)
+    #3 0x7f581f4ac907  (/usr/lib64/libc.so.6+0x8e907)
+    #4 0x7f581f533adc  (/usr/lib64/libc.so.6+0x115adc)
+    
+    #0 0x7f581f5318dd  (/usr/lib64/libc.so.6+0x1138dd)
+    #1 0x19ff015  (/root/.vscode-server/cli/servers/Stable-04c0d99f4fb0d8afe6ce4f0c58e31e183ac3e4b1/server/node+0x15ff015)
+    #2 0x1a00574  (/root/.vscode-server/cli/servers/Stable-04c0d99f4fb0d8afe6ce4f0c58e31e183ac3e4b1/server/node+0x1600574)
+    #3 0x19f76c0  (/root/.vscode-server/cli/servers/Stable-04c0d99f4fb0d8afe6ce4f0c58e31e183ac3e4b1/server/node+0x15f76c0)
+    #4 0x7f581f4ac907  (/usr/lib64/libc.so.6+0x8e907)
+    #5 0x7f581f533adc  (/usr/lib64/libc.so.6+0x115adc)
+[2026-11-10T20:01:50Z INFO  os_sanitizer] Bun Pool 5 (pid: 2508, thread: 2518) opened `/tmp/claude-0/-root/6ca3eefe-8256-4be4-8d52-7bfd1ea4e42e/tasks/balvoyaom.output' (a file) after accessing it via statx, a known TOCTOU pattern; stacktrace:
+    #0 0x34b7c10  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x32b6c10)
+    #1 0x2e100ab  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c0f0ab)
+    #2 0x2e3ba75  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c3aa75)
+    #3 0x3480149  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327f149)
+    #4 0x347fca7  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327eca7)
+    #5 0x347f8a8  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327e8a8)
+    #6 0x7f86e3463907  (/usr/lib64/libc.so.6+0x8e907)
+    ...
+    
+    #0 0x7f86e34e88dd  (/usr/lib64/libc.so.6+0x1138dd)
+    #1 0x2e11a27  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c10a27)
+    #2 0x2e3971e  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c3871e)
+    #3 0x3480149  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327f149)
+    #4 0x347fca7  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327eca7)
+    #5 0x347f8a8  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327e8a8)
+    #6 0x7f86e3463907  (/usr/lib64/libc.so.6+0x8e907)
+    ...
+[2026-11-10T20:01:52Z INFO  os_sanitizer] Bun Pool 5 (pid: 2508, thread: 2518) opened `/tmp/claude-0/-root/6ca3eefe-8256-4be4-8d52-7bfd1ea4e42e/tasks/balvoyaom.output' (a file) after accessing it via statx, a known TOCTOU pattern; stacktrace:
+    #0 0x34b7c10  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x32b6c10)
+    #1 0x2e100ab  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c0f0ab)
+    #2 0x2e3ba75  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c3aa75)
+    #3 0x3480149  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327f149)
+    #4 0x347fca7  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327eca7)
+    #5 0x347f8a8  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327e8a8)
+    #6 0x7f86e3463907  (/usr/lib64/libc.so.6+0x8e907)
+    ...
+    
+    #0 0x7f86e34e88dd  (/usr/lib64/libc.so.6+0x1138dd)
+    #1 0x2e11a27  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c10a27)
+    #2 0x2e3971e  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c3871e)
+    #3 0x3480149  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327f149)
+    #4 0x347fca7  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327eca7)
+    #5 0x347f8a8  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327e8a8)
+    #6 0x7f86e3463907  (/usr/lib64/libc.so.6+0x8e907)
+    ...
+[2026-11-10T20:01:53Z INFO  os_sanitizer] Bun Pool 2 (pid: 2508, thread: 2514) opened `/tmp/claude-0/-root/6ca3eefe-8256-4be4-8d52-7bfd1ea4e42e/tasks/balvoyaom.output' (a file) after accessing it via statx, a known TOCTOU pattern; stacktrace:
+    #0 0x34b7c10  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x32b6c10)
+    #1 0x2e100ab  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c0f0ab)
+    #2 0x2e3ba75  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c3aa75)
+    #3 0x3480149  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327f149)
+    #4 0x347fca7  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327eca7)
+    #5 0x347f8a8  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327e8a8)
+    #6 0x7f86e3463907  (/usr/lib64/libc.so.6+0x8e907)
+    ...
+    
+    #0 0x7f86e34e88dd  (/usr/lib64/libc.so.6+0x1138dd)
+    #1 0x2e11a27  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c10a27)
+    #2 0x2e3971e  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x2c3871e)
+    #3 0x3480149  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327f149)
+    #4 0x347fca7  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327eca7)
+    #5 0x347f8a8  (/root/.vscode-server/extensions/anthropic.claude-code-2.1.322-linux-x64/resources/native-binary/claude+0x327e8a8)
+    #6 0x7f86e3463907  (/usr/lib64/libc.so.6+0x8e907)
+    ...

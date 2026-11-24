@@ -1,0 +1,25 @@
+loading security_file_open (fentry: security_file_open)...done
+[2026-11-10T20:05:49Z ERROR os_sanitizer] 05_security_fil (pid: 74948) opened `/var/tmp/ossan-scenarios/S_root_ww/05_demo_file.txt' (a file) with permissions rw-rw-rw-; stacktrace:
+    #0 0x7f00680deb65
+    #1 0x4011b0
+    #2 0x7f0067fff14a
+    #3 0x7f0067fff20b
+    #4 0x4010b5
+[2026-11-10T20:05:49Z ERROR os_sanitizer] 05_security_fil (pid: 74954) opened `/var/tmp/ossan-scenarios/S_user_ww_own/05_demo_file.txt' (a file) with permissions rw-rw-rw-; stacktrace:
+    #0 0x7f2b24159b65
+    #1 0x4011b0
+    #2 0x7f2b2407a14a
+    #3 0x7f2b2407a20b
+    #4 0x4010b5
+[2026-11-10T20:05:49Z ERROR os_sanitizer] 05_security_fil (pid: 74950) opened `/var/tmp/ossan-scenarios/S_user_ww_own/05_demo_file.txt' (a file) with permissions rw-rw-rw-; stacktrace:
+    #0 0x7f08d4bbfb65
+    #1 0x4011b0
+    #2 0x7f08d4ae014a
+    #3 0x7f08d4ae020b
+    #4 0x4010b5
+[2026-11-10T20:05:49Z ERROR os_sanitizer] 05_security_fil (pid: 74952) opened `/var/tmp/ossan-scenarios/S_root_ww/05_demo_file.txt' (a file) with permissions rw-rw-rw-; stacktrace:
+    #0 0x7f5b04b4ab65
+    #1 0x4011b0
+    #2 0x7f5b04a6b14a
+    #3 0x7f5b04a6b20b
+    #4 0x4010b5

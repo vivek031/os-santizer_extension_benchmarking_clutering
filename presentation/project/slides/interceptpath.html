@@ -1,0 +1,22 @@
+<section id="interceptpath" data-transition="fade" style="background:#FAFAF7;color:#1B2333;font-family:'Inter', Arial, sans-serif;padding:112px 128px;display:flex;flex-direction:column;gap:36px">
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#2F5EA8">The paper · Defect inference with eBPF (Fig. 2)</p>
+<h2 style="font-family:'Inter', Arial, sans-serif;font-size:64px;font-weight:700;letter-spacing:-1px;line-height:1.1;color:#1B2333">intercept_path: six programs, one open()</h2>
+</div>
+<hr style="border-top:2px solid #E2E0D8">
+<table style="font-size:30px;color:#1B2333;font-family:'Inter', Arial, sans-serif">
+<tr style="background:#E6EAF0"><th style="width:28%;text-align:left">Kernel function</th><th style="width:30%;text-align:left">eBPF program</th><th style="width:13%;text-align:left">Role</th><th style="width:29%;text-align:left">Collects</th></tr>
+<tr style="background:#FAFAF7"><td>do_filp_open</td><td>filp_open_fentry</td><td>Enrich</td><td>requested path</td></tr>
+<tr style="background:#F2F1EC"><td>path_openat</td><td>openat_fentry</td><td>Clean</td><td>reset state</td></tr>
+<tr style="background:#FAFAF7"><td>link_path_walk</td><td>inode_perm_lsm</td><td>Enrich</td><td>writers per dir</td></tr>
+<tr style="background:#F2F1EC"><td>may_open</td><td>may_open_fentry</td><td>Enrich</td><td>access mode</td></tr>
+<tr style="background:#FCEFE6"><td><b>security_file_open</b></td><td><b>open_perm_fentry</b></td><td><b>Report</b></td><td><b>real path → report</b></td></tr>
+<tr style="background:#F2F1EC"><td>do_filp_open (exit)</td><td>filp_open_fexit</td><td>Clean</td><td>free state</td></tr>
+</table>
+<ul style="font-size:34px;line-height:1.6">
+<li>Programs share one <b>per-thread eBPF map</b></li>
+<li>Report if <b>another user can redirect</b> the path</li>
+</ul>
+<p style="position:absolute;right:128px;top:56px;width:240px;text-align:right;font-size:24px;color:#6B7280">05 / 18</p>
+<aside>~75 s, the key paper slide. This table is Figure 2 of the paper, read top to bottom in the kernel's call order. intercept_path catches Scenarios 2 to 4. Checking only the final file's permissions is not enough: any directory along the path can be hijacked, and checking components afterwards from user space would race. So the pass rides along with the kernel's own path resolution. (1) filp_open_fentry, at the entry of do_filp_open, saves the user's requested path. (2) openat_fentry, on path_openat, clears any state left for this thread so the report is specific to this open. (3) As link_path_walk resolves each component, the kernel calls inode_permission, where inode_perm_lsm runs as an LSM program and accumulates which users and groups could modify each component. (4) may_open_fentry records the requested permissions (read, write, exec), later used for severity. (5) At security_file_open the helper bpf_d_path is available, so open_perm_fentry gets the canonical path, reads everything in the map, and emits a report if someone other than the actor could redirect the path. (6) filp_open_fexit cleans up on return. The general recipe for every pass: decide what you need to know, find kernel or user events that expose it, record it in a map, and let the last program decide whether to report.</aside>
+</section>

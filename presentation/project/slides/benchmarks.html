@@ -1,0 +1,16 @@
+<section id="benchmarks" data-transition="fade" style="background:#FAFAF7;color:#1B2333;font-family:'Inter', Arial, sans-serif;padding:112px 128px;display:flex;flex-direction:column;gap:40px">
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#A9461A">Our work · Evaluation</p>
+<h2 style="font-family:'Inter', Arial, sans-serif;font-size:64px;font-weight:700;letter-spacing:-1px;line-height:1.1;color:#1B2333">Three benchmarks on our VM</h2>
+</div>
+<hr style="border-top:2px solid #E2E0D8">
+<table style="font-size:34px;color:#1B2333;font-family:'Inter', Arial, sans-serif">
+<tr style="background:#E6EAF0"><th style="width:30%;text-align:left">Benchmark</th><th style="width:42%;text-align:left">What we ran</th><th style="width:28%;text-align:left">Measures</th></tr>
+<tr style="background:#FAFAF7"><td><b>Table 2 · micro</b></td><td>15 small C programs</td><td>worst-case slowdown</td></tr>
+<tr style="background:#F2F1EC"><td><b>Table 3 · real</b></td><td>xz, gcc, perl, sqlite, stockfish</td><td>run-time overhead</td></tr>
+<tr style="background:#FAFAF7"><td><b>Table 4 · live</b></td><td>13.4 h of normal use</td><td>reports per pass</td></tr>
+</table>
+<p style="font-size:32px;line-height:1.5;color:#4A5568"><b>Why not SPEC?</b> The paper used SPEC CPU 2017, a paid benchmark suite. We used free programs that do the same kind of work instead: compiling code (gcc), compressing files (xz), text processing (perl), a database (sqlite) and a chess engine (stockfish).</p>
+<p style="position:absolute;right:128px;top:56px;width:240px;text-align:right;font-size:24px;color:#6B7280">13 / 18</p>
+<aside>(~15 s) Before trusting any of this, we checked that our VM behaves like the paper's setup. So we repeated its three benchmarks: tiny worst-case programs, real programs, and a live system.</aside>
+</section>

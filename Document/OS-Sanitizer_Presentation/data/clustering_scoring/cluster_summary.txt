@@ -1,0 +1,16 @@
+207854 reports -> 1910 clusters (108.8 reports/cluster)
+pass               reports  clusters
+access              115834       783
+sprintf              72545       667
+fixed_mmap           13938       118
+intercept_path        2807       186
+snprintf              2241        44
+rwx_mem                323        38
+filep_unlocked          54        33
+system_abs              50        17
+gets                    30        11
+printf_mut              23         9
+sec_file_open            8         3
+system_mut               1         1
+wrote data/vm_20261112/vm_clusters.csv
+cluster: 12.12s, max RSS 2446540KB

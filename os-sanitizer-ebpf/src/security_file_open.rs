@@ -16,7 +16,7 @@ use os_sanitizer_common::{OsSanitizerError, OsSanitizerReport, ProgId, EXECUTABL
 
 use crate::binding::file;
 use crate::statistics::update_tracking;
-use crate::{emit_report, FLAGGED_FILE_OPEN_PIDS, IGNORED_PIDS, STRING_SCRATCH};
+use crate::{FLAGGED_FILE_OPEN_PIDS, IGNORED_PIDS, STRING_SCRATCH};
 
 #[fentry(function = "security_file_open")]
 fn fentry_security_file_open(probe: FEntryContext) -> u32 {
@@ -96,7 +96,7 @@ unsafe fn try_fentry_security_file_open(ctx: &FEntryContext) -> Result<u32, OsSa
             variant,
         };
 
-        emit_report(ctx, &report)?;
+        crate::emit_report_obj(ctx, &report, data)?;
     }
 
     Ok(0)

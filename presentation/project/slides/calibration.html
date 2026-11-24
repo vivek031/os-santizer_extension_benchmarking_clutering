@@ -1,0 +1,25 @@
+<section id="calibration" data-transition="fade" style="background:#FAFAF7;color:#1B2333;font-family:'Inter', Arial, sans-serif;padding:112px 128px;display:flex;flex-direction:column;gap:40px">
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#A9461A">Benchmark · Calibration</p>
+<h2 style="font-family:'Inter', Arial, sans-serif;font-size:64px;font-weight:700;letter-spacing:-1px;line-height:1.1;color:#1B2333">Precision 1.00, recall 0.80</h2>
+</div>
+<hr style="border-top:2px solid #E2E0D8">
+<div style="flex:1;display:flex;flex-direction:row;gap:96px">
+<ul style="flex:1;font-size:34px;line-height:1.7">
+<li>33 test cases with <b>known answers</b></li>
+<li>Same program: <b>safe vs exploitable</b> setup</li>
+<li>Attacker = normal user (uid 1001)</li>
+<li>Threshold 0.5</li>
+</ul>
+<div style="flex:1;display:flex;flex-direction:column;gap:28px">
+<table style="font-size:32px;color:#1B2333;font-family:'Inter', Arial, sans-serif">
+<tr style="background:#E6EAF0"><th style="width:40%;text-align:left"></th><th style="width:30%;text-align:center">Real bug</th><th style="width:30%;text-align:center">Not a bug</th></tr>
+<tr style="background:#FAFAF7"><td><b>Flagged</b></td><td style="text-align:center"><b>8</b></td><td style="text-align:center">0</td></tr>
+<tr style="background:#F2F1EC"><td><b>Not flagged</b></td><td style="text-align:center">2</td><td style="text-align:center"><b>34</b></td></tr>
+</table>
+<p style="font-size:28px;line-height:1.5;color:#4A5568">2 misses: input passed in by the parent shell, and PATH, which we do not record yet.</p>
+</div>
+</div>
+<p style="position:absolute;right:128px;top:56px;width:240px;text-align:right;font-size:24px;color:#6B7280">17 / 18</p>
+<aside>~45 s. To measure false positives we needed test cases where we know the right answer. scenarios.sh runs the paper's own example programs twice: once in a safe setup, for example root working only on root's files, and once in an exploitable setup, where a normal user (uid 1001) controls a file, a folder, the input or the arguments. 33 cases over 11 passes; for system_abs we even used a fake ls that records which user really ran it. At threshold 0.5, over 44 labelled clusters: 8 real bugs flagged, 0 false alarms, 34 safe cases correctly left low, and 2 real bugs missed. That is precision 1.00 and recall 0.80. The two misses are known blind spots: in one, root reads input that the parent shell opened from the attacker's file, so the process never opens it itself; in the other, the attacker controls root's PATH, which we do not record yet. Both need more kernel context, not different weights. This is a small synthetic test, a sanity check rather than a statistical claim.</aside>
+</section>

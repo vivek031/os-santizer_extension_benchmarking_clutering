@@ -1,0 +1,43 @@
+<section id="scoring" data-transition="fade" style="background:#FAFAF7;color:#1B2333;font-family:'Inter', Arial, sans-serif;padding:112px 128px;display:flex;flex-direction:column;gap:28px">
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#A9461A">Our work · Scoring</p>
+<h2 style="font-family:'Inter', Arial, sans-serif;font-size:64px;font-weight:700;letter-spacing:-1px;line-height:1.1;color:#1B2333">Scoring criteria: start at 0.5, flag at ≥ 0.5</h2>
+</div>
+<div style="flex:1;display:flex;flex-direction:row;gap:56px">
+<div style="flex:1.25;display:flex;flex-direction:column;gap:10px">
+<p style="font-size:26px;font-weight:600;color:#4A5568">File passes (access, intercept_path, sec_file_open)</p>
+<table style="font-size:24px;color:#1B2333;font-family:'Inter', Arial, sans-serif">
+<tr style="background:#E6EAF0"><th style="width:72%;text-align:left;padding:6px 14px">Criterion</th><th style="width:28%;text-align:right;padding:6px 14px">Score</th></tr>
+<tr style="background:#FAFAF7"><td style="padding:6px 14px">Start</td><td style="text-align:right;padding:6px 14px">0.50</td></tr>
+<tr style="background:#F2F1EC"><td style="padding:6px 14px">Root process / normal-user process</td><td style="text-align:right;padding:6px 14px">+0.15 / −0.30</td></tr><tr style="background:#FCEFE6"><td style="padding:6px 14px"><b>Not root: never above 0.45 (new)</b></td><td style="text-align:right;padding:6px 14px"><b>cap 0.45</b></td></tr>
+<tr style="background:#FAFAF7"><td style="padding:6px 14px">Another user can swap the file / nobody can</td><td style="text-align:right;padding:6px 14px">+0.30 / −0.30</td></tr>
+<tr style="background:#F2F1EC"><td style="padding:6px 14px">Another user can write a folder on the path</td><td style="text-align:right;padding:6px 14px">+0.30</td></tr>
+<tr style="background:#FAFAF7"><td style="padding:6px 14px">Root reads a world-writable file</td><td style="text-align:right;padding:6px 14px">+0.20</td></tr>
+<tr style="background:#F2F1EC"><td style="padding:6px 14px">Root process already read another user’s file</td><td style="text-align:right;padding:6px 14px">+0.20</td></tr>
+<tr style="background:#FAFAF7"><td style="padding:6px 14px">Root process started by a normal user</td><td style="text-align:right;padding:6px 14px">+0.15</td></tr>
+<tr style="background:#F2F1EC"><td style="padding:6px 14px">Root runs a program others can modify</td><td style="text-align:right;padding:6px 14px">+0.20</td></tr>
+<tr style="background:#FAFAF7"><td style="padding:6px 14px">Program is setuid / setgid</td><td style="text-align:right;padding:6px 14px">+0.05</td></tr>
+<tr style="background:#F2F1EC"><td style="padding:6px 14px">Packaged program (rpm) / library code</td><td style="text-align:right;padding:6px 14px">−0.05 each</td></tr>
+<tr style="background:#FAFAF7"><td style="padding:6px 14px">Kernel pseudo-file (/proc, pipe, socket)</td><td style="text-align:right;padding:6px 14px">= 0.05</td></tr><tr style="background:#FCEFE6"><td style="padding:6px 14px"><b>System accounts (uid ≤ 999) trusted like root (new)</b></td><td style="text-align:right;padding:6px 14px"><b>no penalty</b></td></tr>
+</table>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:10px">
+<p style="font-size:26px;font-weight:600;color:#4A5568">Other passes · (+x) only if a normal user can reach root</p>
+<table style="font-size:26px;color:#1B2333;font-family:'Inter', Arial, sans-serif">
+<tr style="background:#E6EAF0"><th style="width:42%;text-align:left;padding:6px 14px">Pass</th><th style="width:58%;text-align:right;padding:6px 14px">Score</th></tr>
+<tr style="background:#FAFAF7"><td style="padding:6px 14px">gets</td><td style="text-align:right;padding:6px 14px">0.45 (+0.40)</td></tr>
+<tr style="background:#F2F1EC"><td style="padding:6px 14px">printf/system_mut</td><td style="text-align:right;padding:6px 14px">0.10 const · 0.45 (+0.30)</td></tr>
+<tr style="background:#FAFAF7"><td style="padding:6px 14px">system_abs</td><td style="text-align:right;padding:6px 14px">0.80 user parent · ≤ 0.35</td></tr>
+<tr style="background:#F2F1EC"><td style="padding:6px 14px">snprintf</td><td style="text-align:right;padding:6px 14px">0.20 · leak 0.40 (+0.35)</td></tr>
+<tr style="background:#FAFAF7"><td style="padding:6px 14px">fixed_mmap</td><td style="text-align:right;padding:6px 14px">0.05 hint · 0.40 bad prot.</td></tr>
+<tr style="background:#F2F1EC"><td style="padding:6px 14px">rwx_mem</td><td style="text-align:right;padding:6px 14px">0.30 (+0.30)</td></tr>
+<tr style="background:#FAFAF7"><td style="padding:6px 14px">filep_unlocked</td><td style="text-align:right;padding:6px 14px">0.30</td></tr>
+<tr style="background:#F2F1EC"><td style="padding:6px 14px">sprintf</td><td style="text-align:right;padding:6px 14px">0.30 (+0.15)</td></tr>
+</table>
+<p style="font-size:30px;padding-top:12px"><b>Example:</b> S1 = 0.35 (low) · S2 = 1.00 (flagged)</p>
+<p style="font-size:24px;line-height:1.4;color:#4A5568;background:#F2F1EC;border-radius:10px;padding:14px 18px"><b>Note: weights are hand-set, not learned.</b> ±0.30 = attacker can directly control the file · 0.15–0.20 = indirect sign that attacker input reaches root · 0.05 = weak hint. Below 0.5 unless a privilege boundary is crossed. Scores capped to 0–1; can be tuned with labelled data.</p>
+</div>
+</div>
+<p style="position:absolute;right:128px;top:56px;width:240px;text-align:right;font-size:24px;color:#6B7280">12 / 18</p>
+<aside>(~40 s) Now, which of these 1,910 findings matter? Every group starts at 0.5, undecided, and the evidence moves it. A root process, a file another user could swap, another writer on the path: the score goes up. Nobody else can touch the file, a common library pattern, a constant string: it goes down. At 0.5 or more it is flagged. Think back to the Go example: the same code scores 0.35 in root's own folder and 1.0 in Bob's folder. The weights are set by hand so that every one can be explained, and the two rules marked 'new' came from looking at our own results, which I will show in a moment.</aside>
+</section>

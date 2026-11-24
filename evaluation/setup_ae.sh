@@ -41,7 +41,7 @@ case "$1" in
         rustup component add rust-src --toolchain nightly-x86_64-unknown-linux-gnu
 
         # Install aya toolchain
-        cargo install --force --git https://github.com/aya-rs/bpf-linker bpf-linker
+#        cargo install --force --git https://github.com/aya-rs/bpf-linker bpf-linker
         cargo install bindgen-cli
         cargo install --git https://github.com/aya-rs/aya aya-tool
 

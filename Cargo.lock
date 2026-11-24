@@ -532,6 +532,7 @@ dependencies = [
  "log",
  "once_cell",
  "os-sanitizer-common",
+ "serde_json",
  "thiserror",
  "tokio",
  "users",

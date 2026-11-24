@@ -1,0 +1,16 @@
+<section id="gap" data-transition="fade" style="background:#FAFAF7;color:#1B2333;font-family:'Inter', Arial, sans-serif;padding:112px 128px;display:flex;flex-direction:column;gap:40px">
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#A9461A">Our work · Gaps in the paper</p>
+<h2 style="font-family:'Inter', Arial, sans-serif;font-size:64px;font-weight:700;letter-spacing:-1px;line-height:1.1;color:#1B2333">Gaps in the paper</h2>
+</div>
+<hr style="border-top:2px solid #E2E0D8">
+<ul style="font-size:38px;line-height:1.45">
+<li><b>No false-positive rate.</b> The authors say judging a report is “deeply non-trivial” (§8.2).</li>
+<li><b>The verdict depends on context.</b> The same code is safe or exploitable depending on who runs it and who owns the files.</li>
+<li><b>Duplicates are grouped by hand.</b> 679K log entries in 5 days, about 244 copies of each finding.</li>
+<li><b>Severity is fixed per pass.</b> It depends on the access type (read, write, execute), not on how exploitable the situation is; related reports from different passes are not linked.</li>
+<li><b>Reports are checked by hand.</b> A person reads and filters them with grep, awk and sort: about 2 hours a week.</li>
+</ul>
+<p style="position:absolute;right:128px;top:56px;width:240px;text-align:right;font-size:24px;color:#6B7280">09 / 18</p>
+<aside>(~30 s) So far, the paper. Now the question we asked ourselves: if you really ran this tool, what would you do with its output? The authors are honest about it: they never measured false positives, because a report is only a real bug in the right context, like the Go example. And the raw output is noisy: hundreds of thousands of log lines, the same finding repeated more than 200 times, a severity that only looks at read, write or execute, and a person sorting it all by hand with grep and awk. That is the gap we picked up.</aside>
+</section>

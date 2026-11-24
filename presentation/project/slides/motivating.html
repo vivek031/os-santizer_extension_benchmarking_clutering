@@ -1,0 +1,36 @@
+<section id="motivating" data-transition="fade" style="background:#FAFAF7;color:#1B2333;font-family:'Inter', Arial, sans-serif;padding:112px 128px;display:flex;flex-direction:column;gap:40px">
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#2F5EA8">The paper · Motivating example</p>
+<h2 style="font-family:'Inter', Arial, sans-serif;font-size:64px;font-weight:700;letter-spacing:-1px;line-height:1.1;color:#1B2333">Same Go code, four contexts</h2>
+</div>
+<hr style="border-top:2px solid #E2E0D8">
+<div style="flex:1;display:flex;flex-direction:row;gap:72px">
+<div style="width:760px;display:flex;flex-direction:column;gap:32px">
+<div style="display:flex;flex-direction:column;background:#1B2333;border-radius:12px;padding:28px 32px;font-family:'JetBrains Mono', 'Courier New', monospace">
+<p style="font-size:26px;line-height:1.5;color:#AEB8C9;white-space:nowrap">// Go os.RemoveAll, before 2024</p>
+<p style="font-size:26px;line-height:1.5;color:#F2F0EA;white-space:nowrap">Fstatat(parentFd, base, &amp;st)&#160;<span style="color:#F29A6B">① CHECK</span></p>
+<p style="font-size:26px;line-height:1.5;color:#F2F0EA;white-space:nowrap">if !isDir(st) { return }</p>
+<p style="font-size:26px;line-height:1.5;color:#AEB8C9;white-space:nowrap">// race window</p>
+<p style="font-size:26px;line-height:1.5;color:#F2F0EA;white-space:nowrap">openFdAt(parentFd, base)&#160;&#160;&#160;&#160;<span style="color:#F29A6B">② USE</span></p>
+</div>
+<div style="display:flex;flex-direction:column;font-family:'JetBrains Mono', 'Courier New', monospace">
+<p style="font-size:26px;line-height:1.5;white-space:nowrap">A/&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;alice</p>
+<p style="font-size:26px;line-height:1.5;white-space:nowrap">├─ B/&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#A9461A">bob (attacker)</span></p>
+<p style="font-size:26px;line-height:1.5;white-space:nowrap">│&#160;&#160;└─ C → ../D</p>
+<p style="font-size:26px;line-height:1.5;white-space:nowrap">└─ D/ └─ E/&#160;&#160;&#160;alice</p>
+</div>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:24px">
+<ul style="font-size:36px;line-height:1.7">
+<li><b><span style="color:#2F5EA8">S1 safe:</span></b> root-only tree</li>
+<li><b><span style="color:#A9461A">S2 exploitable:</span></b> Bob swaps C mid-race</li>
+<li><b><span style="color:#A9461A">S3 exploitable:</span></b> path crosses Bob’s dir</li>
+<li><b><span style="color:#A9461A">S4 exploitable:</span></b> Bob owns the binary</li>
+</ul>
+<div style="flex:1"></div>
+<p style="font-size:32px;line-height:1.4;border-left:4px solid #D9622B;padding-left:24px">Real bug, now fixed in Go, Docker, Kubernetes, runc</p>
+</div>
+</div>
+<p style="position:absolute;right:128px;top:56px;width:240px;text-align:right;font-size:24px;color:#6B7280">04 / 18</p>
+<aside>~60 s. A one-line Go program calls os.RemoveAll. Is it vulnerable? From the code alone: no, it is just rm -rf. But the old implementation first checks with Fstatat whether the entry is a directory (1), then opens it unconditionally (2): a time-of-check to time-of-use window. Scenario 1: Alice as root deletes only root-owned trees; nobody else can touch them, so it is safe. Scenario 2: Bob can write directory B; between check and use he replaces C with a symlink, and root deletes a directory Bob chose. Scenario 3: the path goes through Bob's directory, so he can redirect it beforehand without racing. Scenario 4: Bob owns the binary itself; root executing it means Bob runs code as root. Identical code is safe or exploitable depending purely on the execution context, which a runtime tool can see. This bug was really found by OS-Sanitizer. Keep it in mind: our scoring layer encodes exactly the difference between Scenario 1 and Scenario 2.</aside>
+</section>

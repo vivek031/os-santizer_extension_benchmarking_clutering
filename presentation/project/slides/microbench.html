@@ -1,0 +1,19 @@
+<section id="microbench" data-transition="fade" style="background:#FAFAF7;color:#1B2333;font-family:'Inter', Arial, sans-serif;padding:112px 128px;display:flex;flex-direction:column;gap:32px">
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#A9461A">Benchmark · Table 2 · Microbenchmarks</p>
+<h2 style="font-family:'Inter', Arial, sans-serif;font-size:64px;font-weight:700;letter-spacing:-1px;line-height:1.1;color:#1B2333">Cost of each pass in the worst case</h2>
+</div>
+<hr style="border-top:2px solid #E2E0D8">
+<div style="flex:1;display:flex;flex-direction:row;gap:56px;align-items:center">
+<img src="/_blob/f77d8550dc9f0ebbfc0a60294d23622b" alt="Dot plot of slowdown per pass on a log scale, our VM versus the paper: kernel passes 1-10x, snprintf and printf_mut about 30x, memory passes 63-159x" style="width:1040px;height:646px;object-fit:contain">
+<ul style="flex:1;font-size:30px;line-height:1.45">
+<li><b>Test:</b> one tiny C program per pass, repeating only the flagged call (e.g. stat → open) for 10 s</li>
+<li><b>Measure:</b> loops per second with vs without OS-Sanitizer (10 runs)</li>
+<li><b>Kernel passes:</b> 1–10× slower</li>
+<li><b>Memory passes:</b> 63–159× slower</li>
+<li><b>Our results agree with the paper:</b> the same passes are cheap and the same are expensive</li>
+</ul>
+</div>
+<p style="position:absolute;right:128px;top:56px;width:240px;text-align:right;font-size:24px;color:#6B7280">14 / 18</p>
+<aside>(~30 s) The microbenchmarks are the worst case: a tiny program that does nothing but the monitored call, for ten seconds. Passes that watch the kernel cost one to ten times per call; the memory passes up to 159 times. Our exact numbers differ from the paper's because the hardware differs, but the same passes are cheap and the same passes are expensive, so the reproduction holds.</aside>
+</section>

@@ -186,6 +186,20 @@ impl<'a> ProcMapOffsetResolver<'a> {
     }
 }
 
+impl<'a> ProcMapOffsetResolver<'a> {
+    /// Where a data address lives: `binary-ro` (a constant inside a mapped file), `binary-rw`
+    /// (a file's writable data), `runtime` (stack, heap, anonymous memory), or `None` if
+    /// the address is not mapped in the (possibly stale) map.
+    pub fn data_region(&self, addr: u64) -> Option<&'static str> {
+        let entry = self.procmap.entry_for(addr)?;
+        Some(match entry.path() {
+            Some(_) if entry._perms.contains('w') => "binary-rw",
+            Some(_) => "binary-ro",
+            None => "runtime",
+        })
+    }
+}
+
 impl<'a> From<&'a ProcMap> for ProcMapOffsetResolver<'a> {
     fn from(procmap: &'a ProcMap) -> Self {
         Self { procmap }

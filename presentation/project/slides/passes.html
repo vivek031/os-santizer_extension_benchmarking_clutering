@@ -1,0 +1,20 @@
+<section id="passes" data-transition="fade" style="background:#FAFAF7;color:#1B2333;font-family:'Inter', Arial, sans-serif;padding:112px 128px;display:flex;flex-direction:column;gap:40px">
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#2F5EA8">The paper · eBPF passes</p>
+<h2 style="font-family:'Inter', Arial, sans-serif;font-size:64px;font-weight:700;letter-spacing:-1px;line-height:1.1;color:#1B2333">15 passes in four families</h2>
+</div>
+<hr style="border-top:2px solid #E2E0D8">
+<table style="font-size:30px;color:#1B2333;font-family:'Inter', Arial, sans-serif">
+<tr style="background:#E6EAF0"><th style="width:26%;text-align:left">Family</th><th style="width:52%;text-align:left">Passes</th><th style="width:22%;text-align:left">Hook</th></tr>
+<tr style="background:#FAFAF7"><td>System calls</td><td>access, fixed_mmap, rwx_mem</td><td>kernel</td></tr>
+<tr style="background:#F2F1EC"><td>Library usage</td><td>gets, snprintf, printf_mut, system_mut, system_abs, filep_unlocked</td><td>libc</td></tr>
+<tr style="background:#FAFAF7"><td>Environment</td><td>sec_file_open, intercept_path</td><td>kernel + LSM</td></tr>
+<tr style="background:#F2F1EC"><td>Memory</td><td>memcpy, strcpy, strncpy, sprintf</td><td>libc</td></tr>
+</table>
+<ul style="font-size:34px;line-height:1.6">
+<li>Each program <b>reports</b>, <b>enriches</b>, <b>cleans up</b> or <b>filters</b></li>
+<li>Memory passes: 46–140× slower, <b>off by default</b></li>
+</ul>
+<p style="position:absolute;right:128px;top:56px;width:240px;text-align:right;font-size:24px;color:#6B7280">07 / 18</p>
+<aside>~45 s. intercept_path was six programs forming one pass; the paper implements 15 passes in four families. (1) Fault-prone system interactions: access (stat or access before open, the TOCTOU pattern), fixed_mmap (MAP_FIXED overlapping existing maps), rwx_mem (writable and executable memory, typical of JITs). (2) Fault-prone library usage via libc uprobes: gets (always unsafe), snprintf (a truncation footgun that leaks memory), printf_mut and system_mut (mutable format strings and commands), system_abs (system() with a relative command, so PATH decides what runs), filep_unlocked (unlocked FILE* use across threads). (3) Environmental defects: sec_file_open (opening a file with unsafe permissions) and intercept_path. (4) Unsafe memory-function usage: memcpy, strcpy, strncpy, sprintf. These hook hot user-space functions, so every call costs a context switch: 46 to 140 times slower in microbenchmarks, and the paper leaves them off for long-term use. Every program in a pass has one role: report, enrich, clean up stale state, or filter known false positives. All passes are about 2.8k lines of Rust using the aya library.</aside>
+</section>

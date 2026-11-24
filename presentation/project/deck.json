@@ -1,0 +1,55 @@
+{
+  "v": 4,
+  "attachments": {},
+  "createdOnFiles": {
+    "at": "2026-11-12T09:00:00Z",
+    "v": 1
+  },
+  "designSystems": [],
+  "faces": {
+    "inter": {
+      "family": "Inter",
+      "href": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    },
+    "jetbrains-mono": {
+      "family": "JetBrains Mono",
+      "href": "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap"
+    }
+  },
+  "lists": "css",
+  "order": [
+    "cover",
+    "problem",
+    "motivating",
+    "interceptpath",
+    "a896d9e1",
+    "report",
+    "passes",
+    "testbed",
+    "gap",
+    "implemented",
+    "clustering",
+    "scoring",
+    "benchmarks",
+    "microbench",
+    "performance",
+    "table4",
+    "livevm",
+    "close"
+  ],
+  "sections": {
+    "end": {
+      "description": "Conclusion and questions",
+      "start": "close"
+    },
+    "ours": {
+      "description": "Our work: gaps in the paper, what we implemented, clustering, scoring and three benchmarks",
+      "start": "gap"
+    },
+    "paper": {
+      "description": "The paper: the problem, related work, the motivating example, how eBPF passes infer defects, and our VM testbed",
+      "start": "cover"
+    }
+  },
+  "title": "OS-Sanitizer: Paper & Our Extension"
+}

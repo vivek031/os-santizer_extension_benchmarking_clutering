@@ -1,0 +1,11 @@
+<section id="clustering" data-transition="fade" style="background:#FAFAF7;color:#1B2333;font-family:'Inter', Arial, sans-serif;padding:112px 128px;display:flex;flex-direction:column;gap:24px">
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#A9461A">Our work · Clustering</p>
+<h2 style="font-family:'Inter', Arial, sans-serif;font-size:64px;font-weight:700;letter-spacing:-1px;line-height:1.1;color:#1B2333">Clustering result: 109× fewer items to read</h2>
+</div>
+<p style="font-size:32px;color:#4A5568"><b>207,854 → 1,910</b> · busy passes shrink most · rare passes barely shrink · root and normal-user cases stay apart</p>
+<img src="/_blob/7f5ec1bbf63094a632b0769afa3b84aa" alt="Chart of reports versus clusters for all 12 passes on a log scale: access 115,834 to 783 (148x fewer), sprintf 72,545 to 667, fixed_mmap 13,938 to 118, intercept_path 2,807 to 186, snprintf 2,241 to 44, rwx_mem 323 to 38, and the rare passes 1.6 to 2.9x fewer" style="width:1664px;height:560px;object-fit:contain">
+<p style="font-size:26px;line-height:1.4;color:#4A5568"><b>Note:</b> memcpy, strcpy and strncpy were switched off in this live run. Their overhead is very large (4–159× slower), so turning them off kept running programs from slowing down, as in the paper.</p>
+<p style="position:absolute;right:128px;top:56px;width:240px;text-align:right;font-size:24px;color:#6B7280">11 / 18</p>
+<aside>(~30 s) First result: grouping. We left OS-Sanitizer running on our VM for about 13 hours. It produced 207 thousand reports, but only 1,910 distinct findings, about 109 times fewer. The busy passes, like access, collapse the most, because the same code fires again and again. And because the group key includes the context, the safe and the dangerous version of the same code never end up in the same group. The three memory passes are missing here simply because they were switched off, as in the paper, to keep the system fast.</aside>
+</section>

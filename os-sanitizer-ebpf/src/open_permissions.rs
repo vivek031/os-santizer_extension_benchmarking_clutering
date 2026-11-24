@@ -281,7 +281,7 @@ unsafe fn try_open_permissions_file(ctx: &FEntryContext) -> Result<(), OsSanitiz
                     everyone,
                 };
 
-                crate::emit_report(ctx, &report)?;
+                crate::emit_report_obj(ctx, &report, file)?;
             }
         }
     }

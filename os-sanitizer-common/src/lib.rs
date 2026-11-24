@@ -1054,8 +1054,199 @@ pub fn approximate_range(base: usize, len: usize) -> Option<usize> {
     Some(approximate)
 }
 
+/// Offset of the [`ReportCtx`] trailer inside every serialised report buffer.
+///
+/// Reports are serialised from the start of a `SERIALIZED_SIZE` buffer and are far smaller
+/// than this offset (the largest, `UnsafeOpen`, is ~2.2 KiB), so the tail is free.
+pub const CTX_OFFSET: usize = SERIALIZED_SIZE - CTX_LEN;
+/// Space reserved for the [`ReportCtx`] trailer.
+pub const CTX_LEN: usize = 128;
+/// Marks a valid trailer ("OSC1"), so buffers without one are detected.
+pub const CTX_MAGIC: u32 = 0x4f53_4331;
+
+/// Owner/mode of the object a file-related report is about, and of its parent directory.
+///
+/// For TOCTOU and path interception, who may *replace* the entry matters, and that is
+/// decided by the parent directory, not the file itself.
+#[derive(Debug, Copy, Clone, Default, PartialEq, Eq)]
+pub struct ObjInfo {
+    pub uid: u32,
+    pub gid: u32,
+    pub mode: u16,
+    pub parent_uid: u32,
+    pub parent_gid: u32,
+    pub parent_mode: u16,
+}
+
+/// Process context captured in the kernel at the moment a report is emitted.
+///
+/// This exists because looking it up later from `/proc/<pid>` is unreliable: short-lived
+/// processes are gone, PIDs are reused, and credentials may have changed in between.
+/// All ids are kernel (init user namespace) ids, i.e. host ids even inside containers.
+#[derive(Debug, Copy, Clone, Default, PartialEq, Eq)]
+pub struct ReportCtx {
+    pub uid: u32,
+    pub gid: u32,
+    pub euid: u32,
+    pub egid: u32,
+    pub fsuid: u32,
+    pub fsgid: u32,
+    /// Inode and device of the executable mapped by the process (`mm->exe_file`); 0 if none.
+    pub exe_ino: u64,
+    pub exe_dev: u32,
+    pub cgroup_id: u64,
+    /// `bpf_ktime_get_boot_ns()` at emission time.
+    pub ts_boot_ns: u64,
+    pub obj: Option<ObjInfo>,
+    /// Owner and mode of the executable's inode: a privileged process running a binary
+    /// that another user owns or can write is itself exploitable (paper Sec. 7.3).
+    pub exe_uid: u32,
+    pub exe_mode: u16,
+    /// Real uid of the parent: a less-privileged parent controls argv, env and stdin.
+    pub parent_uid: u32,
+    /// Set once this process, while privileged (fsuid 0), opened a regular file owned by
+    /// another non-root user or writable by everyone: a cheap proxy for untrusted input.
+    pub untrusted_open: u8,
+}
+
+impl ReportCtx {
+    /// Writes the trailer into `buf`, which must be the `CTX_LEN`-byte tail of the report buffer.
+    #[inline(always)]
+    pub fn serialise_into(&self, buf: &mut [u8]) -> Result<(), OsSanitizerError> {
+        let buf = buf
+            .write(&CTX_MAGIC.to_be_bytes())?
+            .write(&self.uid.to_be_bytes())?
+            .write(&self.gid.to_be_bytes())?
+            .write(&self.euid.to_be_bytes())?
+            .write(&self.egid.to_be_bytes())?
+            .write(&self.fsuid.to_be_bytes())?
+            .write(&self.fsgid.to_be_bytes())?
+            .write(&self.exe_ino.to_be_bytes())?
+            .write(&self.exe_dev.to_be_bytes())?
+            .write(&self.cgroup_id.to_be_bytes())?
+            .write(&self.ts_boot_ns.to_be_bytes())?;
+        let obj = self.obj.unwrap_or_default();
+        buf.write(&[self.obj.is_some() as u8])?
+            .write(&obj.uid.to_be_bytes())?
+            .write(&obj.gid.to_be_bytes())?
+            .write(&obj.mode.to_be_bytes())?
+            .write(&obj.parent_uid.to_be_bytes())?
+            .write(&obj.parent_gid.to_be_bytes())?
+            .write(&obj.parent_mode.to_be_bytes())?
+            .write(&self.exe_uid.to_be_bytes())?
+            .write(&self.exe_mode.to_be_bytes())?
+            .write(&self.parent_uid.to_be_bytes())?
+            .write(&[self.untrusted_open])?;
+        Ok(())
+    }
+
+    /// Reads the trailer from a full report buffer; `None` if absent (e.g. statistics events).
+    #[cfg(feature = "user")]
+    pub fn parse(report: &[u8]) -> Option<Self> {
+        let tail = report.get(CTX_OFFSET..CTX_OFFSET + CTX_LEN)?;
+        let mut magic = 0u32;
+        let mut c = Self::default();
+        let tail = tail
+            .read_u32(&mut magic)
+            .ok()
+            .filter(|_| magic == CTX_MAGIC)?
+            .read_u32(&mut c.uid)
+            .ok()?
+            .read_u32(&mut c.gid)
+            .ok()?
+            .read_u32(&mut c.euid)
+            .ok()?
+            .read_u32(&mut c.egid)
+            .ok()?
+            .read_u32(&mut c.fsuid)
+            .ok()?
+            .read_u32(&mut c.fsgid)
+            .ok()?
+            .read_u64(&mut c.exe_ino)
+            .ok()?
+            .read_u32(&mut c.exe_dev)
+            .ok()?
+            .read_u64(&mut c.cgroup_id)
+            .ok()?
+            .read_u64(&mut c.ts_boot_ns)
+            .ok()?;
+        let mut flag = [0u8; 1];
+        let mut o = ObjInfo::default();
+        let mut mode = [0u8; 2];
+        let mut pmode = [0u8; 2];
+        let tail = tail
+            .read(&mut flag)
+            .ok()?
+            .read_u32(&mut o.uid)
+            .ok()?
+            .read_u32(&mut o.gid)
+            .ok()?
+            .read(&mut mode)
+            .ok()?
+            .read_u32(&mut o.parent_uid)
+            .ok()?
+            .read_u32(&mut o.parent_gid)
+            .ok()?
+            .read(&mut pmode)
+            .ok()?;
+        let mut emode = [0u8; 2];
+        let mut uo = [0u8; 1];
+        tail.read_u32(&mut c.exe_uid)
+            .ok()?
+            .read(&mut emode)
+            .ok()?
+            .read_u32(&mut c.parent_uid)
+            .ok()?
+            .read(&mut uo)
+            .ok()?;
+        c.exe_mode = u16::from_be_bytes(emode);
+        c.untrusted_open = uo[0];
+        o.mode = u16::from_be_bytes(mode);
+        o.parent_mode = u16::from_be_bytes(pmode);
+        c.obj = (flag[0] != 0).then_some(o);
+        Some(c)
+    }
+}
+
 #[cfg(test)]
 mod test {
+    #[cfg(feature = "user")]
+    #[test]
+    fn report_ctx_roundtrip() {
+        use super::*;
+        let ctx = ReportCtx {
+            uid: 1000,
+            gid: 1001,
+            euid: 0,
+            egid: 0,
+            fsuid: 0,
+            fsgid: 5,
+            exe_ino: 0x1122_3344_5566,
+            exe_dev: 0xfd00001,
+            cgroup_id: 77,
+            ts_boot_ns: 123_456_789,
+            obj: Some(ObjInfo {
+                uid: 0,
+                gid: 0,
+                mode: 0o100644,
+                parent_uid: 1000,
+                parent_gid: 1000,
+                parent_mode: 0o40777,
+            }),
+            exe_uid: 1000,
+            exe_mode: 0o104755,
+            parent_uid: 1000,
+            untrusted_open: 1,
+        };
+        let mut buf = [0u8; SERIALIZED_SIZE];
+        assert!(ctx.serialise_into(&mut buf[CTX_OFFSET..]).is_ok());
+        assert_eq!(ReportCtx::parse(&buf), Some(ctx));
+        let no_obj = ReportCtx { obj: None, ..ctx };
+        assert!(no_obj.serialise_into(&mut buf[CTX_OFFSET..]).is_ok());
+        assert_eq!(ReportCtx::parse(&buf), Some(no_obj));
+        assert_eq!(ReportCtx::parse(&[0u8; SERIALIZED_SIZE]), None);
+    }
+
     #[test]
     fn approximate_range() {
         for base in 0..128 {

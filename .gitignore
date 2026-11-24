@@ -15,3 +15,14 @@ target/
 investigation/
 
 os-sanitizer-ebpf/src/binding.rs
+
+# crash dumps / scratch logs
+*.core
+vgcore.*
+~san.log
+__pycache__/
+# large generated data (GitHub rejects files > 100 MB)
+evaluation/quickbench/results/
+evaluation/quickbench/inputs/data.tar
+evaluation/quickbench/inputs/corpus.txt
+calibration/data/enriched_*/

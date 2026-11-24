@@ -1,0 +1,34 @@
+scenario	label	path_substr	rationale	comm	pass
+A_root_rootdir	fp	A_root_rootdir/	root, root-owned dir and file: nobody else can swap the entry (Scenario 1)		
+A_root_userdir	tp	A_root_userdir/	root opens in a dir owned by uid 1001, who can swap the file between check and use (Scenario 2)		
+A_user_userdir	fp	A_user_userdir/	uid 1001 in its own dir: no privilege boundary		
+A_root_sticky_rootfile	fp	A_root_sticky_rootfile/	sticky world-writable dir but root-owned entry: others cannot replace it		
+A_root_sticky_userfile	tp	A_root_sticky_userfile/	sticky dir, entry owned by uid 1001: owner can replace it under root		
+I_root_userdir	tp	I_root_userdir/	root traverses dir1 owned by uid 1001, who can redirect dir2 (Scenario 3)		
+I_root_worldw	tp	I_root_worldw/	root traverses a world-writable non-sticky dir		
+I_user_owntree	none	I_user_owntree/	uid 1001 in its own tree: should not be reported at all		
+S_root_ww	tp	S_root_ww/	root reads a file any user can modify		
+S_user_ww_own	unsure	S_user_ww_own/	uid 1001 reads its own world-writable file: weakness, no privilege gain		
+g_root_trusted	fp		root, root-owned binary, dir and input: no boundary	g_root_trusted	gets
+g_user_own	fp		uid 1001 runs it: no privilege to gain	g_user_own	gets
+g_root_uinput	tp		root reads stdin from a file uid 1001 writes: attacker controls gets() input	g_root_uinput	gets
+g_setuid	tp		setuid root, run by uid 1001, who controls stdin	g_setuid	gets
+p_root_trusted	fp		root, root-owned binary, dir and input: no boundary	p_root_trusted	printf_mut
+p_user_own	fp		uid 1001 runs it: no privilege to gain	p_user_own	printf_mut
+p_setuid_argv0	tp		setuid root, uid 1001 picks argv[0] = the format string	p_setuid_argv0	printf_mut
+x_root_trusted	fp		root, root-owned binary, dir and input: no boundary	x_root_trusted	system_abs
+x_user_own	fp		uid 1001 runs it: no privilege to gain	x_user_own	system_abs
+x_root_upath	tp		root's PATH starts with a dir uid 1001 owns (oracle: 0 )	x_root_upath	system_abs
+x_setuid_upath	fp		setuid root, uid 1001 sets PATH (oracle: 1001 )	x_setuid_upath	system_abs
+n_root_trusted	fp		root, root-owned binary, dir and input: no boundary	n_root_trusted	snprintf
+n_user_own	fp		uid 1001 runs it: no privilege to gain	n_user_own	snprintf
+n_setuid	unsure		setuid root leaks stack bytes, but only into /dev/null	n_setuid	snprintf
+f_root_trusted	fp		constant 4.4 KB source into a 5 KB stack buffer, root, no boundary	f_root_trusted	sprintf
+f_setuid	fp		setuid root, but the formatted data is a constant uid 1001 cannot change	f_setuid	sprintf
+m_root_trusted	fp		root, fixed remap of its own private page	m_root_trusted	fixed_mmap
+m_setuid	fp		setuid root, but neither address nor contents depend on the user	m_setuid	fixed_mmap
+u_root_trusted	fp		root, threads race on a root-owned output file	u_root_trusted	filep_unlocked
+u_setuid	fp		setuid root, but the raced data is not user-controlled	u_setuid	filep_unlocked
+r_root_trusted	fp		root maps its own root-owned file W+X	r_root_trusted	rwx_mem
+r_user_own	fp		uid 1001 maps its own file W+X	r_user_own	rwx_mem
+r_root_ufile	unsure		root maps a uid-1001 file W+X, but never executes it	r_root_ufile	rwx_mem

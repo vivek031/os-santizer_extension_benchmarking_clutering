@@ -1,0 +1,28 @@
+<section id="report" data-transition="fade" style="background:#FAFAF7;color:#1B2333;font-family:'Inter', Arial, sans-serif;padding:112px 128px;display:flex;flex-direction:column;gap:40px">
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#2F5EA8">The paper · Example report</p>
+<h2 style="font-family:'Inter', Arial, sans-serif;font-size:64px;font-weight:700;letter-spacing:-1px;line-height:1.1;color:#1B2333">Who, what, who else, where</h2>
+</div>
+<hr style="border-top:2px solid #E2E0D8">
+<div style="flex:1;display:flex;flex-direction:row;gap:72px">
+<div style="width:860px;display:flex;flex-direction:column;background:#1B2333;border-radius:12px;padding:32px 36px;font-family:'JetBrains Mono', 'Courier New', monospace;align-self:start">
+<p style="font-size:26px;line-height:1.55;color:#F2F0EA;white-space:nowrap">[WARN] listing-1 (pid 204448)</p>
+<p style="font-size:26px;line-height:1.55;color:#8DB3F5;white-space:nowrap">① acting as root:root</p>
+<p style="font-size:26px;line-height:1.55;color:#F2F0EA;white-space:nowrap">&#160;&#160;&#160;accessed /tmp/…/A/B</p>
+<p style="font-size:26px;line-height:1.55;color:#8DB3F5;white-space:nowrap">② with ["MAY_READ"]</p>
+<p style="font-size:26px;line-height:1.55;color:#F29A6B;white-space:nowrap">③ interceptable by uids [bob]</p>
+<p style="font-size:26px;line-height:1.55;color:#AEB8C9;white-space:nowrap">④ #0 listing-1+0x286e</p>
+<p style="font-size:26px;line-height:1.55;color:#AEB8C9;white-space:nowrap">&#160;&#160;&#160;#1 listing-1+0x5fab8 …</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:20px">
+<p style="font-size:28px;font-weight:600;color:#4A5568">Severity by access kind</p>
+<ul style="font-size:36px;line-height:1.7">
+<li><b><span style="color:#A9461A">ERROR</span></b>: execute (S4)</li>
+<li><b>WARN</b>: read / write (S2, S3)</li>
+<li><b><span style="color:#6B7280">INFO</span></b>: pattern only (S1)</li>
+</ul>
+</div>
+</div>
+<p style="position:absolute;right:128px;top:56px;width:240px;text-align:right;font-size:24px;color:#6B7280">06 / 18</p>
+<aside>~40 s. This is what intercept_path emits for Scenario 2 (paper Listing 3, shortened). It answers four questions: (1) who is acting (root:root), (2) what access was requested (MAY_READ), (3) who else could intercept the path (uid bob), and (4) where in the binary: a stack trace of binary plus file offset, which is stable across runs and ASLR and can be symbolised to source lines later. Severity is assigned in user space by the kind of access: executing a file someone else can swap is ERROR (Scenario 4, rarely intended), read or write is WARN because there are benign uses like indexers running as root, and the plain TOCTOU pattern of Scenario 1 is INFO. The launcher, a ~2.5k-line Rust systemd service, processes reports in five stages: deserialize, map the stack trace, filter and assign severity, print, and symbolize offline in bulk. Note: severity depends on the pass and access kind, not on context. That is the gap we come back to.</aside>
+</section>

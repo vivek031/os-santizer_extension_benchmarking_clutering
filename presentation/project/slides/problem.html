@@ -1,0 +1,35 @@
+<section id="problem" data-transition="fade" style="background:#FAFAF7;color:#1B2333;font-family:'Inter', Arial, sans-serif;padding:112px 128px;display:flex;flex-direction:column;gap:40px">
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#2F5EA8">The paper · Problem</p>
+<h2 style="font-family:'Inter', Arial, sans-serif;font-size:64px;font-weight:700;letter-spacing:-1px;line-height:1.1;color:#1B2333">Latent defects never fail a test</h2>
+</div>
+<hr style="border-top:2px solid #E2E0D8">
+<ul style="font-size:38px;line-height:1.6;color:#1B2333">
+<li>Testing finds bugs only when something <b>fails</b></li>
+<li>Latent defects: <b>safe in one context, exploitable in another</b></li>
+<li>ASan / MSan: rebuild needed, catch only the fault</li>
+<li>OS-Sanitizer <b>infers the defect</b> from benign runs, via eBPF</li>
+</ul>
+<div style="flex:1"></div>
+<div style="display:grid;grid-template-columns:1fr 64px 1fr 64px 1fr 64px 1fr;gap:12px 0">
+<p style="font-size:44px;font-weight:600;text-align:center;color:#6B7280">Error</p>
+<p style="font-size:44px;text-align:center;color:#9AA3AE">→</p>
+<p style="font-size:44px;font-weight:700;text-align:center;color:#1B2333">Defect</p>
+<p style="font-size:44px;text-align:center;color:#9AA3AE">→</p>
+<p style="font-size:44px;font-weight:600;text-align:center;color:#6B7280">Fault</p>
+<p style="font-size:44px;text-align:center;color:#9AA3AE">→</p>
+<p style="font-size:44px;font-weight:600;text-align:center;color:#6B7280">Failure</p>
+<div></div>
+<div></div>
+<div style="height:6px;background:#2F6FDB;border-radius:3px"></div>
+<div></div>
+<div style="grid-column:span 3;height:6px;background:#D9622B;border-radius:3px"></div>
+<div></div>
+<div></div>
+<p style="font-size:28px;font-weight:600;text-align:center;color:#2F5EA8">OS-Sanitizer</p>
+<div></div>
+<p style="grid-column:span 3;font-size:28px;font-weight:600;text-align:center;color:#A9461A">ASan, MSan, tests</p>
+</div>
+<p style="position:absolute;right:128px;top:56px;width:240px;text-align:right;font-size:24px;color:#6B7280">02 / 18</p>
+<aside>~45 s. Classic dynamic testing works by example: run the program, and if something fails you know there is a bug. The chain at the bottom is error, defect, fault, failure. AddressSanitizer or unit tests sit at the fault and failure end: they fire only once the bad behaviour happens, and compiler sanitizers need a rebuild. But many defects are latent: they become a fault only in a particular environment, for example when another user can touch the files a root process opens. The paper asks whether we can infer the defect from runs that behaved fine, using runtime events as context: dynamic defect inference. Why at the OS level with eBPF: no recompilation, the whole system in any language, and it sees the context (credentials, ownership, permissions) that decides whether a code smell is exploitable.</aside>
+</section>
